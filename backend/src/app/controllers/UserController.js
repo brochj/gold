@@ -138,5 +138,11 @@ class UserController {
       gender,
     });
   }
+
+  async delete(req, res) {
+    const user = await User.findByPk(req.userId);
+    await user.destroy();
+    return res.send();
+  }
 }
 export default new UserController();
