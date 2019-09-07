@@ -1,7 +1,38 @@
+import * as Yup from 'yup';
 import User from '../models/User';
 
 class UserController {
   async store(req, res) {
+    const schema = Yup.object().shape({
+      name: Yup.string().required('name field is required'),
+      email: Yup.string()
+        .email('invalid email')
+        .required('email field is required'),
+      password: Yup.string()
+        .min(6, 'password must be at least 6 characters')
+        .required('password field is required'),
+      birthday: Yup.date().required('birthday field is required'),
+      height: Yup.number()
+        .integer()
+        .positive()
+        .min(60, 'height field: min value is 60')
+        .max(250, 'height field: max value is 250')
+        .required('height field is required'),
+      weight: Yup.number()
+        .integer()
+        .positive()
+        .min(20, 'weight field: min value is 20')
+        .max(500, 'weight field: max value is 500')
+        .required('weight field is required'),
+      gender: Yup.mixed()
+        .oneOf(['male', 'female'])
+        .required('gender field is required'),
+    });
+
+    schema
+      .validate(req.body)
+      .catch(e => res.status(400).json({ error: e.message }));
+
     // Verificando se ja existe usuário com email cadastrado
     const userExists = await User.findOne({ where: { email: req.body.email } });
 
