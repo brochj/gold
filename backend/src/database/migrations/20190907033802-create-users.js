@@ -25,11 +25,11 @@ module.exports = {
         allowNull: false,
       },
       height: {
-        type: Sequelize.DATE,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       weight: {
-        type: Sequelize.DATE,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       gender: {
