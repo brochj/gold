@@ -13,9 +13,10 @@ routes.post('/sessions', SessionController.store);
 
 routes.use(authMiddleware);
 
+routes.get('/recipes', RecipeController.index);
 routes.post('/recipes', RecipeController.store);
-routes.delete('/recipes/:id', RecipeController.delete);
 routes.put('/recipes/:id', RecipeController.update);
+routes.delete('/recipes/:id', RecipeController.delete);
 
 routes.put('/users', UserController.update);
 routes.delete('/users', UserController.delete);

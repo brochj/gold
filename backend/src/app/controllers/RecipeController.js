@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import Recipe from '../models/Recipe';
+import User from '../models/User';
 
 class RecipeController {
   async store(req, res) {
@@ -115,6 +116,27 @@ class RecipeController {
       is_private,
       difficulty,
     });
+  }
+
+  async index(req, res) {
+    const { page = 1 } = req.query;
+
+    const recipes = await Recipe.findAll({
+      where: { is_private: false },
+      order: ['id'],
+      attributes: ['id', 'name', 'preparation_time', 'servings', 'difficulty'],
+      limit: 20,
+      offset: (page - 1) * 20,
+      include: [
+        {
+          model: User,
+          as: 'creator',
+          attributes: ['id', 'name'],
+        },
+      ],
+    });
+
+    return res.status(200).json(recipes);
   }
 
   async delete(req, res) {
