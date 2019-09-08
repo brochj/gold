@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('diet_plans', {
+    return queryInterface.createTable('recipes', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -11,25 +11,33 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
+        allowNull: true,
+      },
+      name: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      calorie_intake: {
+      description: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      preparation_time: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      calorie_goal: {
+      servings: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      physical_activity: {
-        type: Sequelize.ENUM,
-        values: ['light', 'moderate', 'high', 'intense'],
+      private: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
         allowNull: false,
       },
-      objective: {
+      difficulty: {
         type: Sequelize.ENUM,
-        values: ['gainMuscle', 'weightLoss', 'maintainWeight'],
+        values: ['easy', 'medium', 'hard'],
         allowNull: false,
       },
       created_at: {
@@ -44,6 +52,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('diet_plans');
+    return queryInterface.dropTable('recipes');
   },
 };
