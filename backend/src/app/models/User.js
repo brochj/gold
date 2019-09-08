@@ -14,7 +14,11 @@ class User extends Model {
         weight: Sequelize.INTEGER,
         gender: Sequelize.ENUM('male', 'female'),
       },
-      { sequelize }
+      {
+        freezeTableName: true,
+        tableName: 'user',
+        sequelize,
+      }
     );
 
     this.addHook('beforeSave', async user => {

@@ -8,17 +8,21 @@ class Recipe extends Model {
         description: Sequelize.STRING,
         preparation_time: Sequelize.INTEGER,
         servings: Sequelize.INTEGER,
-        private: Sequelize.BOOLEAN,
+        is_private: Sequelize.BOOLEAN,
         difficulty: Sequelize.ENUM('easy', 'medium', 'hard'),
       },
-      { sequelize }
+      {
+        freezeTableName: true,
+        tableName: 'recipe',
+        sequelize,
+      }
     );
 
     return this;
   }
 
   static associate(models) {
-    this.belongsToMany(models.Meal, { through: 'recipe_meal' });
+    this.belongsTo(models.User, { foreignKey: 'user_id' });
   }
 }
 

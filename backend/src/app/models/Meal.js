@@ -7,7 +7,11 @@ class Meal extends Model {
         calorie: Sequelize.INTEGER,
         title: Sequelize.STRING,
       },
-      { sequelize }
+      {
+        freezeTableName: true,
+        tableName: 'meal',
+        sequelize,
+      }
     );
 
     return this;

@@ -14,7 +14,11 @@ class DietPlan extends Model {
           'intense'
         ),
       },
-      { sequelize }
+      {
+        freezeTableName: true,
+        tableName: 'diet_plan',
+        sequelize,
+      }
     );
 
     return this;

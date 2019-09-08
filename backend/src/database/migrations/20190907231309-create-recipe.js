@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('recipes', {
+    return queryInterface.createTable('recipe', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -9,7 +9,7 @@ module.exports = {
       },
       user_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'users', key: 'id' },
+        references: { model: 'user', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
         allowNull: true,
@@ -30,7 +30,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      private: {
+      is_private: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false,
@@ -52,6 +52,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('recipes');
+    return queryInterface.dropTable('recipe');
   },
 };
