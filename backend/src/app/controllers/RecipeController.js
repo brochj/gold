@@ -4,8 +4,13 @@ import Recipe from '../models/Recipe';
 class RecipeController {
   async store(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string().required('name field is required'),
-      description: Yup.string().required('description field is required'),
+      name: Yup.string()
+        .min(2, 'Recipe name must be at least 2 characters')
+        .required('name field is required'),
+      description: Yup.string().min(
+        2,
+        'Recipe description must be at least 2 characters'
+      ),
       preparation_time: Yup.number()
         .integer()
         .positive()
@@ -53,12 +58,80 @@ class RecipeController {
     });
   }
 
-  async delete(req, res) {
-    const { id } = req.params;
-    const recipe = await Recipe.findByPk(id);
+  async update(req, res) {
+    const schema = Yup.object().shape({
+      name: Yup.string()
+        .min(2, 'Recipe name must be at least 2 characters')
+        .required('name field is required'),
+      description: Yup.string().min(
+        2,
+        'Recipe description must be at least 2 characters'
+      ),
+      preparation_time: Yup.number()
+        .integer()
+        .positive()
+        .min(1, 'preparation_time field: min value is 1')
+        .max(1440, 'preparation_time field: max value is 1440'),
+      servings: Yup.number()
+        .integer()
+        .positive()
+        .min(1, 'servings field: min value is 1')
+        .max(500, 'servings field: max value is 500'),
+      is_private: Yup.boolean(),
+      difficulty: Yup.mixed().oneOf(['easy', 'medium', 'hard']),
+    });
+
+    schema
+      .validate(req.body)
+      .catch(e => res.status(400).json({ error: e.message }));
+
+    const recipe = await Recipe.findOne({
+      where: { user_id: req.userId, id: req.params.id },
+    });
 
     if (!recipe)
+      return res
+        .status(401)
+        .json({ error: 'You do not have permission to change this recipe' });
+
+    const {
+      id,
+      user_id,
+      name,
+      description,
+      preparation_time,
+      servings,
+      is_private,
+      difficulty,
+    } = await recipe.update({ ...req.body });
+
+    return res.json({
+      id,
+      user_id,
+      name,
+      description,
+      preparation_time,
+      servings,
+      is_private,
+      difficulty,
+    });
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+    const recipeExists = await Recipe.findByPk(id);
+
+    if (!recipeExists)
       return res.status(400).json({ error: 'Recipe does not exist' });
+
+    const recipe = await Recipe.findOne({
+      where: { user_id: req.userId, id: req.params.id },
+    });
+
+    if (!recipe)
+      return res
+        .status(401)
+        .json({ error: 'You do not have permission to delete this recipe' });
 
     await recipe.destroy();
     return res.send();
