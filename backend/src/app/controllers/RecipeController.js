@@ -52,5 +52,16 @@ class RecipeController {
       difficulty,
     });
   }
+
+  async delete(req, res) {
+    const { id } = req.params;
+    const recipe = await Recipe.findByPk(id);
+
+    if (!recipe)
+      return res.status(400).json({ error: 'Recipe does not exist' });
+
+    await recipe.destroy();
+    return res.send();
+  }
 }
 export default new RecipeController();

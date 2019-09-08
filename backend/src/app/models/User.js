@@ -33,6 +33,10 @@ class User extends Model {
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
   }
+
+  static associate(models) {
+    this.hasMany(models.Recipe, { foreignKey: 'user_id' }); // necessário?
+  }
 }
 
 export default User;

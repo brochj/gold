@@ -141,6 +141,9 @@ class UserController {
 
   async delete(req, res) {
     const user = await User.findByPk(req.userId);
+
+    if (!user) return res.status(400).json({ error: 'User does not exist' });
+
     await user.destroy();
     return res.send();
   }
