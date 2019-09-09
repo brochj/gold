@@ -114,11 +114,18 @@ class DietPlanController {
   async index(req, res) {
     const { page = 1 } = req.query;
 
-    const recipes = await Recipe.findAll({
-      where: { is_private: false },
+    const dietPlans = await DietPlan.findAll({
+      where: { user_id: req.userId },
       order: ['id'],
-      attributes: ['id', 'name', 'preparation_time', 'servings', 'difficulty'],
-      limit: 20,
+      attributes: [
+        'id',
+        'objective',
+        'difficulty',
+        'calorie_goal',
+        'calorie_intake',
+        'physical_activity',
+      ],
+      limit: 10,
       offset: (page - 1) * 20,
       include: [
         {
@@ -129,7 +136,7 @@ class DietPlanController {
       ],
     });
 
-    return res.status(200).json(recipes);
+    return res.status(200).json(dietPlans);
   }
 
   async delete(req, res) {

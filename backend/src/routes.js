@@ -19,7 +19,7 @@ routes.post('/recipes', RecipeController.store);
 routes.put('/recipes/:id', RecipeController.update);
 routes.delete('/recipes/:id', RecipeController.delete);
 
-// routes.get('/dietplans', DietPlanController.index);
+routes.get('/dietplans', DietPlanController.index);
 routes.post('/dietplans', DietPlanController.store);
 // routes.put('/dietplans/:id', DietPlanController.update);
 // routes.delete('/dietplans/:id', DietPlanController.delete);
