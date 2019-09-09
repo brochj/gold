@@ -21,7 +21,7 @@ routes.delete('/recipes/:id', RecipeController.delete);
 
 routes.get('/dietplans', DietPlanController.index);
 routes.post('/dietplans', DietPlanController.store);
-// routes.put('/dietplans/:id', DietPlanController.update);
+routes.put('/dietplans/:id', DietPlanController.update);
 routes.delete('/dietplans/:id', DietPlanController.delete);
 
 routes.put('/users', UserController.update);

@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import Recipe from '../models/Recipe';
 import User from '../models/User';
 import DietPlan from '../models/DietPlan';
 
@@ -91,23 +90,21 @@ class DietPlanController {
     const {
       id,
       user_id,
-      name,
-      description,
-      preparation_time,
-      servings,
-      is_private,
+      objective,
       difficulty,
+      calorie_goal,
+      calorie_intake,
+      physical_activity,
     } = await dietPlan.update({ ...req.body });
 
     return res.json({
       id,
       user_id,
-      name,
-      description,
-      preparation_time,
-      servings,
-      is_private,
+      objective,
       difficulty,
+      calorie_goal,
+      calorie_intake,
+      physical_activity,
     });
   }
 
