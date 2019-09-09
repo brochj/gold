@@ -22,7 +22,7 @@ routes.delete('/recipes/:id', RecipeController.delete);
 routes.get('/dietplans', DietPlanController.index);
 routes.post('/dietplans', DietPlanController.store);
 // routes.put('/dietplans/:id', DietPlanController.update);
-// routes.delete('/dietplans/:id', DietPlanController.delete);
+routes.delete('/dietplans/:id', DietPlanController.delete);
 
 routes.put('/users', UserController.update);
 routes.delete('/users', UserController.delete);

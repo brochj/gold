@@ -141,21 +141,21 @@ class DietPlanController {
 
   async delete(req, res) {
     const { id } = req.params;
-    const recipeExists = await Recipe.findByPk(id);
+    const dietPlanExists = await DietPlan.findByPk(id);
 
-    if (!recipeExists)
-      return res.status(400).json({ error: 'Recipe does not exist' });
+    if (!dietPlanExists)
+      return res.status(400).json({ error: 'Diet plan does not exist' });
 
-    const recipe = await Recipe.findOne({
+    const dietPlan = await DietPlan.findOne({
       where: { user_id: req.userId, id: req.params.id },
     });
 
-    if (!recipe)
+    if (!dietPlan)
       return res
         .status(401)
-        .json({ error: 'You do not have permission to delete this recipe' });
+        .json({ error: 'You do not have permission to delete this diet plan' });
 
-    await recipe.destroy();
+    await dietPlan.destroy();
     return res.send();
   }
 }
