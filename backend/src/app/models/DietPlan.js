@@ -1,4 +1,5 @@
 import Sequelize, { Model } from 'sequelize';
+import { defineDifficulty } from '../util/dietPlanCalc';
 
 class DietPlan extends Model {
   static init(sequelize) {
@@ -13,6 +14,12 @@ class DietPlan extends Model {
           'high',
           'intense'
         ),
+        difficulty: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            return defineDifficulty(this.calorie_intake, this.calorie_goal);
+          },
+        },
       },
       {
         freezeTableName: true,
