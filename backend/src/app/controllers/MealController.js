@@ -89,6 +89,11 @@ class MealController {
     const { page = 1 } = req.query;
     const { dietPlanId } = req.params;
 
+    const dietPlanExists = await DietPlan.findByPk(dietPlanId);
+
+    if (!dietPlanExists)
+      return res.status(400).json({ error: 'Diet plan does not exist' });
+
     const meals = await Meal.findAll({
       where: { diet_plan_id: dietPlanId },
       order: ['id'],
@@ -108,13 +113,14 @@ class MealController {
   }
 
   async delete(req, res) {
-    const mealexists = await Meal.findByPk(req.params.id);
+    const { id, dietPlanId } = req.params;
+    const mealexists = await Meal.findByPk(id);
 
     if (!mealexists)
       return res.status(401).json({ error: 'Meal does not exist' });
 
-    const meal = await DietPlan.findOne({
-      where: { id: req.params.dietPlanId, user_id: req.userId },
+    const meal = await Meal.findOne({
+      where: { id, diet_plan_id: dietPlanId },
     });
 
     if (!meal)
