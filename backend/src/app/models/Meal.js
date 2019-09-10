@@ -18,7 +18,10 @@ class Meal extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.DietPlan, { foreignKey: 'diet_plan_id' });
+    this.belongsTo(models.DietPlan, {
+      foreignKey: 'diet_plan_id',
+      as: 'diet_plan',
+    });
   }
 }
 

@@ -6,6 +6,7 @@ import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import RecipeController from './app/controllers/RecipeController';
 import DietPlanController from './app/controllers/DietPlanController';
+import MealController from './app/controllers/MealController';
 
 const routes = new Router();
 
@@ -23,6 +24,11 @@ routes.get('/dietplans', DietPlanController.index);
 routes.post('/dietplans', DietPlanController.store);
 routes.put('/dietplans/:id', DietPlanController.update);
 routes.delete('/dietplans/:id', DietPlanController.delete);
+
+routes.get('/dietplans/:id/meals', MealController.index);
+routes.post('/dietplans/:id/meals', MealController.store);
+routes.put('/dietplans/:id/meals/:mealId', MealController.update);
+routes.delete('/dietplans/:id/meals/:mealId', MealController.delete);
 
 routes.put('/users', UserController.update);
 routes.delete('/users', UserController.delete);
