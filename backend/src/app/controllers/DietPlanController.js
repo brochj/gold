@@ -78,6 +78,11 @@ class DietPlanController {
       .validate(req.body)
       .catch(e => res.status(400).json({ error: e.message }));
 
+    const dietPlanExists = await DietPlan.findByPk(req.params.id);
+
+    if (!dietPlanExists)
+      return res.status(400).json({ error: 'Diet plan does not exist' });
+
     const dietPlan = await DietPlan.findOne({
       where: { user_id: req.userId, id: req.params.id },
     });

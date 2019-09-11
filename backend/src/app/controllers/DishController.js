@@ -2,16 +2,10 @@ import * as Yup from 'yup';
 import DietPlan from '../models/DietPlan';
 import Meal from '../models/Meal';
 
-class MealController {
+class DishController {
   async store(req, res) {
     const schema = Yup.object().shape({
       title: Yup.string().required('title field is required'),
-      calorie: Yup.number()
-        .integer()
-        .positive()
-        .min(1, 'calorie field: min value is 1')
-        .max(99999, 'calorie field: max value is 99999')
-        .required('calorie field is required'),
     });
 
     schema
@@ -25,7 +19,7 @@ class MealController {
       return res.status(400).json({ error: 'Diet plan does not exist' });
 
     const meal = await DietPlan.findOne({
-      where: { id: req.params.dietPlanId, user_id: req.userId },
+      where: { id: dietPlanId, user_id: req.userId },
     });
 
     if (!meal)
@@ -33,14 +27,13 @@ class MealController {
         .status(401)
         .json({ error: 'You are not the owner of this diet plan' });
 
-    const body = { ...req.body, diet_plan_id: dietPlanId };
+    const body = { ...req.body, meal_id: dietPlanId };
 
-    const { id, diet_plan_id, calorie, title } = await Meal.create(body);
+    const { id, meal_id, title } = await Meal.create(body);
 
     return res.json({
       id,
-      diet_plan_id,
-      calorie,
+      meal_id,
       title,
     });
   }
@@ -74,6 +67,11 @@ class MealController {
         },
       ],
     });
+
+    if (meal.diet_plan.user_id !== req.userId)
+      return res
+        .status(401)
+        .json({ error: 'You do not have permission to delete this meal' });
 
     const { id, diet_plan_id, calorie, title } = await meal.update(req.body);
 
@@ -118,8 +116,13 @@ class MealController {
       where: { id, diet_plan_id: dietPlanId },
     });
 
+    if (!meal)
+      return res
+        .status(401)
+        .json({ error: 'You do not have permission to delete this meal' });
+
     await meal.destroy();
     return res.send();
   }
 }
-export default new MealController();
+export default new DishController();

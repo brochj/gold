@@ -1,12 +1,16 @@
 import { Router } from 'express';
 
 import authMiddleware from './app/middlewares/auth';
+import dietPlanOwnerMiddleware from './app/middlewares/dietPlanOwner';
 
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
+
 import RecipeController from './app/controllers/RecipeController';
+
 import DietPlanController from './app/controllers/DietPlanController';
 import MealController from './app/controllers/MealController';
+import DishController from './app/controllers/DishController';
 
 const routes = new Router();
 
@@ -25,10 +29,21 @@ routes.post('/diet-plans', DietPlanController.store);
 routes.put('/diet-plans/:id', DietPlanController.update);
 routes.delete('/diet-plans/:id', DietPlanController.delete);
 
-routes.get('/diet-plans/:dietPlanId/meals', MealController.index);
-routes.post('/diet-plans/:dietPlanId/meals', MealController.store);
-routes.put('/diet-plans/:dietPlanId/meals/:id', MealController.update);
-routes.delete('/diet-plans/:dietPlanId/meals/:id', MealController.delete);
+const diets = '/diet-plans/:dietPlanId';
+
+routes.use(diets, dietPlanOwnerMiddleware);
+
+routes.get(`${diets}/meals`, MealController.index);
+routes.post(`${diets}/meals`, MealController.store);
+routes.put(`${diets}/meals/:id`, MealController.update);
+routes.delete(`${diets}/meals/:id`, MealController.delete);
+
+const meals = '/diet-plans/:dietPlanId/meals/:mealId';
+
+routes.get(`${meals}/dishes`, DishController.index);
+routes.post(`${meals}/dishes`, DishController.store);
+routes.put(`${meals}/dishes/:id`, DishController.update);
+routes.delete(`${meals}/dishes/:id`, DishController.delete);
 
 routes.put('/users', UserController.update);
 routes.delete('/users', UserController.delete);
