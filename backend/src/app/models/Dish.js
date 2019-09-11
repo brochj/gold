@@ -17,7 +17,7 @@ class Dish extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Meal, { foreignKey: 'meal_id' });
+    this.belongsTo(models.Meal, { foreignKey: 'meal_id', as: 'meal' });
   }
 }
 

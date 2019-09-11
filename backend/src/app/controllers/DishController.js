@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
-import DietPlan from '../models/DietPlan';
 import Meal from '../models/Meal';
+import Dish from '../models/Dish';
 
 class DishController {
   async store(req, res) {
@@ -12,24 +12,16 @@ class DishController {
       .validate(req.body)
       .catch(e => res.status(400).json({ error: e.message }));
 
-    const { dietPlanId } = req.params;
-    const dietPlanExists = await DietPlan.findByPk(dietPlanId);
+    const { mealId } = req.params;
 
-    if (!dietPlanExists)
-      return res.status(400).json({ error: 'Diet plan does not exist' });
+    const mealExists = await Meal.findByPk(mealId);
 
-    const meal = await DietPlan.findOne({
-      where: { id: dietPlanId, user_id: req.userId },
-    });
+    if (!mealExists)
+      return res.status(400).json({ error: 'Meal does not exist' });
 
-    if (!meal)
-      return res
-        .status(401)
-        .json({ error: 'You are not the owner of this diet plan' });
+    const body = { ...req.body, meal_id: mealId };
 
-    const body = { ...req.body, meal_id: dietPlanId };
-
-    const { id, meal_id, title } = await Meal.create(body);
+    const { id, meal_id, title } = await Dish.create(body);
 
     return res.json({
       id,
@@ -40,88 +32,55 @@ class DishController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      title: Yup.string(),
-      calorie: Yup.number()
-        .integer()
-        .positive()
-        .min(1, 'calorie field: min value is 1')
-        .max(99999, 'calorie field: max value is 99999'),
+      title: Yup.string().required('title field is required'),
     });
 
     schema
       .validate(req.body)
       .catch(e => res.status(400).json({ error: e.message }));
 
-    const mealexists = await Meal.findByPk(req.params.id);
+    const { id: dishId, mealId } = req.params;
 
-    if (!mealexists)
-      return res.status(401).json({ error: 'Meal does not exist' });
+    const mealExists = await Meal.findByPk(mealId);
 
-    const meal = await Meal.findOne({
-      where: { diet_plan_id: req.params.dietPlanId, id: req.params.id },
-      include: [
-        {
-          model: DietPlan,
-          as: 'diet_plan',
-          attributes: ['user_id'],
-        },
-      ],
-    });
+    if (!mealExists)
+      return res.status(400).json({ error: 'Meal does not exist' });
 
-    if (meal.diet_plan.user_id !== req.userId)
-      return res
-        .status(401)
-        .json({ error: 'You do not have permission to delete this meal' });
+    const dish = await Dish.findOne({ where: { meal_id: mealId, id: dishId } });
 
-    const { id, diet_plan_id, calorie, title } = await meal.update(req.body);
+    const { id, meal_id, title } = await dish.update(req.body);
 
-    return res.json({ id, diet_plan_id, calorie, title });
+    return res.json({ id, meal_id, title });
   }
 
   async index(req, res) {
     const { page = 1 } = req.query;
-    const { dietPlanId } = req.params;
+    const { mealId } = req.params;
 
-    const dietPlanExists = await DietPlan.findByPk(dietPlanId);
-
-    if (!dietPlanExists)
-      return res.status(400).json({ error: 'Diet plan does not exist' });
-
-    const meals = await Meal.findAll({
-      where: { diet_plan_id: dietPlanId },
+    const dishes = await Dish.findAll({
+      where: { meal_id: mealId },
       order: ['id'],
-      attributes: ['id', 'calorie', 'title'],
+      attributes: ['id', 'meal_id', 'title'],
       limit: 10,
       offset: (page - 1) * 10,
       include: [
         {
-          model: DietPlan,
-          as: 'diet_plan',
+          model: Meal,
+          as: 'meal',
           attributes: ['id'],
         },
       ],
     });
 
-    return res.status(200).json(meals);
+    return res.status(200).json(dishes);
   }
 
   async delete(req, res) {
-    const { id, dietPlanId } = req.params;
-    const mealexists = await Meal.findByPk(id);
+    const dish = await Dish.findByPk(req.params.id);
 
-    if (!mealexists)
-      return res.status(401).json({ error: 'Meal does not exist' });
+    if (!dish) return res.status(401).json({ error: 'Dish does not exist' });
 
-    const meal = await Meal.findOne({
-      where: { id, diet_plan_id: dietPlanId },
-    });
-
-    if (!meal)
-      return res
-        .status(401)
-        .json({ error: 'You do not have permission to delete this meal' });
-
-    await meal.destroy();
+    await dish.destroy();
     return res.send();
   }
 }

@@ -5,7 +5,10 @@ export default async (req, res, next) => {
 
   const dietPlan = await DietPlan.findByPk(req.params.dietPlanId);
 
-  if (dietPlan.user_id !== req.userId)
+  if (!dietPlan)
+    return res.status(401).json({ error: 'Diet Plan does not exist' });
+
+  if (dietPlan && dietPlan.user_id !== req.userId)
     return res
       .status(401)
       .json({ error: 'You are not the owner of this diet plan' });
