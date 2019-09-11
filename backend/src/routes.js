@@ -1,7 +1,8 @@
 import { Router } from 'express';
 
 import authMiddleware from './app/middlewares/auth';
-import dietPlanOwnerMiddleware from './app/middlewares/dietPlanOwner';
+import dietPlanMiddleware from './app/middlewares/dietPlan';
+import mealMiddleware from './app/middlewares/meal';
 
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
@@ -30,15 +31,16 @@ routes.put('/diet-plans/:id', DietPlanController.update);
 routes.delete('/diet-plans/:id', DietPlanController.delete);
 
 const diets = '/diet-plans/:dietPlanId';
-
-routes.use(diets, dietPlanOwnerMiddleware);
+routes.use(diets, dietPlanMiddleware);
 
 routes.get(`${diets}/meals`, MealController.index);
 routes.post(`${diets}/meals`, MealController.store);
 routes.put(`${diets}/meals/:id`, MealController.update);
 routes.delete(`${diets}/meals/:id`, MealController.delete);
 
-const meals = '/diet-plans/:dietPlanId/meals/:mealId';
+const meals = `${diets}/meals/:mealId`;
+
+routes.use(meals, mealMiddleware);
 
 routes.get(`${meals}/dishes`, DishController.index);
 routes.post(`${meals}/dishes`, DishController.store);

@@ -48,6 +48,8 @@ class DishController {
 
     const dish = await Dish.findOne({ where: { meal_id: mealId, id: dishId } });
 
+    if (!dish) return res.status(400).json({ error: 'Dish does not exist' });
+
     const { id, meal_id, title } = await dish.update(req.body);
 
     return res.json({ id, meal_id, title });
@@ -76,7 +78,14 @@ class DishController {
   }
 
   async delete(req, res) {
-    const dish = await Dish.findByPk(req.params.id);
+    const { id, mealId } = req.params;
+
+    const mealExists = await Meal.findByPk(mealId);
+
+    if (!mealExists)
+      return res.status(400).json({ error: 'Meal does not exist' });
+
+    const dish = await Dish.findByPk(id);
 
     if (!dish) return res.status(401).json({ error: 'Dish does not exist' });
 
