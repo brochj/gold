@@ -1,5 +1,4 @@
 import Sequelize, { Model } from 'sequelize';
-import RecipeDish from './RecipeDish';
 
 class Recipe extends Model {
   static init(sequelize) {
@@ -25,7 +24,7 @@ class Recipe extends Model {
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: 'user_id', as: 'creator' });
     this.belongsToMany(models.Dish, {
-      through: RecipeDish,
+      through: models.RecipeDish,
       foreignKey: 'recipe_id',
     });
   }
