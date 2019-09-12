@@ -23,6 +23,11 @@ class Dish extends Model {
       as: 'recipes',
       foreignKey: 'dish_id',
     });
+    this.belongsToMany(models.Food, {
+      through: models.FoodDish,
+      as: 'foods',
+      foreignKey: 'dish_id',
+    });
   }
 }
 

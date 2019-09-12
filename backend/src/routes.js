@@ -15,6 +15,7 @@ import DietPlanController from './app/controllers/DietPlanController';
 import MealController from './app/controllers/MealController';
 import DishController from './app/controllers/DishController';
 import RecipeDishController from './app/controllers/RecipeDishController';
+import FoodDishController from './app/controllers/FoodDishController';
 
 const routes = new Router();
 
@@ -53,6 +54,7 @@ const meals = `${diets}/meals/:mealId`;
 routes.use(meals, mealMiddleware);
 
 routes.get(`${meals}/dishes`, DishController.index);
+routes.get(`${meals}/dishes/:id`, DishController.index);
 routes.post(`${meals}/dishes`, DishController.store);
 routes.put(`${meals}/dishes/:id`, DishController.update);
 routes.delete(`${meals}/dishes/:id`, DishController.delete);
@@ -63,5 +65,9 @@ routes.use(dishes, dishMiddleware);
 routes.get(`${dishes}/recipes/`, RecipeDishController.index);
 routes.post(`${dishes}/recipes/`, RecipeDishController.store);
 routes.delete(`${dishes}/recipes/:id`, RecipeDishController.delete);
+
+routes.get(`${dishes}/foods/`, FoodDishController.index);
+routes.post(`${dishes}/foods/`, FoodDishController.store);
+routes.delete(`${dishes}/foods/:id`, FoodDishController.delete);
 
 export default routes;

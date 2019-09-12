@@ -7,10 +7,11 @@ import Recipe from '../app/models/Recipe';
 import Dish from '../app/models/Dish';
 import RecipeDish from '../app/models/RecipeDish';
 import Food from '../app/models/Food';
+import FoodDish from '../app/models/FoodDish';
 
 import databaseConfig from '../config/database';
 
-const models = [User, DietPlan, Meal, Recipe, Dish, RecipeDish, Food];
+const models = [User, DietPlan, Meal, Recipe, Dish, RecipeDish, Food, FoodDish];
 
 class Database {
   constructor() {

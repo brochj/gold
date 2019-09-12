@@ -18,9 +18,13 @@ class Food extends Model {
     return this;
   }
 
-  // static associate(models) {
-  //   this.hasMany(models.NutritionFact, { foreignKey: 'food_id' }); // necessário?
-  // }
+  static associate(models) {
+    // this.hasMany(models.NutritionFact, { foreignKey: 'food_id' }); // necessário?
+    this.belongsToMany(models.Dish, {
+      through: models.FoodDish,
+      foreignKey: 'food_id',
+    });
+  }
 }
 
 export default Food;

@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
 import Meal from '../models/Meal';
 import Dish from '../models/Dish';
+import Food from '../models/Food';
+import Recipe from '../models/Recipe';
 
 class DishController {
   async store(req, res) {
@@ -57,7 +59,47 @@ class DishController {
 
   async index(req, res) {
     const { page = 1 } = req.query;
-    const { mealId } = req.params;
+    const { mealId, id } = req.params;
+
+    if (id) {
+      const dish = await Dish.findByPk(id);
+      if (!dish) return res.status(400).json({ error: 'Dish does not exist' });
+
+      const dishes = await Dish.findOne({
+        where: { id },
+        order: ['id'],
+        attributes: ['id', 'meal_id', 'title'],
+        limit: 10,
+        offset: (page - 1) * 10,
+        include: [
+          {
+            model: Meal,
+            as: 'meal',
+            attributes: ['title', 'calorie'], // TODO colocar o time
+          },
+          {
+            model: Recipe,
+            as: 'recipes',
+            attributes: [
+              'id',
+              'name',
+              'preparation_time',
+              'servings',
+              'difficulty',
+            ],
+            through: { attributes: [] },
+          },
+          {
+            model: Food,
+            as: 'foods',
+            attributes: ['id', 'name', 'brand'],
+            through: { attributes: [] },
+          },
+        ],
+      });
+
+      return res.status(200).json(dishes);
+    }
 
     const dishes = await Dish.findAll({
       where: { meal_id: mealId },
@@ -69,7 +111,25 @@ class DishController {
         {
           model: Meal,
           as: 'meal',
-          attributes: ['title'],
+          attributes: ['title', 'calorie'], // TODO colocar o time
+        },
+        {
+          model: Recipe,
+          as: 'recipes',
+          attributes: [
+            'id',
+            'name',
+            'preparation_time',
+            'servings',
+            'difficulty',
+          ],
+          through: { attributes: [] },
+        },
+        {
+          model: Food,
+          as: 'foods',
+          attributes: ['id', 'name', 'brand'],
+          through: { attributes: [] },
         },
       ],
     });
