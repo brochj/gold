@@ -62,10 +62,7 @@ class DishController {
     const { mealId, id } = req.params;
 
     if (id) {
-      const dish = await Dish.findByPk(id);
-      if (!dish) return res.status(400).json({ error: 'Dish does not exist' });
-
-      const dishes = await Dish.findOne({
+      const dish = await Dish.findOne({
         where: { id },
         order: ['id'],
         attributes: ['id', 'meal_id', 'title'],
@@ -98,7 +95,9 @@ class DishController {
         ],
       });
 
-      return res.status(200).json(dishes);
+      if (!dish) return res.status(400).json({ error: 'Dish does not exist' });
+
+      return res.status(200).json(dish);
     }
 
     const dishes = await Dish.findAll({
