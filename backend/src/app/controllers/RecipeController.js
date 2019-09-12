@@ -8,10 +8,7 @@ class RecipeController {
       name: Yup.string()
         .min(2, 'Recipe name must be at least 2 characters')
         .required('name field is required'),
-      description: Yup.string().min(
-        2,
-        'Recipe description must be at least 2 characters'
-      ),
+      description: Yup.string(),
       preparation_time: Yup.number()
         .integer()
         .positive()
@@ -64,10 +61,7 @@ class RecipeController {
       name: Yup.string()
         .min(2, 'Recipe name must be at least 2 characters')
         .required('name field is required'),
-      description: Yup.string().min(
-        2,
-        'Recipe description must be at least 2 characters'
-      ),
+      description: Yup.string(),
       preparation_time: Yup.number()
         .integer()
         .positive()

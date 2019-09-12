@@ -9,6 +9,7 @@ import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 
 import RecipeController from './app/controllers/RecipeController';
+import FoodController from './app/controllers/FoodController';
 
 import DietPlanController from './app/controllers/DietPlanController';
 import MealController from './app/controllers/MealController';
@@ -24,6 +25,11 @@ routes.use(authMiddleware);
 
 routes.put('/users', UserController.update);
 routes.delete('/users', UserController.delete);
+
+routes.get('/foods', FoodController.index);
+routes.post('/foods', FoodController.store);
+routes.put('/foods/:id', FoodController.update);
+routes.delete('/foods/:id', FoodController.delete);
 
 routes.get('/recipes', RecipeController.index);
 routes.post('/recipes', RecipeController.store);
@@ -44,7 +50,6 @@ routes.put(`${diets}/meals/:id`, MealController.update);
 routes.delete(`${diets}/meals/:id`, MealController.delete);
 
 const meals = `${diets}/meals/:mealId`;
-
 routes.use(meals, mealMiddleware);
 
 routes.get(`${meals}/dishes`, DishController.index);
@@ -53,7 +58,6 @@ routes.put(`${meals}/dishes/:id`, DishController.update);
 routes.delete(`${meals}/dishes/:id`, DishController.delete);
 
 const dishes = `${meals}/dishes/:dishId`;
-
 routes.use(dishes, dishMiddleware);
 
 routes.get(`${dishes}/recipes/`, RecipeDishController.index);

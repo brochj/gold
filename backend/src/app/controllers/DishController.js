@@ -65,13 +65,13 @@ class DishController {
       attributes: ['id', 'meal_id', 'title'],
       limit: 10,
       offset: (page - 1) * 10,
-      // include: [
-      //   {
-      //     model: Meal,
-      //     as: 'meal',
-      //     attributes: ['id'],
-      //   },
-      // ],
+      include: [
+        {
+          model: Meal,
+          as: 'meal',
+          attributes: ['title'],
+        },
+      ],
     });
 
     return res.status(200).json(dishes);
