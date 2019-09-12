@@ -8,10 +8,21 @@ import Dish from '../app/models/Dish';
 import RecipeDish from '../app/models/RecipeDish';
 import Food from '../app/models/Food';
 import FoodDish from '../app/models/FoodDish';
+import Section from '../app/models/Section';
 
 import databaseConfig from '../config/database';
 
-const models = [User, DietPlan, Meal, Recipe, Dish, RecipeDish, Food, FoodDish];
+const models = [
+  User,
+  DietPlan,
+  Meal,
+  Recipe,
+  Dish,
+  RecipeDish,
+  Food,
+  FoodDish,
+  Section,
+];
 
 class Database {
   constructor() {

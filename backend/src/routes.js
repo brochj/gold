@@ -33,6 +33,7 @@ routes.put('/foods/:id', FoodController.update);
 routes.delete('/foods/:id', FoodController.delete);
 
 routes.get('/recipes', RecipeController.index);
+routes.get('/recipes/:id', RecipeController.index);
 routes.post('/recipes', RecipeController.store);
 routes.put('/recipes/:id', RecipeController.update);
 routes.delete('/recipes/:id', RecipeController.delete);

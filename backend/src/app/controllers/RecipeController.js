@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import Recipe from '../models/Recipe';
+import Section from '../models/Section';
 import User from '../models/User';
 
 class RecipeController {
@@ -31,29 +32,40 @@ class RecipeController {
       .validate(req.body)
       .catch(e => res.status(400).json({ error: e.message }));
 
-    const body = { ...req.body, user_id: req.userId };
+    const { sections, ...recipeBasicInfo } = req.body;
 
-    const {
-      id,
-      user_id,
-      name,
-      description,
-      preparation_time,
-      servings,
-      is_private,
-      difficulty,
-    } = await Recipe.create(body);
-
-    return res.json({
-      id,
-      user_id,
-      name,
-      description,
-      preparation_time,
-      servings,
-      is_private,
-      difficulty,
+    const { id } = await Recipe.create({
+      user_id: req.userId,
+      ...recipeBasicInfo,
     });
+
+    await sections.forEach(async section => {
+      await Section.create({
+        ...section,
+        recipe_id: id,
+      });
+    });
+
+    const recipe = await Recipe.findOne({
+      where: { id },
+      attributes: [
+        'id',
+        'user_id',
+        'name',
+        'description',
+        'preparation_time',
+        'servings',
+        'difficulty',
+        'is_private',
+      ],
+    });
+
+    const savedSections = await Section.findAll({
+      where: { recipe_id: id },
+      attributes: ['id', 'order', 'recipe_id', 'title', 'steps'],
+    });
+
+    return res.json({ recipe, sections: savedSections });
   }
 
   async update(req, res) {
@@ -114,6 +126,35 @@ class RecipeController {
 
   async index(req, res) {
     const { page = 1 } = req.query;
+
+    const { id } = req.params;
+    if (id) {
+      const savedSections = await Section.findAll({
+        where: { recipe_id: id },
+        attributes: ['id', 'order', 'recipe_id', 'title', 'steps'],
+      });
+
+      const recipe = await Recipe.findOne({
+        where: { is_private: false, id },
+        order: ['id'],
+        attributes: [
+          'id',
+          'name',
+          'preparation_time',
+          'servings',
+          'difficulty',
+        ],
+        include: [
+          {
+            model: User,
+            as: 'creator',
+            attributes: ['id', 'name'],
+          },
+        ],
+      });
+
+      return res.status(200).json({ recipe, sections: savedSections });
+    }
 
     const recipes = await Recipe.findAll({
       where: { is_private: false },

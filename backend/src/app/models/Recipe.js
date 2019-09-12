@@ -10,6 +10,7 @@ class Recipe extends Model {
         servings: Sequelize.INTEGER,
         is_private: Sequelize.BOOLEAN,
         difficulty: Sequelize.ENUM('easy', 'medium', 'hard'),
+        sections: Sequelize.VIRTUAL,
       },
       {
         freezeTableName: true,
