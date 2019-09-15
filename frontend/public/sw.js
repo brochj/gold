@@ -42,7 +42,7 @@ self.addEventListener('activate', function activator(event) {
 });
 
 self.addEventListener('fetch', (event) => {
-    console.log('chamou o fetch');
+    // console.log('chamou o fetch');
     if (event.request.method === 'GET') {
       event.respondWith(
         caches.match(event.request)

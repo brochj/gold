@@ -3,10 +3,9 @@ import { Router } from 'react-router-dom';
 // import { Provider } from 'react-redux';
 // import { ToastContainer } from 'react-toastify';
 
-// import './config/ReactotronConfig';
+import './config/ReactotronConfig';
 
-// import GlobalStyles from './styles/global';
-// import Header from './components/Header';
+import GlobalStyles from './styles/global';
 import Routes from './routes';
 
 import history from './services/history';
@@ -15,12 +14,12 @@ import history from './services/history';
 function App() {
   return (
     // <Provider store={store}>
-      <Router history={history} >
-        {/* <Header /> */}
-        <Routes />
-        {/* <GlobalStyles /> */}
-        {/* <ToastContainer autoClose={3000} /> */}
-      </Router >
+    <Router history={history} >
+      {/* <Header /> */}
+      <Routes />
+      <GlobalStyles />
+      {/* <ToastContainer autoClose={3000} /> */}
+    </Router >
     // </Provider>
   );
 }
