@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -21,7 +21,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Link as ReactLink } from 'react-router-dom'
+// import { Link as ReactLink } from 'react-router-dom'
+import api from '../../services/api'
 
 function Copyright() {
   return (
@@ -63,26 +64,21 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignUp() {
   const classes = useStyles();
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     amount: '',
     password: '',
     showPassword: false,
   });
-  const [selectedDate, setSelectedDate] = React.useState();
 
-  const [value, setValue] = React.useState('female');
+  const [name, setName] = useState('Oscar Broch Junior')
+  const [email, setEmail] = useState('brochj@gmail.com')
+  const [password, setPassword] = useState('123456')
+  const [birthday, setBirthday] = useState()
+  const [height, setHeight] = useState('175')
+  const [weight, setWeight] = useState('70')
+  const [gender, setGender] = useState('male');
 
-  function handleDateChange(date) {
-    setSelectedDate(date);
-  }
 
-  const handleChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  function handleRadioChange(event) {
-    setValue(event.target.value);
-  }
 
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
@@ -91,6 +87,24 @@ export default function SignUp() {
   const handleMouseDownPassword = event => {
     event.preventDefault();
   };
+
+  async function handleSignIn() {
+
+    try {
+      const response = await api.post('/users', {
+        name,
+        email,
+        password,
+        birthday,
+        height,
+        weight,
+        gender,
+      });
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -102,7 +116,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h4">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -114,6 +128,8 @@ export default function SignUp() {
                 id="firstName"
                 label="Full Name"
                 autoFocus
+                value={name}
+                onChange={e => setName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -123,9 +139,12 @@ export default function SignUp() {
                   margin="normal"
                   id="date-picker-dialog"
                   label="birthday"
-                  format="MM/dd/yyyy"
-                  value={selectedDate}
-                  onChange={handleDateChange}
+                  format="yyyy-mm-dd"
+                  value={birthday}
+                  onChange={date => {
+                    setBirthday(date.getFullYear() + "-0" + (date.getMonth() + 1) + "-" + date.getDate() + "T00:00:00-03:00")
+                    
+                  }}
                   KeyboardButtonProps={{
                     'aria-label': 'change date',
                   }}
@@ -142,6 +161,8 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -154,7 +175,8 @@ export default function SignUp() {
                 type={values.showPassword ? 'text' : 'password'}
                 id="password"
                 autoComplete="current-password"
-                onChange={handleChange('password')}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -182,6 +204,8 @@ export default function SignUp() {
                 id="height"
                 label="Height (cm)"
                 autoFocus
+                value={height}
+                onChange={e => setHeight(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -195,12 +219,15 @@ export default function SignUp() {
                 id="weight"
                 label="Weight (kg)"
                 autoFocus
+                value={weight}
+                onChange={e => setWeight(e.target.value)}
               />
             </Grid>
             <Grid item xs={10}>
               <FormControl component="fieldset" className={classes.formControl}>
                 <FormLabel component="legend">Gender</FormLabel>
-                <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleRadioChange}>
+                <RadioGroup aria-label="gender" name="gender1" value={gender}
+                  onChange={e => setGender(e.target.value)}>
                   <FormControlLabel value="female" control={<Radio />} label="Female" />
                   <FormControlLabel value="male" control={<Radio />} label="Male" />
                 </RadioGroup>
@@ -209,11 +236,12 @@ export default function SignUp() {
 
           </Grid>
           <Button
-            type="submit"
+            type="button"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={() => handleSignIn()}
           >
             Sign Up
           </Button>
