@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -11,9 +12,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   card: {
-    maxWidth: 345,
+    maxWidth: 350,
     marginBottom: 30,
   },
   media: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function RecipeReviewCard({ recipe }) {
+export default function RecipeViewCard({ recipe }) {
   const classes = useStyles();
 
   return (
@@ -59,3 +60,16 @@ export default function RecipeReviewCard({ recipe }) {
     </Card>
   );
 }
+
+RecipeViewCard.propTypes = {
+  recipe: PropTypes.shape({
+    name: PropTypes.string,
+    difficulty: PropTypes.string,
+  }).isRequired,
+};
+RecipeViewCard.defaults = {
+  recipe: {
+    name: '',
+    difficulty: '',
+  },
+};
