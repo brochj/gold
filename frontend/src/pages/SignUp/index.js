@@ -18,9 +18,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import api from '../../services/api'
-import { Link } from 'react-router-dom'
-
+import { Link } from 'react-router-dom';
+import api from '../../services/api';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -55,15 +54,13 @@ export default function SignUp() {
     showPassword: false,
   });
 
-  const [name, setName] = useState('Oscar Broch Junior')
-  const [email, setEmail] = useState('brochj@gmail.com')
-  const [password, setPassword] = useState('123456')
-  const [birthday, setBirthday] = useState('1994-06-20')
-  const [height, setHeight] = useState('175')
-  const [weight, setWeight] = useState('70')
+  const [name, setName] = useState('Oscar Broch Junior');
+  const [email, setEmail] = useState('brochj@gmail.com');
+  const [password, setPassword] = useState('123456');
+  const [birthday, setBirthday] = useState('1994-06-20');
+  const [height, setHeight] = useState('175');
+  const [weight, setWeight] = useState('70');
   const [gender, setGender] = useState('male');
-
-
 
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
@@ -73,10 +70,8 @@ export default function SignUp() {
     event.preventDefault();
   };
 
-
   async function handleSignIn() {
-
-    await setBirthday(birthday + 'T00:00:00-03:00')
+    await setBirthday(`${birthday}T00:00:00-03:00`);
     try {
       const response = await api.post('/users', {
         name,
@@ -103,7 +98,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h4">
           Sign up
         </Typography>
-        <form className={classes.form} >
+        <form className={classes.form}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -168,7 +163,11 @@ export default function SignUp() {
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
                       >
-                        {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        {values.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -208,14 +207,25 @@ export default function SignUp() {
             <Grid item xs={10}>
               <FormControl component="fieldset" className={classes.formControl}>
                 <FormLabel component="legend">Gender</FormLabel>
-                <RadioGroup aria-label="gender" name="gender1" value={gender}
-                  onChange={e => setGender(e.target.value)}>
-                  <FormControlLabel value="female" control={<Radio />} label="Female" />
-                  <FormControlLabel value="male" control={<Radio />} label="Male" />
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender1"
+                  value={gender}
+                  onChange={e => setGender(e.target.value)}
+                >
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio />}
+                    label="Female"
+                  />
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio />}
+                    label="Male"
+                  />
                 </RadioGroup>
               </FormControl>
             </Grid>
-
           </Grid>
           <Button
             type="button"
@@ -230,14 +240,12 @@ export default function SignUp() {
           <Grid container justify="flex-end">
             <Grid item>
               <Link to="/" variant="body2">
-
                 Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
-
     </Container>
   );
 }

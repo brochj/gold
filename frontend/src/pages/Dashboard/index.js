@@ -19,10 +19,9 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 
+import api from '../../services/api';
 
-import api from '../../services/api'
-
-import RecipeCard from '../../components/RecipeCard'
+import RecipeCard from '../../components/RecipeCard';
 
 function Copyright() {
   return (
@@ -121,17 +120,17 @@ const useStyles = makeStyles(theme => ({
 export default function Dashboard() {
   const classes = useStyles();
 
-  const [recipes, setRecipes] = useState([])
+  const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
     async function getRecipes() {
-      const response = await api.get('/recipes')
-      setRecipes(response.data)
+      const response = await api.get('/recipes');
+      setRecipes(response.data);
       console.log(response.data);
     }
 
     getRecipes();
-  }, [])
+  }, []);
 
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -145,18 +144,30 @@ export default function Dashboard() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <AppBar
+        position="absolute"
+        className={clsx(classes.appBar, open && classes.appBarShift)}
+      >
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+            className={clsx(
+              classes.menuButton,
+              open && classes.menuButtonHidden
+            )}
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            className={classes.title}
+          >
             Dashboard
           </Typography>
           <IconButton color="inherit">
@@ -195,14 +206,12 @@ export default function Dashboard() {
                   {recipes.map(recipe => (
                     <li key={String(recipe.id)}>
                       <RecipeCard recipe={recipe} />
-
                     </li>
                   ))}
                 </ul>
               </Paper>
             </Grid>
           </Grid>
-
         </Container>
         <Copyright />
       </main>

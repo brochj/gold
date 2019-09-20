@@ -28,7 +28,6 @@ export default function RecipeReviewCard({ recipe }) {
   return (
     <Card className={classes.card}>
       <CardHeader
-
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
@@ -43,9 +42,10 @@ export default function RecipeReviewCard({ recipe }) {
         title="Paella dish"
       /> */}
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p" >
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+        <Typography variant="body2" color="textSecondary" component="p">
+          This impressive paella is a perfect party dish and a fun meal to cook
+          together with your guests. Add 1 cup of frozen peas along with the
+          mussels, if you like.
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -55,9 +55,7 @@ export default function RecipeReviewCard({ recipe }) {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-
       </CardActions>
-
     </Card>
   );
 }
