@@ -23,6 +23,13 @@ export default createGlobalStyle`
     font-family: Arial, Helvetica, sans-serif;
   }
 
+  a {
+    text-decoration: none
+  }
+
+  ul{
+    list-style: none
+  }
   button {
     cursor: pointer;
   }

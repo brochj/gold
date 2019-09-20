@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 import api from '../../services/api'
+import history from '../../services/history'
 
 
 const useStyles = makeStyles(theme => ({
@@ -50,7 +51,10 @@ export default function SignIn() {
       email,
       password: pass
     });
-    console.log(response.data);
+    if (response) {
+      localStorage.setItem('token', response.data.token)
+      history.push('/dashboard')
+    }
   }
 
   return (
@@ -118,7 +122,7 @@ export default function SignIn() {
           </Grid>
         </form>
       </div>
-    
+
     </Container>
   );
 }

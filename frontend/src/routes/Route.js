@@ -7,7 +7,8 @@ export default function RouterWrapper({
   isPrivate,
   ...rest
 }) {
-  const signed = false;
+
+  const signed = localStorage.getItem('token');
 
   if (!signed && isPrivate) {
     return <Redirect to="/" />;

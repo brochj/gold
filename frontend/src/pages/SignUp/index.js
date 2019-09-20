@@ -5,37 +5,22 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns'
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-// import { Link as ReactLink } from 'react-router-dom'
 import api from '../../services/api'
+import { Link } from 'react-router-dom'
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -73,7 +58,7 @@ export default function SignUp() {
   const [name, setName] = useState('Oscar Broch Junior')
   const [email, setEmail] = useState('brochj@gmail.com')
   const [password, setPassword] = useState('123456')
-  const [birthday, setBirthday] = useState()
+  const [birthday, setBirthday] = useState('1994-06-20')
   const [height, setHeight] = useState('175')
   const [weight, setWeight] = useState('70')
   const [gender, setGender] = useState('male');
@@ -88,8 +73,10 @@ export default function SignUp() {
     event.preventDefault();
   };
 
+
   async function handleSignIn() {
 
+    await setBirthday(birthday + 'T00:00:00-03:00')
     try {
       const response = await api.post('/users', {
         name,
@@ -122,7 +109,7 @@ export default function SignUp() {
               <TextField
                 autoComplete="fname"
                 name="firstName"
-                // variant="outlined"
+                variant="outlined"
                 required
                 fullWidth
                 id="firstName"
@@ -133,28 +120,23 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  fullWidth
-                  margin="normal"
-                  id="date-picker-dialog"
-                  label="birthday"
-                  format="yyyy-mm-dd"
-                  value={birthday}
-                  onChange={date => {
-                    setBirthday(date.getFullYear() + "-0" + (date.getMonth() + 1) + "-" + date.getDate() + "T00:00:00-03:00")
-                    
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                />
-              </MuiPickersUtilsProvider>
+              <TextField
+                autoComplete="fname"
+                name="birthday"
+                variant="outlined"
+                required
+                fullWidth
+                id="birthday"
+                label="Birthday"
+                autoFocus
+                value={birthday}
+                onChange={e => setBirthday(e.target.value)}
+              />
             </Grid>
 
             <Grid item xs={12}>
               <TextField
-                // variant="outlined"
+                variant="outlined"
                 required
                 fullWidth
                 id="email"
@@ -167,7 +149,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                // variant="outlined"
+                variant="outlined"
                 required
                 fullWidth
                 name="password"
@@ -197,7 +179,7 @@ export default function SignUp() {
               <TextField
                 autoComplete="fname"
                 name="height"
-                // variant="outlined"
+                variant="outlined"
                 required
                 fullWidth
                 type="number"
@@ -212,7 +194,7 @@ export default function SignUp() {
               <TextField
                 autoComplete="fname"
                 name="weight"
-                // variant="outlined"
+                variant="outlined"
                 required
                 fullWidth
                 type="number"
@@ -247,16 +229,15 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/" variant="body2">
+              <Link to="/" variant="body2">
+
                 Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+
     </Container>
   );
 }
