@@ -1,17 +1,28 @@
 import React, { useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
+import { signInRequest } from '~/store/modules/auth/actions';
 
 export default function SignIn({ navigation }) {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState('brochj@gmail.com');
   const [password, setPassword] = useState('123456');
 
-  const passwordInput = useRef(null);
+  const loading = useSelector(state => state.auth.loading);
+
+  function handleSignIn() {
+    dispatch(signInRequest(email, password));
+  }
+
+  const passwordRef = useRef(null);
 
   return (
     <View style={styles.container}>
@@ -26,11 +37,11 @@ export default function SignIn({ navigation }) {
           keyboardType="email-address"
           value={email}
           onChangeText={text => setEmail(text)}
-          onSubmitEditing={() => passwordInput.current.focus()}
+          onSubmitEditing={() => passwordRef.current.focus()}
         />
         <Text style={styles.labelTxt}>Senha</Text>
         <TextInput
-          ref={passwordInput}
+          ref={passwordRef}
           style={[styles.input, styles.inputSenha]}
           secureTextEntry
           maxLength={20}
@@ -39,10 +50,13 @@ export default function SignIn({ navigation }) {
           onChangeText={text => setPassword(text)}
           onSubmitEditing={() => {}}
         />
-        <TouchableOpacity style={styles.buttonCadastro} onPress={() => {}}>
-          <Text style={styles.buttonTxt}>Entrar</Text>
+        <TouchableOpacity style={styles.buttonCadastro} onPress={handleSignIn}>
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <Text style={styles.buttonTxt}>Entrar</Text>
+          )}
         </TouchableOpacity>
-        {/* <Button title="Cadastrar" onPress={this.entrar} /> */}
         <View style={styles.loginView}>
           <Text
             style={styles.loginTxt}

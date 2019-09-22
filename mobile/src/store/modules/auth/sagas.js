@@ -16,11 +16,11 @@ export function* signIn({ payload }) {
 
     const { token, user } = response.data;
 
-    if (!user.provider) {
-      Alert.alert('Error', 'Usuário não é prestador');
-      yield put(signFailure());
-      return;
-    }
+    // if (!user.provider) {
+    //   Alert.alert('Error', 'Usuário não é prestador');
+    //   yield put(signFailure());
+    //   return;
+    // }
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
