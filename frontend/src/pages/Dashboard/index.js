@@ -1,28 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Grid, GridListTile, GridList } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
 
-import api from '../../services/api';
+import api from '~/services/api';
 
-import RecipeCard from '../../components/RecipeCard';
+import RecipeCard from '~/components/RecipeCard';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { recipeRequest } from '~/store/modules/recipe/actions';
+
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="textSecondary" align="center">
+//       {'Copyright © '}
+//       <Link color="inherit" href="https://material-ui.com/">
+//         Your Website
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
 const drawerWidth = 240;
 
@@ -104,10 +108,14 @@ const useStyles = makeStyles(theme => ({
   card: {
     marginBottom: 30,
   },
+  unstyledButton: {
+    border: 'none',
+  },
 }));
 
 export default function Dashboard() {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [recipes, setRecipes] = useState([]);
 
@@ -119,6 +127,10 @@ export default function Dashboard() {
 
     getRecipes();
   }, []);
+
+  function handleRecipeClick(id) {
+    dispatch(recipeRequest(id));
+  }
 
   return (
     <div className={classes.root}>
@@ -134,20 +146,31 @@ export default function Dashboard() {
             spacing={3}
           >
             {/* <Grid item xs="auto" md={8} lg={9}> */}
-              <Paper className={classes.paper} direction="row">
-                <h1>Receitas</h1>
-                <GridList cols={2}>
-                  {recipes.map(recipe => (
-                    <GridListTile key={String(recipe.id)} className={classes.card}>
-                      <RecipeCard recipe={recipe} />
-                    </GridListTile>
-                  ))}
-                </GridList>
-              </Paper>
+            <Paper className={classes.paper} direction="row">
+              <h1>Receitas</h1>
+              <GridList cols={2}>
+                {recipes.map(recipe => (
+                  <GridListTile
+                    key={String(recipe.id)}
+                    className={classes.card}
+                  >
+                    <button
+                      type="button"
+                      className={classes.unstyledButton}
+                      onClick={() => handleRecipeClick(recipe.id)}
+                    >
+                      {/* <Link to={`recipes/${recipe.id}`}> */}
+                        <RecipeCard recipe={recipe} />
+                      {/* </Link> */}
+                    </button>
+                  </GridListTile>
+                ))}
+              </GridList>
+            </Paper>
             {/* </Grid> */}
           </Grid>
         </Container>
-        <Copyright />
+        {/* <Copyright /> */}
       </main>
     </div>
   );
