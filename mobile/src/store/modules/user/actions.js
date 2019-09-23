@@ -7,13 +7,13 @@ export function updateRequest(user) {
 
 export function updateSuccess(user) {
   return {
-    type: '@user/update_SUCCESS',
+    type: '@user/UPDATE_SUCCESS',
     payload: user,
   };
 }
 
 export function updateFailure() {
   return {
-    type: '@user/update_FAILURE',
+    type: '@user/UPDATE_FAILURE',
   };
 }
