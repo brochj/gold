@@ -13,6 +13,7 @@ const INITIAL_STATE = {
   physicalActivity: 'light',
   calorieIntake: null,
   objective: 'maintainWeight',
+  calorieGoal: null,
 };
 
 export default function user(state = INITIAL_STATE, action) {
@@ -54,6 +55,10 @@ export default function user(state = INITIAL_STATE, action) {
       }
       case '@user/CHANGE_OBJECTIVE': {
         draft.objective = action.payload;
+        break;
+      }
+      case '@user/CHANGE_CALORIE_GOAL': {
+        draft.calorieGoal = action.payload;
         break;
       }
 

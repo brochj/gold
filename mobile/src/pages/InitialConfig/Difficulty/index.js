@@ -1,8 +1,95 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { View, Text, Button } from 'react-native';
 
-// import { Container } from './styles';
+import { changeCalorieGoal } from '~/store/modules/user/actions';
 
-export default function Difficulty() {
-  return <View />;
+import { Input } from './styles';
+
+export default function Difficulty({ navigation }) {
+  const dispatch = useDispatch();
+  const calorieIntake = useSelector(state => state.user.calorieIntake);
+  const objective = useSelector(state => state.user.objective);
+  const calorieGoal = useSelector(state => state.user.calorieGoal);
+
+  function handleDifficulty(difficulty) {
+    // dispatch(changeDifficulty(difficulty));
+
+    if (objective === 'lossWeight') {
+      switch (difficulty) {
+        case 'easy':
+          dispatch(changeCalorieGoal(calorieIntake - 300));
+          break;
+        case 'medium':
+          dispatch(changeCalorieGoal(calorieIntake - 500));
+          break;
+        case 'hard':
+          dispatch(changeCalorieGoal(calorieIntake - 700));
+          break;
+        default:
+          break;
+      }
+    } else if (objective === 'gainMuscle') {
+      switch (difficulty) {
+        case 'easy':
+          dispatch(changeCalorieGoal(calorieIntake + 300));
+          break;
+        case 'medium':
+          dispatch(changeCalorieGoal(calorieIntake + 500));
+          break;
+        case 'hard':
+          dispatch(changeCalorieGoal(calorieIntake + 700));
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  return (
+    <View>
+      <Text>Suas calorias diárias</Text>
+      <Text>{calorieIntake}</Text>
+      <Text>Objective</Text>
+      <Text>{objective}</Text>
+      <Text>Caloria Meta</Text>
+      <Input
+        value={String(calorieGoal)}
+        onChangeText={text => dispatch(changeCalorieGoal(text))}
+      />
+      <Button
+        title="MealsCalories"
+        onPress={() => navigation.navigate('MealsCalories')}
+      />
+      <Text>{calorieGoal}</Text>
+      <Button
+        style={{ marginTop: 15 }}
+        title="easy"
+        onPress={() => handleDifficulty('easy')}
+      />
+      <Text>{calorieGoal}</Text>
+      <Button
+        style={{ marginTop: 15 }}
+        title="medium"
+        onPress={() => handleDifficulty('medium')}
+      />
+      <Text>{calorieGoal}</Text>
+      <Button
+        style={{ marginTop: 15 }}
+        title="hard"
+        onPress={() => handleDifficulty('hard')}
+      />
+    </View>
+  );
 }
+
+Difficulty.navigationOptions = {
+  title: 'Difficulty',
+};
+
+Difficulty.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};

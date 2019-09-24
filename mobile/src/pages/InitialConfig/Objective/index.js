@@ -1,18 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { View, Text, Button } from 'react-native';
 
-import { changeObjective } from '~/store/modules/user/actions';
+import {
+  changeObjective,
+  changeCalorieGoal,
+} from '~/store/modules/user/actions';
 
 // import { Container } from './styles';
 
 export default function Objective({ navigation }) {
   const dispatch = useDispatch();
+  const calorieIntake = useSelector(state => state.user.calorieIntake);
 
   function handleObjective(objective) {
     dispatch(changeObjective(objective));
-    navigation.navigate('Difficulty');
+
+    if (objective === 'maintainWeight') {
+      dispatch(changeCalorieGoal(calorieIntake));
+
+      navigation.navigate('MealsCalories');
+    } else {
+      navigation.navigate('Difficulty');
+    }
   }
   return (
     <View>
@@ -36,8 +47,8 @@ export default function Objective({ navigation }) {
 
       <Button
         style={{ marginTop: 15 }}
-        title="weightLoss"
-        onPress={() => handleObjective('weightLoss')}
+        title="lossWeight"
+        onPress={() => handleObjective('lossWeight')}
       />
     </View>
   );

@@ -38,3 +38,10 @@ export function changeObjective(objective) {
     payload: objective,
   };
 }
+
+export function changeCalorieGoal(calorieGoal) {
+  return {
+    type: '@user/CHANGE_CALORIE_GOAL',
+    payload: calorieGoal,
+  };
+}
