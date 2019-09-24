@@ -24,3 +24,10 @@ export function changePhysicalActivity(level) {
     payload: level,
   };
 }
+
+export function changeCalorieIntake(calorie) {
+  return {
+    type: '@user/CHANGE_CALORIE_INTAKE',
+    payload: calorie,
+  };
+}

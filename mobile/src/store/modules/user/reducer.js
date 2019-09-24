@@ -10,7 +10,8 @@ const INITIAL_STATE = {
   height: null,
   loading: false,
   profile: null,
-  physicalActivity: null,
+  physicalActivity: 'light',
+  calorieIntake: null,
 };
 
 export default function user(state = INITIAL_STATE, action) {
@@ -44,6 +45,10 @@ export default function user(state = INITIAL_STATE, action) {
       }
       case '@user/CHANGE_PHYSICAL_ACTIVITY': {
         draft.physicalActivity = action.payload;
+        break;
+      }
+      case '@user/CHANGE_CALORIE_INTAKE': {
+        draft.calorieIntake = action.payload;
         break;
       }
 
