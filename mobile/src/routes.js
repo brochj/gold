@@ -25,14 +25,19 @@ export default (isSigned = false) =>
         App: createBottomTabNavigator({
           Dashboard,
         }),
-        InitialConfig: createStackNavigator({
-          UserBasicData,
-          PhysicalActivity,
-          CaloricExpenditure,
-          Objective,
-          Difficulty,
-          MealsCalories,
-        }),
+        InitialConfig: createStackNavigator(
+          {
+            UserBasicData,
+            PhysicalActivity,
+            CaloricExpenditure,
+            Objective,
+            Difficulty,
+            MealsCalories,
+          },
+          {
+            initialRouteName: 'MealsCalories',
+          }
+        ),
       },
       {
         initialRouteName: isSigned ? 'InitialConfig' : 'Sign',
