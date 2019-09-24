@@ -87,3 +87,8 @@ export const Input = styled.TextInput`
   font-size: 40px;
   border: 0.5px solid rgba(0, 0, 0, 0.2);
 `;
+
+export const TextCalories = styled.Text`
+  font-size: 20px;
+  align-self: center;
+`;

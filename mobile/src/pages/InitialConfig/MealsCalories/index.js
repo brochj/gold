@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { FlatList } from 'react-native';
+import { FlatList, Text } from 'react-native';
 
 import {
   ActionButton,
@@ -17,6 +18,7 @@ import {
   Title,
   ChangeCalorieIcon,
   Input,
+  TextCalories,
 } from './styles';
 
 function MealItem({ data, editMode, changeCalorie }) {
@@ -85,6 +87,8 @@ MealItem.propTypes = {
 };
 
 export default function MealsCalories() {
+  const calorieGoal = useSelector(state => state.user.calorieGoal);
+
   const apiMeals = [
     { id: 31, calorie: 250, title: 'Café da manhã' },
     { id: 33, calorie: 180, title: 'Lanche da manhã' },
@@ -100,6 +104,11 @@ export default function MealsCalories() {
       ...meal,
       isSelected: false,
     }))
+  );
+
+  const totalCalories = useMemo(
+    () => meals.reduce((a, b) => +a + +b.calorie, 0),
+    [meals]
   );
 
   const handleEditMode = useCallback(
@@ -128,6 +137,8 @@ export default function MealsCalories() {
 
   return (
     <Container>
+      <TextCalories>Sua meta é {calorieGoal} kcal</TextCalories>
+      <TextCalories>A soma atual é {totalCalories} kcal</TextCalories>
       <FlatList
         data={meals}
         extraData={meals}
