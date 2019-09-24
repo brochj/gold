@@ -20,7 +20,6 @@ export default function CaloricExpenditure({ navigation }) {
   const gender = useSelector(state => state.user.gender);
   const physicalActivity = useSelector(state => state.user.physicalActivity);
 
-  console.tron.log(differenceInCalendarYears(new Date(), parseISO(birthday)));
   useEffect(() => {
     const calculatedKcal = calculateCalories({
       age: differenceInCalendarYears(new Date(), parseISO(birthday)),
@@ -36,8 +35,8 @@ export default function CaloricExpenditure({ navigation }) {
     <View>
       <Text>CaloricExpenditure</Text>
       <Button
-        title="ActivityLevel"
-        onPress={() => navigation.navigate('ActivityLevel')}
+        title="Build Diet Plan"
+        onPress={() => navigation.navigate('Objective')}
       />
       <Button
         title="Dashboard"

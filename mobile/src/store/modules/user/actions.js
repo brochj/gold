@@ -31,3 +31,10 @@ export function changeCalorieIntake(calorie) {
     payload: calorie,
   };
 }
+
+export function changeObjective(objective) {
+  return {
+    type: '@user/CHANGE_OBJECTIVE',
+    payload: objective,
+  };
+}
