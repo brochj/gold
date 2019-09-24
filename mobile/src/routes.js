@@ -7,7 +7,7 @@ import SignUp from './pages/SignUp';
 
 import Dashboard from './pages/Dashboard';
 
-import ActivityLevel from './pages/InitialConfig/ActivityLevel';
+import PhysicalActivity from './pages/InitialConfig/PhysicalActivity';
 import UserBasicData from './pages/InitialConfig/UserBasicData';
 import Difficulty from './pages/InitialConfig/Difficulty';
 import CaloricExpenditure from './pages/InitialConfig/CaloricExpenditure';
@@ -27,7 +27,7 @@ export default (isSigned = false) =>
         }),
         InitialConfig: createStackNavigator({
           UserBasicData,
-          ActivityLevel,
+          PhysicalActivity,
           CaloricExpenditure,
           Objective,
           Difficulty,

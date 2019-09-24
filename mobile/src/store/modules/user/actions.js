@@ -17,3 +17,10 @@ export function updateFailure() {
     type: '@user/UPDATE_FAILURE',
   };
 }
+
+export function changePhysicalActivity(level) {
+  return {
+    type: '@user/CHANGE_PHYSICAL_ACTIVITY',
+    payload: level,
+  };
+}

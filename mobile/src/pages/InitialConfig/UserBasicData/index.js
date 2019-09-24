@@ -33,10 +33,10 @@ export default function UserBasicData({ navigation }) {
     <View>
       <Text>UserBasicData</Text>
       <Button
-        title="ActivityLevel"
+        title="PhysicalActivity"
         onPress={() => {
           handleUserUpdate();
-          navigation.navigate('ActivityLevel');
+          navigation.navigate('PhysicalActivity');
         }}
       />
       {/* <Button title="update" onPress={handleUserUpdate} /> */}

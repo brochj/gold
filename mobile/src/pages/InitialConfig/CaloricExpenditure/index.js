@@ -12,6 +12,10 @@ export default function CaloricExpenditure({ navigation }) {
         title="ActivityLevel"
         onPress={() => navigation.navigate('ActivityLevel')}
       />
+      <Button
+        title="Dashboard"
+        onPress={() => navigation.navigate('Dashboard')}
+      />
     </View>
   );
 }

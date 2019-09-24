@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   height: null,
   loading: false,
   profile: null,
+  physicalActivity: null,
 };
 
 export default function user(state = INITIAL_STATE, action) {
@@ -39,6 +40,10 @@ export default function user(state = INITIAL_STATE, action) {
       }
       case '@user/UPDATE_FAILURE': {
         draft.loading = false;
+        break;
+      }
+      case '@user/CHANGE_PHYSICAL_ACTIVITY': {
+        draft.physicalActivity = action.payload;
         break;
       }
 
