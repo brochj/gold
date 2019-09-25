@@ -47,8 +47,8 @@ function MealItem({ data, editMode, changeCalorie }) {
           {data.isSelected ? (
             <ActionIcon name="done" size={28} />
           ) : (
-              <ActionIcon />
-            )}
+            <ActionIcon />
+          )}
         </ActionButton>
       </Header>
       <Divider />
@@ -70,12 +70,12 @@ function MealItem({ data, editMode, changeCalorie }) {
           <CalorieText>kcal</CalorieText>
         </Content>
       ) : (
-          <Content>
-            <CalorieIcon />
-            <Calorie onPress={handleEditCalorie}>{data.calorie}</Calorie>
-            <CalorieText>kcal</CalorieText>
-          </Content>
-        )}
+        <Content>
+          <CalorieIcon />
+          <Calorie onPress={handleEditCalorie}>{data.calorie}</Calorie>
+          <CalorieText>kcal</CalorieText>
+        </Content>
+      )}
     </MealCard>
   );
 }
@@ -146,8 +146,8 @@ export default function MealsCalories({ navigation }) {
     // await meals.forEach(async meal => {
     //   await dispatch(createMealRequest(meal, dietPlanId));
     // });
-    dispatch(createMealRequest(meals[0], dietPlanId));
-    // dispatch(createMultipleMealsRequest(meals, dietPlanId));
+    // dispatch(createMealRequest(meals[0], dietPlanId));
+    dispatch(createMultipleMealsRequest(meals, dietPlanId));
   }
 
   return (

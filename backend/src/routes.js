@@ -48,6 +48,7 @@ routes.use(diets, dietPlanMiddleware);
 
 routes.get(`${diets}/meals`, MealController.index);
 routes.post(`${diets}/meals`, MealController.store);
+routes.patch(`${diets}/meals`, MealController.bulkStore);
 routes.put(`${diets}/meals/:id`, MealController.update);
 routes.delete(`${diets}/meals/:id`, MealController.delete);
 

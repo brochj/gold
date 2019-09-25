@@ -41,7 +41,7 @@ export function* createMultipleMeals({ payload }) {
   const { meals, dietPlanId } = payload;
 
   try {
-    meals.forEach(meal => {
+    yield meals.forEach(meal => {
       call(api.post, `diet-plans/${dietPlanId}/meals`, meal);
     });
 
