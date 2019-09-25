@@ -142,11 +142,7 @@ export default function MealsCalories({ navigation }) {
     [meals]
   );
 
-  async function handleCreateMeals() {
-    // await meals.forEach(async meal => {
-    //   await dispatch(createMealRequest(meal, dietPlanId));
-    // });
-    // dispatch(createMealRequest(meals[0], dietPlanId));
+  function handleCreateMeals() {
     dispatch(createMultipleMealsRequest(meals, dietPlanId));
   }
 

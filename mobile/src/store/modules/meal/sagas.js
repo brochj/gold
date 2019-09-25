@@ -41,15 +41,19 @@ export function* createMultipleMeals({ payload }) {
   const { meals, dietPlanId } = payload;
 
   try {
-    yield meals.forEach(meal => {
-      call(api.post, `diet-plans/${dietPlanId}/meals`, meal);
+    const sanitizedMeals = meals.map(({ title, calorie }) => ({
+      title,
+      calorie,
+    }));
+    yield call(api.patch, `diet-plans/${dietPlanId}/meals`, {
+      meals: sanitizedMeals,
     });
 
     yield put(createMultipleMealsSuccess());
   } catch (err) {
     Alert.alert(
       'Error',
-      `Falha na criação das refeições, verifique seus dados ${err}`
+      `Falha na criação de múltiplas refeições, verifique seus dados ${err}`
     );
 
     yield put(createMealFailure());
