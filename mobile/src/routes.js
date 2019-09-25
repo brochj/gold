@@ -35,7 +35,7 @@ export default (isSigned = false) =>
             MealsCalories,
           },
           {
-            initialRouteName: 'MealsCalories',
+            initialRouteName: 'UserBasicData',
           }
         ),
       },

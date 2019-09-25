@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { View, Text, Button } from 'react-native';
 
 import { changeCalorieGoal } from '~/store/modules/user/actions';
+import { createDietPlanRequest } from '~/store/modules/dietPlan/actions';
 
 import { Input } from './styles';
 
@@ -12,6 +13,18 @@ export default function Difficulty({ navigation }) {
   const calorieIntake = useSelector(state => state.user.calorieIntake);
   const objective = useSelector(state => state.user.objective);
   const calorieGoal = useSelector(state => state.user.calorieGoal);
+  const physicalActivity = useSelector(state => state.user.physicalActivity);
+
+  function handleDietPlan() {
+    dispatch(
+      createDietPlanRequest({
+        objective,
+        calorie_goal: calorieGoal,
+        calorie_intake: calorieIntake,
+        physical_activity: physicalActivity,
+      })
+    );
+  }
 
   function handleDifficulty(difficulty) {
     // dispatch(changeDifficulty(difficulty));
@@ -58,10 +71,7 @@ export default function Difficulty({ navigation }) {
         value={String(calorieGoal)}
         onChangeText={text => dispatch(changeCalorieGoal(text))}
       />
-      <Button
-        title="MealsCalories"
-        onPress={() => navigation.navigate('MealsCalories')}
-      />
+      <Button title="MealsCalories" onPress={handleDietPlan} />
       <Text>{calorieGoal}</Text>
       <Button
         style={{ marginTop: 15 }}
