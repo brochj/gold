@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { FlatList, Text } from 'react-native';
+import { FlatList, Button } from 'react-native';
 
 import {
   ActionButton,
@@ -20,6 +20,11 @@ import {
   Input,
   TextCalories,
 } from './styles';
+
+import {
+  createMultipleMealsRequest,
+  createMealRequest,
+} from '~/store/modules/meal/actions';
 
 function MealItem({ data, editMode, changeCalorie }) {
   function handleEditCalorie() {
@@ -42,8 +47,8 @@ function MealItem({ data, editMode, changeCalorie }) {
           {data.isSelected ? (
             <ActionIcon name="done" size={28} />
           ) : (
-            <ActionIcon />
-          )}
+              <ActionIcon />
+            )}
         </ActionButton>
       </Header>
       <Divider />
@@ -65,12 +70,12 @@ function MealItem({ data, editMode, changeCalorie }) {
           <CalorieText>kcal</CalorieText>
         </Content>
       ) : (
-        <Content>
-          <CalorieIcon />
-          <Calorie onPress={handleEditCalorie}>{data.calorie}</Calorie>
-          <CalorieText>kcal</CalorieText>
-        </Content>
-      )}
+          <Content>
+            <CalorieIcon />
+            <Calorie onPress={handleEditCalorie}>{data.calorie}</Calorie>
+            <CalorieText>kcal</CalorieText>
+          </Content>
+        )}
     </MealCard>
   );
 }
@@ -86,8 +91,10 @@ MealItem.propTypes = {
   changeCalorie: PropTypes.func.isRequired,
 };
 
-export default function MealsCalories() {
+export default function MealsCalories({ navigation }) {
+  const dispatch = useDispatch();
   const calorieGoal = useSelector(state => state.user.calorieGoal);
+  const dietPlanId = useSelector(state => state.dietPlan.id);
 
   const apiMeals = [
     { id: 31, calorie: 250, title: 'Café da manhã' },
@@ -135,8 +142,21 @@ export default function MealsCalories() {
     [meals]
   );
 
+  async function handleCreateMeals() {
+    // await meals.forEach(async meal => {
+    //   await dispatch(createMealRequest(meal, dietPlanId));
+    // });
+    dispatch(createMealRequest(meals[0], dietPlanId));
+    // dispatch(createMultipleMealsRequest(meals, dietPlanId));
+  }
+
   return (
     <Container>
+      <Button
+        title="Dashboard"
+        onPress={() => navigation.navigate('Dashboard')}
+      />
+      <Button title="Create Meals" onPress={handleCreateMeals} />
       <TextCalories>Sua meta é {calorieGoal} kcal</TextCalories>
       <TextCalories>A soma atual é {totalCalories} kcal</TextCalories>
       <FlatList
@@ -154,3 +174,9 @@ export default function MealsCalories() {
     </Container>
   );
 }
+
+MealsCalories.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};

@@ -47,8 +47,8 @@ export default function Objective({ navigation }) {
 
       <Button
         style={{ marginTop: 15 }}
-        title="lossWeight"
-        onPress={() => handleObjective('lossWeight')}
+        title="weightLoss"
+        onPress={() => handleObjective('weightLoss')}
       />
     </View>
   );

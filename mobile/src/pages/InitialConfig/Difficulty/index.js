@@ -10,9 +10,9 @@ import { Input } from './styles';
 
 export default function Difficulty({ navigation }) {
   const dispatch = useDispatch();
-  const calorieIntake = useSelector(state => state.user.calorieIntake);
   const objective = useSelector(state => state.user.objective);
   const calorieGoal = useSelector(state => state.user.calorieGoal);
+  const calorieIntake = useSelector(state => state.user.calorieIntake);
   const physicalActivity = useSelector(state => state.user.physicalActivity);
 
   function handleDietPlan() {
@@ -29,7 +29,7 @@ export default function Difficulty({ navigation }) {
   function handleDifficulty(difficulty) {
     // dispatch(changeDifficulty(difficulty));
 
-    if (objective === 'lossWeight') {
+    if (objective === 'weightLoss') {
       switch (difficulty) {
         case 'easy':
           dispatch(changeCalorieGoal(calorieIntake - 300));
@@ -71,7 +71,11 @@ export default function Difficulty({ navigation }) {
         value={String(calorieGoal)}
         onChangeText={text => dispatch(changeCalorieGoal(text))}
       />
-      <Button title="MealsCalories" onPress={handleDietPlan} />
+      <Button
+        title="Meals calories"
+        onPress={() => navigation.navigate('MealsCalories')}
+      />
+      <Button title="Create diet plan" onPress={handleDietPlan} />
       <Text>{calorieGoal}</Text>
       <Button
         style={{ marginTop: 15 }}

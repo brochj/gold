@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   loading: false,
 };
 
-export default function user(state = INITIAL_STATE, action) {
+export default function dietPlan(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
       case '@dietPlan/CREATE_DIET_PLAN_REQUEST': {
