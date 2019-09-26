@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   id: null,
   calorie: null,
   title: null,
+  meals: [],
   loading: false,
 };
 
@@ -26,6 +27,15 @@ export default function meal(state = INITIAL_STATE, action) {
         break;
       }
       case '@meal/CREATE_MULTIPLE_MEALS_SUCCESS': {
+        draft.loading = false;
+        break;
+      }
+      case '@meal/GET_MEALS_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+      case '@meal/GET_MEALS_SUCCESS': {
+        draft.meals = action.payload;
         draft.loading = false;
         break;
       }

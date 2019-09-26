@@ -25,6 +25,20 @@ export function createMultipleMealsSuccess() {
   };
 }
 
+export function getMealsRequest(dietPlanId) {
+  return {
+    type: '@meal/GET_MEALS_REQUEST',
+    payload: dietPlanId,
+  };
+}
+
+export function getMealsSuccess(meals) {
+  return {
+    type: '@meal/GET_MEALS_SUCCESS',
+    payload: meals,
+  };
+}
+
 export function createMealFailure() {
   return {
     type: '@meal/MEAL_FAILURE',

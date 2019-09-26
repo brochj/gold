@@ -5,6 +5,7 @@ import {
   createMealSuccess,
   createMealFailure,
   createMultipleMealsSuccess,
+  getMealsSuccess,
 } from '~/store/modules/meal/actions';
 
 import api from '~/services/api';
@@ -60,7 +61,27 @@ export function* createMultipleMeals({ payload }) {
   }
 }
 
+export function* getMeals({ payload }) {
+  if (!payload) return;
+
+  try {
+    const response = yield call(api.get, `diet-plans/${payload}/meals`);
+
+    yield put(getMealsSuccess(response.data));
+
+  } catch (err) {
+    Alert.alert(
+      'Error',
+      `Falha na listagem das refeições. ${err}`
+    );
+
+    yield put(createMealFailure());
+  }
+}
+
+
 export default all([
   takeLatest('@meal/CREATE_MEAL_REQUEST', createMeal),
   takeLatest('@meal/CREATE_MULTIPLE_MEALS_REQUEST', createMultipleMeals),
+  takeLatest('@meal/GET_MEALS_REQUEST', getMeals),
 ]);
