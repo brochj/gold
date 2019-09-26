@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux'
 
 import {
@@ -17,24 +17,27 @@ import {
 
 import FoodItem from '~/components/FoodItem';
 
-import { getMealsRequest } from '~/store/modules/meal/actions'
+import { getMealsRequest, changeActiveMeal } from '~/store/modules/meal/actions'
 
 
-function MealCardItem({ data }) {
+function MealCardItem({ data, onPress }) {
   return (
     <MealCard>
-      <MealHeader>
-        <MealTitle>{data.title}</MealTitle>
-        <View style={{ flexDirection: 'row' }}>
-          <CalorieIcon />
-          <Calorie>{data.calorie}</Calorie>
-        </View>
-      </MealHeader>
+      <TouchableOpacity onPress={() => onPress(data)}>
+
+        <MealHeader >
+          <MealTitle>{data.title}</MealTitle>
+          <View style={{ flexDirection: 'row' }}>
+            <CalorieIcon />
+            <Calorie>{data.calorie}</Calorie>
+          </View>
+        </MealHeader>
+      </TouchableOpacity>
     </MealCard>
 
   );
 }
-export default function DietPlan() {
+export default function DietPlan({ navigation }) {
   const dispatch = useDispatch();
   const dietPlanId = useSelector(state => state.dietPlan.id)
   const meals = useSelector(state => state.meal.meals)
@@ -44,6 +47,11 @@ export default function DietPlan() {
       dispatch(getMealsRequest(dietPlanId));
     }
   }, [])
+
+  function handleMeal(meal) {
+    dispatch(changeActiveMeal(meal));
+    navigation.navigate('Meal');
+  }
 
   return (
     <Container>
@@ -55,7 +63,7 @@ export default function DietPlan() {
 
       <FlatList
         data={meals}
-        renderItem={({ item }) => <MealCardItem data={item} />}
+        renderItem={({ item }) => <MealCardItem data={item} onPress={handleMeal} />}
         keyExtractor={item => item.title}
       />
 

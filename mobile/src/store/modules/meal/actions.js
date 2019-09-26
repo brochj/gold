@@ -44,3 +44,10 @@ export function createMealFailure() {
     type: '@meal/MEAL_FAILURE',
   };
 }
+
+export function changeActiveMeal(meal) {
+  return {
+    type: '@meal/CHANGE_ACTIVE_MEAL',
+    payload: meal
+  };
+}

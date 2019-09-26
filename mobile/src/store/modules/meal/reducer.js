@@ -43,6 +43,11 @@ export default function meal(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@meal/CHANGE_ACTIVE_MEAL': {
+        draft.id = action.payload.id;
+        draft.title = action.payload.title;
+        break;
+      }
 
       default:
         break;

@@ -68,17 +68,12 @@ export function* getMeals({ payload }) {
     const response = yield call(api.get, `diet-plans/${payload}/meals`);
 
     yield put(getMealsSuccess(response.data));
-
   } catch (err) {
-    Alert.alert(
-      'Error',
-      `Falha na listagem das refeições. ${err}`
-    );
+    Alert.alert('Error', `Falha na listagem das refeições. ${err}`);
 
     yield put(createMealFailure());
   }
 }
-
 
 export default all([
   takeLatest('@meal/CREATE_MEAL_REQUEST', createMeal),
