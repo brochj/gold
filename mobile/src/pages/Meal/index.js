@@ -20,36 +20,22 @@ import FoodItem from '~/components/FoodItem';
 
 import { getDishesRequest } from '~/store/modules/dish/actions';
 
-const foods = [
-  {
-    image: coxinha,
-    title: 'Fannie Brewer',
-    amount: 436,
-    unit: 'natural',
-    calorie: 384,
-  },
-  {
-    image: coxinha,
-    title: 'Alejandro Wagner',
-    amount: 374,
-    unit: 'depth',
-    calorie: 376,
-  },
-  {
-    image: coxinha,
-    title: 'Dorothy Schneider',
-    amount: 72,
-    unit: 'house',
-    calorie: 475,
-  },
-  {
-    image: coxinha,
-    title: 'Jeremy Fleming',
-    amount: 364,
-    unit: 'possibly',
-    calorie: 410,
-  },
-];
+
+
+function DishCardItem({ data }) {
+  return (
+    <DishCard>
+      <DishHeader>
+        <DishTitle>{data.title}</DishTitle>
+        <View style={{ flexDirection: 'row' }}>
+          <CalorieIcon />
+          <Calorie>350 </Calorie>
+        </View>
+      </DishHeader>
+
+    </DishCard>
+  );
+}
 
 export default function Meal() {
   const dispatch = useDispatch();
@@ -57,11 +43,11 @@ export default function Meal() {
   const mealTitle = useSelector(state => state.meal.title);
   const mealId = useSelector(state => state.meal.id);
   const dietPlanId = useSelector(state => state.dietPlan.id);
+  const dishes = useSelector(state => state.dish.dishes);
 
   useEffect(() => {
-
     dispatch(getDishesRequest(dietPlanId, mealId));
-  }, [mealId]);
+  }, [mealId]); // eslint-disable-line
 
   return (
     <Container>
@@ -70,52 +56,12 @@ export default function Meal() {
         <CalorieGoal>250</CalorieGoal>
       </Header>
 
-      <DishCard>
-        <DishHeader>
-          <DishTitle> Low carb</DishTitle>
-          <View style={{ flexDirection: 'row' }}>
-            <CalorieIcon />
-            <Calorie>350 </Calorie>
-          </View>
-        </DishHeader>
-        <FlatList
-          data={foods}
-          renderItem={({ item }) => <FoodItem data={item} />}
-          keyExtractor={item => item.title}
-        />
-      </DishCard>
+      <FlatList
+        data={dishes}
+        renderItem={({ item }) => <DishCardItem data={item} />}
+        keyExtractor={item => String(item.id)}
+      />
 
-      <DishCard>
-        <DishHeader>
-          <DishTitle> Low carb</DishTitle>
-          <View style={{ flexDirection: 'row' }}>
-            <CalorieIcon />
-            <Calorie>350 </Calorie>
-          </View>
-        </DishHeader>
-        <FlatList
-          data={foods}
-          renderItem={({ item }) => <FoodItem data={item} />}
-          keyExtractor={item => item.title}
-        />
-      </DishCard>
-
-      <DishCard>
-        <DishHeader>
-          <DishTitle> Low carb</DishTitle>
-          <View style={{ flexDirection: 'row' }}>
-            <CalorieIcon />
-            <Calorie>350 </Calorie>
-          </View>
-        </DishHeader>
-        <DishContent>
-          <FlatList
-            data={foods}
-            renderItem={({ item }) => <FoodItem data={item} />}
-            keyExtractor={item => item.title}
-          />
-        </DishContent>
-      </DishCard>
     </Container>
   );
 }
