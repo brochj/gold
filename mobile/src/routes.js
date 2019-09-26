@@ -2,17 +2,18 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
+import SignIn from '~/pages/SignIn';
+import SignUp from '~/pages/SignUp';
 
-import Dashboard from './pages/Dashboard';
-import DietPlan from './pages/DietPlan';
+import Dashboard from '~/pages/Dashboard';
+import DietPlan from '~/pages/DietPlan';
+import Meal from '~/pages/Meal';
 
-import PhysicalActivity from './pages/InitialConfig/PhysicalActivity';
-import UserBasicData from './pages/InitialConfig/UserBasicData';
-import Difficulty from './pages/InitialConfig/Difficulty';
-import CaloricExpenditure from './pages/InitialConfig/CaloricExpenditure';
-import Objective from './pages/InitialConfig/Objective';
+import PhysicalActivity from '~/pages/InitialConfig/PhysicalActivity';
+import UserBasicData from '~/pages/InitialConfig/UserBasicData';
+import Difficulty from '~/pages/InitialConfig/Difficulty';
+import CaloricExpenditure from '~/pages/InitialConfig/CaloricExpenditure';
+import Objective from '~/pages/InitialConfig/Objective';
 import MealsCalories from './pages/InitialConfig/MealsCalories';
 
 export default (isSigned = false) =>
@@ -23,10 +24,11 @@ export default (isSigned = false) =>
           SignIn,
           SignUp,
         }),
-        App: createMaterialBottomTabNavigator(
+        MainBottomTab: createMaterialBottomTabNavigator(
           {
             Dashboard,
             DietPlan,
+            Meal
           },
           {
             initialRouteName: 'DietPlan',
@@ -52,7 +54,7 @@ export default (isSigned = false) =>
         ),
       },
       {
-        initialRouteName: isSigned ? 'App' : 'Sign',
+        initialRouteName: isSigned ? 'MainBottomTab' : 'Sign',
       }
     )
   );

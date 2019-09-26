@@ -24,7 +24,7 @@ export const CalorieIcon = styled(Icon).attrs(props => ({
   color: props.color || '#fff',
 }))``;
 
-export const MealCard = styled.View.attrs({
+export const DishCard = styled.View.attrs({
   elevation: 4
 })`
   margin: 10px 15px 15px;
@@ -32,7 +32,7 @@ export const MealCard = styled.View.attrs({
   border-radius: 5px;
 `;
 
-export const MealHeader = styled.View`
+export const DishHeader = styled.View`
   flex-direction: row;
   justify-content: space-between;
   background: #196a65;
@@ -41,7 +41,7 @@ export const MealHeader = styled.View`
   border-top-right-radius: 5px;
 `;
 
-export const MealTitle = styled.Text`
+export const DishTitle = styled.Text`
   color: #fff;
   font-size: 22px;
 `;
@@ -52,7 +52,7 @@ export const Calorie = styled.Text`
 
 `;
 
-export const MealContent = styled.View`
+export const DishContent = styled.View`
   padding: 5px;
 `;
 

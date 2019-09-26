@@ -1,74 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux'
 import coxinha from '~/res/images/recipes/coxinha.jpg'
 
-import { Container, Header, Title, CalorieGoal, DishCard, DishHeader, DishTitle, CalorieIcon, Calorie, DishContent } from './styles';
+import { Container, Header, Title, CalorieGoal, MealCard, MealHeader, MealTitle, CalorieIcon, Calorie, MealContent } from './styles';
 
 import FoodItem from '~/components/FoodItem';
 
-const foods = [
-  { image: coxinha, title: 'Fannie Brewer', amount: 436, unit: 'natural', calorie: 384 },
-  { image: coxinha, title: 'Alejandro Wagner', amount: 374, unit: 'depth', calorie: 376 },
-  { image: coxinha, title: 'Dorothy Schneider', amount: 72, unit: 'house', calorie: 475 },
-  { image: coxinha, title: 'Jeremy Fleming', amount: 364, unit: 'possibly', calorie: 410 },
+const meals = [
+  { title: 'Café da manhã', calorie: 375 },
+  { title: 'Lanche da manhã', calorie: 304 },
+  { title: 'Almoço', calorie: 292 },
+  { title: 'Lanche da tarde', calorie: 624 },
+  { title: 'Jantar', calorie: 339 },
 ]
+
+function MealCardItem({ data }) {
+  return (
+    <MealCard>
+      <MealHeader>
+        <MealTitle>{data.title}</MealTitle>
+        <View style={{ flexDirection: 'row' }}>
+
+          <CalorieIcon />
+          <Calorie>{data.calorie}</Calorie>
+        </View>
+      </MealHeader>
+
+    </MealCard>
+
+  );
+}
 export default function DietPlan() {
   return (
     <Container>
       <Header>
-        <Title>Cafe da manha</Title>
+        <Title>Plano de dieta</Title>
         <CalorieGoal>250</CalorieGoal>
       </Header>
 
-      <DishCard>
-        <DishHeader>
-          <DishTitle> Low carb</DishTitle>
-          <View style={{ flexDirection: 'row' }}>
-
-            <CalorieIcon />
-            <Calorie>350 </Calorie>
-          </View>
-        </DishHeader>
-        <FlatList
-          data={foods}
-          renderItem={({ item }) => <FoodItem data={item} />}
-          keyExtractor={item => item.title}
-        />
-      </DishCard>
-
-      <DishCard>
-        <DishHeader>
-          <DishTitle> Low carb</DishTitle>
-          <View style={{ flexDirection: 'row' }}>
-            <CalorieIcon />
-            <Calorie>350 </Calorie>
-          </View>
-        </DishHeader>
-        <FlatList
-          data={foods}
-          renderItem={({ item }) => <FoodItem data={item} />}
-          keyExtractor={item => item.title}
-        />
-      </DishCard>
-
-      <DishCard>
-        <DishHeader>
-          <DishTitle> Low carb</DishTitle>
-          <View style={{ flexDirection: 'row' }}>
-
-            <CalorieIcon />
-            <Calorie>350 </Calorie>
-          </View>
-        </DishHeader>
-        <DishContent>
-
-          <FlatList
-            data={foods}
-            renderItem={({ item }) => <FoodItem data={item} />}
-            keyExtractor={item => item.title}
-          />
-        </DishContent>
-      </DishCard>
+      <FlatList
+        data={meals}
+        renderItem={({ item }) => <MealCardItem data={item} />}
+        keyExtractor={item => item.title}
+      />
 
     </Container>
   );
