@@ -21,10 +21,7 @@ import {
   TextCalories,
 } from './styles';
 
-import {
-  createMultipleMealsRequest,
-  createMealRequest,
-} from '~/store/modules/meal/actions';
+import { createMultipleMealsRequest } from '~/store/modules/meal/actions';
 
 function MealItem({ data, editMode, changeCalorie }) {
   function handleEditCalorie() {

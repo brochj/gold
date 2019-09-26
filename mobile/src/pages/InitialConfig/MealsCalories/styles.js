@@ -92,3 +92,7 @@ export const TextCalories = styled.Text`
   font-size: 20px;
   align-self: center;
 `;
+
+export const DishContent = styled.View`
+  padding: 5px;
+`;
