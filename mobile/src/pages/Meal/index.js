@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
-import { View, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, FlatList, Text, Button, TextInput } from 'react-native';
+import Modal from 'react-native-modal'
 import { useSelector, useDispatch } from 'react-redux';
+import { FloatingAction } from "react-native-floating-action";
 import coxinha from '~/res/images/recipes/coxinha.jpg';
 
 import {
@@ -32,6 +34,18 @@ function DishCardItem({ data }) {
           <Calorie>350 </Calorie>
         </View>
       </DishHeader>
+      <FlatList
+        data={data.recipes}
+        renderItem={({ item }) => <Text>recipe: {item.name}</Text>}
+        keyExtractor={item => String(item.id)}
+        listKey={item => String(item.id)}
+      />
+      <FlatList
+        data={data.foods}
+        renderItem={({ item }) => <Text>foods: {item.name}</Text>}
+        keyExtractor={item => String(item.id)}
+        listKey={item => String(item.id)}
+      />
 
     </DishCard>
   );
@@ -45,23 +59,65 @@ export default function Meal() {
   const dietPlanId = useSelector(state => state.dietPlan.id);
   const dishes = useSelector(state => state.dish.dishes);
 
+  const [showModal, setShowModal] = useState(false)
+
   useEffect(() => {
     dispatch(getDishesRequest(dietPlanId, mealId));
   }, [mealId]); // eslint-disable-line
 
   return (
-    <Container>
-      <Header>
-        <Title>{mealTitle}</Title>
-        <CalorieGoal>250</CalorieGoal>
-      </Header>
+    <>
+      <Container>
+        <Header>
+          <Title>{mealTitle}</Title>
+          <CalorieGoal>250</CalorieGoal>
+        </Header>
 
-      <FlatList
-        data={dishes}
-        renderItem={({ item }) => <DishCardItem data={item} />}
-        keyExtractor={item => String(item.id)}
+        <FlatList
+          data={dishes}
+          renderItem={({ item }) => <DishCardItem data={item} />}
+          keyExtractor={item => String(item.id)}
+        />
+
+
+      </Container>
+      <FloatingAction
+        overlayColor='rgba(0,0,0,0.05)'
+        showBackground={false}
+        onPressMain={() => {
+          setShowModal(!showModal)
+        }}
+        visible={!showModal}
       />
 
-    </Container>
+      <Modal isVisible={showModal}
+        backdropOpacity={0.5}
+        backdropColor="#000"
+        showBackground={false}
+        onBackdropPress={() => { setShowModal(!showModal) }}
+      >
+        <>
+          <View style={{
+            backgroundColor: 'white',
+            padding: 22,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 4,
+            borderColor: 'rgba(0, 0, 0, 0.1)',
+          }}>
+            <Text>Criar nova opção de refeição</Text>
+            <TextInput
+              autoFocus
+              placeholder="Digite o nome desse prato"
+              onSubmitEditing={() => { setShowModal(!showModal) }}
+            />
+          </View>
+
+
+        </>
+      </Modal>
+
+
+    </>
   );
 }
