@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, Text, Button, TextInput } from 'react-native';
+import { View, FlatList, Text, TouchableOpacity, TextInput } from 'react-native';
 import Modal from 'react-native-modal'
 import { useSelector, useDispatch } from 'react-redux';
 import { FloatingAction } from "react-native-floating-action";
@@ -20,20 +20,22 @@ import {
 
 import FoodItem from '~/components/FoodItem';
 
-import { getDishesRequest } from '~/store/modules/dish/actions';
+import { getDishesRequest, createDishRequest, deleteDishRequest } from '~/store/modules/dish/actions';
 
 
 
-function DishCardItem({ data }) {
+function DishCardItem({ data, onLongPress }) {
   return (
     <DishCard>
-      <DishHeader>
-        <DishTitle>{data.title}</DishTitle>
-        <View style={{ flexDirection: 'row' }}>
-          <CalorieIcon />
-          <Calorie>350 </Calorie>
-        </View>
-      </DishHeader>
+      <TouchableOpacity onLongPress={() => onLongPress(data.id)}>
+        <DishHeader>
+          <DishTitle>{data.title}</DishTitle>
+          <View style={{ flexDirection: 'row' }}>
+            <CalorieIcon />
+            <Calorie>350 </Calorie>
+          </View>
+        </DishHeader>
+      </TouchableOpacity>
       <FlatList
         data={data.recipes}
         renderItem={({ item }) => <Text>recipe: {item.name}</Text>}
@@ -60,11 +62,27 @@ export default function Meal() {
   const dishes = useSelector(state => state.dish.dishes);
 
   const [showModal, setShowModal] = useState(false)
+  const [DishTitle, setDishTitle] = useState('')
+  const [refreshing, setRefreshing] = useState(false)
 
   useEffect(() => {
     dispatch(getDishesRequest(dietPlanId, mealId));
-  }, [mealId]); // eslint-disable-line
+  }, [mealId, showModal]); // eslint-disable-line
 
+  function handleCreateDish() {
+    dispatch(createDishRequest({ title: DishTitle }, dietPlanId, mealId))
+  }
+
+  function handleDeleteDish(dishId) {
+    dispatch(deleteDishRequest(dietPlanId, mealId, dishId));
+    handleRefreshDishes();
+  }
+
+  function handleRefreshDishes() {
+    setRefreshing(true)
+    dispatch(getDishesRequest(dietPlanId, mealId));
+    setRefreshing(false)
+  }
   return (
     <>
       <Container>
@@ -75,7 +93,9 @@ export default function Meal() {
 
         <FlatList
           data={dishes}
-          renderItem={({ item }) => <DishCardItem data={item} />}
+          refreshing={refreshing}
+          onRefresh={handleRefreshDishes}
+          renderItem={({ item }) => <DishCardItem data={item} onLongPress={() => handleDeleteDish(item.id)} />}
           keyExtractor={item => String(item.id)}
         />
 
@@ -109,11 +129,14 @@ export default function Meal() {
             <TextInput
               autoFocus
               placeholder="Digite o nome desse prato"
-              onSubmitEditing={() => { setShowModal(!showModal) }}
+              onChangeText={text => setDishTitle(text)}
+              onSubmitEditing={() => {
+                setShowModal(!showModal);
+                handleCreateDish();
+                handleRefreshDishes();
+              }}
             />
           </View>
-
-
         </>
       </Modal>
 

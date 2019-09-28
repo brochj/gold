@@ -5,6 +5,7 @@ import {
   createDishSuccess,
   createDishFailure,
   getDishesSuccess,
+  deleteDishSuccess,
 } from '~/store/modules/dish/actions';
 
 import api from '~/services/api';
@@ -48,7 +49,27 @@ export function* getDishes({ payload }) {
   }
 }
 
+export function* deleteDish({ payload }) {
+  if (!payload) return;
+
+  const { dietPlanId, mealId, dishId } = payload;
+
+  try {
+    yield call(
+      api.delete,
+      `diet-plans/${dietPlanId}/meals/${mealId}/dishes/${dishId}`
+    );
+
+    yield put(deleteDishSuccess());
+  } catch (err) {
+    Alert.alert('Error', `Falha na ao remover o prato. ${err}`);
+
+    yield put(createDishFailure());
+  }
+}
+
 export default all([
   takeLatest('@dish/CREATE_DISH_REQUEST', createDish),
   takeLatest('@dish/GET_DISHES_REQUEST', getDishes),
+  takeLatest('@dish/DELETE_DISH_REQUEST', deleteDish),
 ]);

@@ -31,3 +31,16 @@ export function createDishFailure() {
     type: '@dish/DISH_FAILURE',
   };
 }
+
+export function deleteDishRequest(dietPlanId, mealId, dishId) {
+  return {
+    type: '@dish/DELETE_DISH_REQUEST',
+    payload: { dietPlanId, mealId, dishId },
+  };
+}
+
+export function deleteDishSuccess() {
+  return {
+    type: '@dish/DELETE_DISH_SUCCESS',
+  };
+}

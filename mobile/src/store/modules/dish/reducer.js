@@ -30,6 +30,14 @@ export default function dish(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@dish/DELETE_DISH_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+      case '@dish/DELETE_DISH_SUCCESS': {
+        draft.loading = false;
+        break;
+      }
       case '@dish/DISH_FAILURE': {
         draft.loading = false;
         break;
