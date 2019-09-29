@@ -44,3 +44,10 @@ export function deleteDishSuccess() {
     type: '@dish/DELETE_DISH_SUCCESS',
   };
 }
+
+export function changeActiveDish(dish) {
+  return {
+    type: '@dish/CHANGE_ACTIVE_DISH',
+    payload: dish,
+  };
+}

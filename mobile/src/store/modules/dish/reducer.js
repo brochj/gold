@@ -42,6 +42,12 @@ export default function dish(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@dish/CHANGE_ACTIVE_DISH': {
+        draft.id = action.payload.id;
+        draft.title = action.payload.title;
+        draft.loading = false;
+        break;
+      }
 
       default:
         break;

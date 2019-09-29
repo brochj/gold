@@ -1,3 +1,4 @@
+import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -8,6 +9,7 @@ import SignUp from '~/pages/SignUp';
 import Dashboard from '~/pages/Dashboard';
 import DietPlan from '~/pages/DietPlan';
 import Meal from '~/pages/Meal';
+import Recipes from '~/pages/Recipes';
 
 import PhysicalActivity from '~/pages/InitialConfig/PhysicalActivity';
 import UserBasicData from '~/pages/InitialConfig/UserBasicData';
@@ -15,6 +17,8 @@ import Difficulty from '~/pages/InitialConfig/Difficulty';
 import CaloricExpenditure from '~/pages/InitialConfig/CaloricExpenditure';
 import Objective from '~/pages/InitialConfig/Objective';
 import MealsCalories from './pages/InitialConfig/MealsCalories';
+
+import CalorieIcon from '~/components/Icons/CalorieIcon';
 
 export default (isSigned = false) =>
   createAppContainer(
@@ -27,15 +31,28 @@ export default (isSigned = false) =>
         MainBottomTab: createMaterialBottomTabNavigator(
           {
             Dashboard,
-            DietPlan,
-            Meal
+            Recipes,
+            DietPlanStack: createStackNavigator(
+              {
+                DietPlan,
+                Meal,
+              },
+              {
+                navigationOptions: {
+                  title: 'Dieta',
+                  tabBarColor: '#196a65',
+                  tabBaricon: <CalorieIcon />,
+                },
+              }
+            ),
           },
           {
-            initialRouteName: 'DietPlan',
-            activeColor: '#f0edf6',
-            inactiveColor: '#3e2465',
+            initialRouteName: 'Recipes',
+            activeColor: '#fff',
+            inactiveColor: '#ddd',
+            // shifting: true,
             barStyle: {
-              backgroundColor: '#694fad',
+              backgroundColor: '#196a65',
             },
           }
         ),

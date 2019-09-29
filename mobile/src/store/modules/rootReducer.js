@@ -11,5 +11,5 @@ export default combineReducers({
   user,
   dietPlan,
   meal,
-  dish
+  dish,
 });

@@ -48,6 +48,6 @@ export function createMealFailure() {
 export function changeActiveMeal(meal) {
   return {
     type: '@meal/CHANGE_ACTIVE_MEAL',
-    payload: meal
+    payload: meal,
   };
 }

@@ -1,13 +1,12 @@
 import styled from 'styled-components/native';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export const Container = styled.ScrollView`
   flex: 1;
+  margin-top: 10px;
 `;
 
-export const Header = styled.View`
- 
-`;
+export const Header = styled.View``;
 
 export const Title = styled.Text`
   color: #333;
@@ -25,7 +24,7 @@ export const CalorieIcon = styled(Icon).attrs(props => ({
 }))``;
 
 export const MealCard = styled.View.attrs({
-  elevation: 4
+  elevation: 4,
 })`
   margin: 10px 15px 15px;
   padding: 3px;
@@ -37,8 +36,7 @@ export const MealHeader = styled.View`
   justify-content: space-between;
   background: #196a65;
   padding: 8px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-radius: 5px;
 `;
 
 export const MealTitle = styled.Text`
@@ -49,15 +47,8 @@ export const MealTitle = styled.Text`
 export const Calorie = styled.Text`
   color: #fff;
   font-size: 22px;
-
 `;
 
 export const MealContent = styled.View`
   padding: 5px;
 `;
-
-
-
-
-
-
