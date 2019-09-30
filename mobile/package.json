@@ -25,6 +25,7 @@
     "react-native-reanimated": "^1.2.0",
     "react-native-screens": "^1.0.0-alpha.23",
     "react-native-svg": "^9.9.9",
+    "react-native-tags": "^2.1.0",
     "react-native-ui-kitten": "^4.2.0",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.0.7",

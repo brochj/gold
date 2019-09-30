@@ -10,6 +10,7 @@ import Dashboard from '~/pages/Dashboard';
 import DietPlan from '~/pages/DietPlan';
 import Meal from '~/pages/Meal';
 import Recipes from '~/pages/Recipes';
+// import ShowRecipe from '~/pages/ShowRecipe';
 
 import PhysicalActivity from '~/pages/InitialConfig/PhysicalActivity';
 import UserBasicData from '~/pages/InitialConfig/UserBasicData';
@@ -32,6 +33,7 @@ export default (isSigned = false) =>
           {
             Dashboard,
             Recipes,
+            // ShowRecipe,
             DietPlanStack: createStackNavigator(
               {
                 DietPlan,

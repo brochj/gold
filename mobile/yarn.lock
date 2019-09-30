@@ -5874,6 +5874,11 @@ react-native-tab-view@^2.9.0:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.10.0.tgz#5e249e5650502010013449ffd4e5edc18a95364b"
   integrity sha512-qgexVz5eO4yaFjdkmn/sURXgVvaBo6pZD/q1eoca96SbPVbaH3WzVhF3bRUfeTHwZkXwznFTpS3JURqIFU8vQA==
 
+react-native-tags@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-tags/-/react-native-tags-2.1.0.tgz#a25ee38075231f75d1ecd4f98160afe81ab2aa16"
+  integrity sha512-B/sPwJedh2ECgjma9txZYPeZUWISRTITJqlRmRtYcmSNCaLim6Aa4zjqgRVrigl3JXk7faeKxds2qaqC6R3+Vg==
+
 react-native-ui-kitten@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/react-native-ui-kitten/-/react-native-ui-kitten-4.2.0.tgz#f8992d4a664d93fc9a3076e5d24fca49ae2fb05e"

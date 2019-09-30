@@ -10,20 +10,19 @@ import bolo from '~/res/images/recipes/bolo.jpg';
 
 import styles from './styles';
 
-
 export default function RecipeCardItem({ data, onPress }) {
   const { id, name, preparation_time, servings, difficulty } = data;
-  let ptbrDifficulty
+  let ptbrDifficulty;
 
   switch (difficulty) {
-    case "easy":
-      ptbrDifficulty = "fácil"
+    case 'easy':
+      ptbrDifficulty = 'fácil';
       break;
-    case "medium":
-      ptbrDifficulty = "médio"
+    case 'medium':
+      ptbrDifficulty = 'médio';
       break;
-    case "hard":
-      ptbrDifficulty = "difícil"
+    case 'hard':
+      ptbrDifficulty = 'difícil';
       break;
     default:
       break;
@@ -37,17 +36,23 @@ export default function RecipeCardItem({ data, onPress }) {
       <View style={styles.stats}>
         <View style={styles.row}>
           <Icon name="timer" size={22} color="#666" />
-          <Text style={styles.info} category="h6"> {preparation_time} min</Text>
+          <Text style={styles.info} category="h6">
+            {' '}
+            {preparation_time} min
+          </Text>
         </View>
         <View style={styles.row}>
           <Icon name="people" size={22} color="#666" />
           <Text style={styles.info} category="h6">
-            {servings === 1 ? servings + ' porção' : servings + ' porções'}
+            {servings === 1 ? `${servings  } porção` : `${servings  } porções`}
           </Text>
         </View>
         <View style={styles.row}>
           <Icon name="network-check" size={22} color="#666" />
-          <Text style={styles.info} category="h6"> {ptbrDifficulty}</Text>
+          <Text style={styles.info} category="h6">
+            {' '}
+            {ptbrDifficulty}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

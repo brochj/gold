@@ -13,14 +13,32 @@ export default function Recipes() {
 
   useEffect(() => {
     getRecipes();
-  }, []);
+  }, []); // eslint-disable-line
 
-  async function getRecipes(page = 1) {
-    const response = await api.get(`recipes?page=${page}`);
+  async function getRecipes() {
+    const response = await api.get(`recipes`);
 
     if (response.data) {
       setRecipes([...recipes, ...response.data]);
-      setPage(page + 1)
+      setPage(page + 1);
+    }
+  }
+
+  async function refreshRecipes() {
+    const response = await api.get(`recipes`);
+
+    if (response.data) {
+      setRecipes(response.data);
+      setPage(1);
+    }
+  }
+
+  async function handleOnEndReached() {
+    const response = await api.get(`recipes?page=${page + 1}`);
+
+    if (response.data) {
+      setRecipes([...recipes, ...response.data]);
+      setPage(page + 1);
     }
   }
 
@@ -30,34 +48,28 @@ export default function Recipes() {
 
   return (
     <View style={styles.container}>
-      {recipes ?
-        <FlatList
-          data={recipes}
-          keyExtractor={item => String(item.id)}
-          refreshing={refreshing}
-          onRefresh={getRecipes}
-          onEndReachedThreshold={0.3}
-          onEndReached={() => getRecipes(page)}
-          ListFooterComponent={<ActivityIndicator />}
-          renderItem={({ item }) => (
-            <RecipeCardItem
-              data={item}
-              onPress={() => handleSelectedRecipe(item.id)}
-            />
-          )}
-          showsVerticalScrollIndicator={false}
-        />
-        :
-        <View style={styles.loading}>
-          <ActivityIndicator size="large" color="#196a65" />
-
-        </View>
-
-      }
+      <FlatList
+        data={recipes}
+        keyExtractor={item => String(item.id)}
+        refreshing={refreshing}
+        onRefresh={refreshRecipes}
+        onEndReachedThreshold={0.3}
+        onEndReached={() => handleOnEndReached()}
+        ListFooterComponent={<ActivityIndicator />}
+        renderItem={({ item }) => (
+          <RecipeCardItem
+            data={item}
+            onPress={() => handleSelectedRecipe(item.id)}
+          />
+        )}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 }
 
-Recipes.navigationOptions = {
-  title: 'Receitas',
+Recipes.navigationOptions = ({ navigation }) => {
+  return {
+    title: 'Sua Dieta',
+  };
 };
