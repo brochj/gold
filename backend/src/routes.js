@@ -10,6 +10,7 @@ import SessionController from './app/controllers/SessionController';
 
 import RecipeController from './app/controllers/RecipeController';
 import FoodController from './app/controllers/FoodController';
+import NutritionFactController from './app/controllers/NutritionFactController';
 
 import DietPlanController from './app/controllers/DietPlanController';
 import MealController from './app/controllers/MealController';
@@ -31,6 +32,11 @@ routes.get('/foods', FoodController.index);
 routes.post('/foods', FoodController.store);
 routes.put('/foods/:id', FoodController.update);
 routes.delete('/foods/:id', FoodController.delete);
+
+// routes.get('/foods/:foodId/nutrition-facts', NutritionFactController.index);
+routes.post('/foods/:foodId/nutrition-facts', NutritionFactController.store);
+// routes.put('/foods/:foodId/nutrition-facts/:id', NutritionFactController.update);
+// routes.delete('/foods/:foodId/nutrition-facts/:id', NutritionFactController.delete);
 
 routes.get('/recipes', RecipeController.index);
 routes.get('/recipes/:id', RecipeController.index);
