@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import multer from 'multer';
+import multerConfig from './config/multer';
 
 import authMiddleware from './app/middlewares/auth';
 import dietPlanMiddleware from './app/middlewares/dietPlan';
@@ -10,6 +12,7 @@ import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 
 import RecipeController from './app/controllers/RecipeController';
+import RecipeFileController from './app/controllers/RecipeFileController';
 import FoodController from './app/controllers/FoodController';
 import NutritionFactController from './app/controllers/NutritionFactController';
 
@@ -20,11 +23,14 @@ import RecipeDishController from './app/controllers/RecipeDishController';
 import FoodDishController from './app/controllers/FoodDishController';
 
 const routes = new Router();
+const upload = multer(multerConfig);
 
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 
 routes.use(authMiddleware);
+
+routes.post('/files', upload.single('file'), RecipeFileController.store);
 
 routes.put('/users', UserController.update);
 routes.delete('/users', UserController.delete);

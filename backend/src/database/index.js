@@ -10,6 +10,7 @@ import Food from '../app/models/Food';
 import FoodDish from '../app/models/FoodDish';
 import Section from '../app/models/Section';
 import NutritionFact from '../app/models/NutritionFact';
+import RecipeFile from '../app/models/RecipeFile';
 
 import databaseConfig from '../config/database';
 
@@ -24,6 +25,7 @@ const models = [
   FoodDish,
   Section,
   NutritionFact,
+  RecipeFile,
 ];
 
 class Database {
