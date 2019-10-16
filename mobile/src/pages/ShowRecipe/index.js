@@ -20,102 +20,50 @@ import IngredientItem from './IngredientItem';
 import StepsSection from './StepsSection';
 import { capitalize } from '~/lib/scripts/stringScript';
 
-const initialRecipe = {
-  id: 60,
-  name: 'Crepioca recheada fit',
-  description:
-    'Além de ser muito saudável, essa receita não contém glúten. A crepioca recheada com frango pode substituir uma refeição e fica deliciosa com esse recheio acessível e gostoso. ',
-  preparation_time: 5,
-  servings: 2,
-  difficulty: 'easy',
-  public: true,
-  creator: {
-    id: 2,
-    name: 'Oscar Broch',
-  },
-  cover: {
-    url:
-      'https://firebasestorage.googleapis.com/v0/b/dietapp-9c0a6.appspot.com/o/recipes%2F11i1w7eLqK%2Fcrepioca.jpg?alt=media&token=dc905dc6-3854-4691-9463-e252524b0299',
-  },
+const tags = ['high protein', 'low carb', 'chicken', 'lunch', 'easy'];
 
-  ingredients: [
-    XHlQjQWmnFUL: {
-      key: 'XHlQjQWmnFUL',
-      order: 0,
-      section: 'Crepioca',
-      items: {
-        nghpCGQkgQ: {
-          key: 'nghpCGQkgQ',
-          item: '1 colher (de sopa) Tapioca ',
-          quantity: 30,
-          unit: 'g',
-          order: 1,
-        },
-        XBxXFfnFUdDjcaenBnghpCGQkgQ: {
-          key: 'XBxXFfnFUdDjcaenBnghpCGQkgQ',
-          item: '1 colher (de sopa) de semente de chia',
-          quantity: 30,
-          unit: 'g',
-          order: 2,
-        },
-        aNZQphFpKcrtYf: {
-          key: 'aNZQphFpKcrtYf',
-          item: '2 ovos',
-          quantity: 2,
-          unit: 'un',
-          order: 3,
-        },
-        NPEVbZbQeK: {
-          key: 'NPEVbZbQeK',
-          item: '1 colher (de sopa) de leite',
-          quantity: 400,
-          unit: 'ml',
-          order: 4,
-        },
-        NPiBYyJskxhqqXUhqpFgoxEVbZbQeK: {
-          key: 'NPiBYyJskxhqqXUhqpFgoxEVbZbQeK',
-          item: 'Peito de peru ou frango desfiado',
-          quantity: 200,
-          unit: 'g',
-          order: 5,
-        },
-        LJAOJpvcDtubzeZN: {
-          key: 'NPiBYyJskxhqqXUhqpFgoxEVbZbQeK',
-          item: 'Saladas variadas (do seu gosto)',
-          quantity: 20,
-          unit: 'g',
-          order: 6,
-          tip:
-            'Exemplos: beterraba ralada, cenoura ralada, alface, tomate, cebola, pimentão',
-        },
-      },
+const initialRecipe = {
+  recipe: {
+    id: 1,
+    name: 'Frango grelhado',
+    preparation_time: 15,
+    servings: 1,
+    description: 'Franguinho TOP 1',
+    difficulty: 'medium',
+    creator: {
+      id: 2,
+      name: 'Oscar',
     },
-  ],
+    cover: {
+      url: 'http://localhost:3333/recipe-files/undefined',
+      id: 1,
+    },
+  },
   sections: [
     {
-      steps: [
+      data: [
         {
           order: '0',
-          text: 'Mistura a farinha',
-          tip: 'Use uma vasilha redonda',
+          text: 'Mistura a farinha 2 ',
+          tip: 'Use uma vasilha redonda 2',
         },
         {
           order: '0',
-          text: 'Mistura a farinha',
+          text: 'Mistura a farinha 1',
           tip: 'Use uma vasilha redonda',
         },
       ],
-      id: 96,
+      id: 8,
       order: 0,
-      recipe_id: 60,
+      recipe_id: 16,
       title: 'Massa',
     },
     {
-      steps: [
+      data: [
         {
           order: '0',
           text: 'Mistura a Doce',
-          tip: 'Use uma vasilha redonda',
+          tip: 'Use uma vasilha redonda 1',
         },
         {
           order: '0',
@@ -123,30 +71,32 @@ const initialRecipe = {
           tip: 'Use uma vasilha redonda',
         },
       ],
-      id: 97,
+      id: 9,
       order: 1,
-      recipe_id: 60,
+      recipe_id: 16,
       title: 'Recheio',
     },
   ],
 };
 
-const tags = ['high protein', 'low carb', 'chicken', 'lunch', 'easy'];
-
 export default function ShowRecipe() {
-  const [recipe, SetRecipe] = useState(initialRecipe);
-  const [tags, SetTags] = useState([]);
+  const [recipe, SetRecipe] = useState({
+    ...initialRecipe.recipe,
+    sections: initialRecipe.sections,
+  });
+  // const [tags, SetTags] = useState([]);
 
   return (
     <View style={styles.body}>
       <ScrollView style={styles.scrollContainer}>
         {/* <Text>{JSON.stringify(this.state.recipeData, null, 3)}</Text> */}
-        <Image source={{ uri: recipe.url }} style={styles.recipeImage} />
+        <Image source={{ uri: recipe.cover.url }} style={styles.recipeImage} />
         <View style={styles.headerView}>
           <Text style={styles.nameTxt}>{recipe.name}</Text>
           <View style={styles.rowView}>
             <MaterialCommunityIcons name="fire" color="#196a65" size={30} />
-            <Text style={styles.caloriesTxt}>{recipe.calories} kcal</Text>
+            {/* <Text style={styles.caloriesTxt}>{recipe.calories} kcal</Text> */}
+            <Text style={styles.caloriesTxt}>100 kcal</Text>
           </View>
           <View style={styles.separator} />
           <Text style={styles.descriptionTxt}>{recipe.description}</Text>
@@ -193,8 +143,8 @@ export default function ShowRecipe() {
               //     placeholder: "Any type of animal"
               // }}
               initialTags={tags}
-              onChangeTags={tags => console.log(tags)}
-              onTagPress={(index, tagLabel, event, deleted) => { }}
+              onChangeTags={tags_1 => console.log(tags_1)}
+              onTagPress={(index, tagLabel, event, deleted) => {}}
               containerStyle={{ justifyContent: 'center' }}
               inputStyle={{ backgroundColor: 'white' }}
               renderTag={({
@@ -204,14 +154,14 @@ export default function ShowRecipe() {
                 deleteTagOnPress,
                 readonly,
               }) => (
-                  <TouchableOpacity
-                    key={`${tag}-${index}`}
-                    onPress={onPress}
-                    style={styles.tagTouch}
-                  >
-                    <Text style={styles.tagTxt}>#{capitalize(tag)}</Text>
-                  </TouchableOpacity>
-                )}
+                <TouchableOpacity
+                  key={`${tag}-${index}`}
+                  onPress={onPress}
+                  style={styles.tagTouch}
+                >
+                  <Text style={styles.tagTxt}>#{capitalize(tag)}</Text>
+                </TouchableOpacity>
+              )}
             />
           </View>
         </View>
@@ -226,7 +176,7 @@ export default function ShowRecipe() {
             <Text style={styles.ingredientsTxt}>Ingredientes</Text>
           </View>
           <View style={[styles.separator, { marginBottom: 0, height: 0.9 }]} />
-          <IngredientsSection data={recipe.ingredients} />
+          {/* <IngredientsSection data={recipe.ingredients} /> */}
         </View>
 
         <View style={styles.intructionsView}>
@@ -235,7 +185,7 @@ export default function ShowRecipe() {
             <Text style={styles.ingredientsTxt}>Modo de preparo</Text>
           </View>
           <View style={[styles.separator, { marginBottom: 0, height: 0.9 }]} />
-          <StepsSection data={recipe.instructions} />
+          <StepsSection data={recipe.sections} />
         </View>
       </ScrollView>
     </View>
@@ -367,16 +317,3 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
 });
-
-// return (
-//   // Espera carregar
-//   if (this.state.recipeData == null) {
-//   return (
-//     <View
-//       style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-//     >
-//       <ActivityIndicator size="large" />
-//       <Text style={styles.txtName}>Carregando...</Text>
-//     </View>
-//   );
-// }
