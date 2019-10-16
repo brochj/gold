@@ -36,7 +36,7 @@ class NutritionFact extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Food, { foreignKey: 'food_id' });
+    this.belongsTo(models.Food, { foreignKey: 'food_id', as: 'food' });
   }
 }
 

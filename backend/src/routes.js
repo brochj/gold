@@ -4,6 +4,7 @@ import authMiddleware from './app/middlewares/auth';
 import dietPlanMiddleware from './app/middlewares/dietPlan';
 import mealMiddleware from './app/middlewares/meal';
 import dishMiddleware from './app/middlewares/dish';
+import foodMiddleware from './app/middlewares/food';
 
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
@@ -34,7 +35,8 @@ routes.put('/foods/:id', FoodController.update);
 routes.delete('/foods/:id', FoodController.delete);
 
 const foods = '/foods/:foodId';
-// routes.get(`${foods}/nutrition-facts`, NutritionFactController.index);
+routes.get(`/nutrition-facts`, NutritionFactController.index);
+routes.use(foods, foodMiddleware);
 routes.post(`${foods}/nutrition-facts`, NutritionFactController.store);
 routes.put(`${foods}/nutrition-facts/:id`, NutritionFactController.update);
 // routes.delete(`${foods}/nutrition-facts/:id`, NutritionFactController.delete);

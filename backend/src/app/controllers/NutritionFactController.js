@@ -35,9 +35,6 @@ class NutritionFactController {
       .validate(req.body)
       .catch(e => res.status(400).json({ error: e.message }));
 
-    const food = await Food.findByPk(req.params.foodId);
-    if (!food) return res.status(400).json({ error: 'Food does not exist' });
-
     const nutriFactsExists = await NutritionFact.findOne({
       where: { food_id: req.params.foodId },
     });
@@ -86,14 +83,15 @@ class NutritionFactController {
       .validate(req.body)
       .catch(e => res.status(400).json({ error: e.message }));
 
-    const food = await Food.findByPk(req.params.foodId);
-    if (!food) return res.status(400).json({ error: 'Food does not exist' });
+    const { id, foodId: food_id } = req.params;
 
-    const nutritionFact = await NutritionFact.findByPk(req.params.id);
+    const nutritionFact = await NutritionFact.findOne({
+      where: { id, food_id },
+    });
     if (!nutritionFact)
-      return res
-        .status(400)
-        .json({ error: 'This Nutrition Fact does not exist' });
+      return res.status(400).json({
+        error: 'This Nutrition Fact does not exist or belong to this food',
+      });
 
     const newNutritionFact = await nutritionFact.update(req.body);
 
@@ -103,21 +101,20 @@ class NutritionFactController {
   async index(req, res) {
     const { page = 1 } = req.query;
 
-    const food = await Food.findAll({
+    const nutritionFacts = await NutritionFact.findAll({
       order: ['id'],
-      attributes: ['id', 'name', 'brand', 'description'],
       limit: 10,
       offset: (page - 1) * 10,
-      // include: [
-      //   {
-      //     model: NutritionFact,
-      //     as: 'meal',
-      //     attributes: ['energy', 'carbohydrate', 'protein', 'total_fat'],
-      //   },
-      // ],
+      include: [
+        {
+          model: Food,
+          as: 'food',
+          attributes: ['name', 'brand', 'description'],
+        },
+      ],
     });
 
-    return res.status(200).json(food);
+    return res.status(200).json(nutritionFacts);
   }
 
   async delete(req, res) {
