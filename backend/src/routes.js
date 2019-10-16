@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-import multerConfig from './config/multer';
+import { recipeFilesConfig } from './config/multer';
 
 import authMiddleware from './app/middlewares/auth';
 import dietPlanMiddleware from './app/middlewares/dietPlan';
@@ -11,8 +11,9 @@ import foodMiddleware from './app/middlewares/food';
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 
-import RecipeController from './app/controllers/RecipeController';
 import RecipeFileController from './app/controllers/RecipeFileController';
+
+import RecipeController from './app/controllers/RecipeController';
 import FoodController from './app/controllers/FoodController';
 import NutritionFactController from './app/controllers/NutritionFactController';
 
@@ -23,14 +24,18 @@ import RecipeDishController from './app/controllers/RecipeDishController';
 import FoodDishController from './app/controllers/FoodDishController';
 
 const routes = new Router();
-const upload = multer(multerConfig);
+const recipeUpload = multer(recipeFilesConfig);
 
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 
 routes.use(authMiddleware);
 
-routes.post('/files', upload.single('file'), RecipeFileController.store);
+routes.post(
+  '/recipe-files',
+  recipeUpload.single('file'),
+  RecipeFileController.store
+);
 
 routes.put('/users', UserController.update);
 routes.delete('/users', UserController.delete);
