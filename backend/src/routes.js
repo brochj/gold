@@ -39,7 +39,7 @@ routes.get(`/nutrition-facts`, NutritionFactController.index);
 routes.use(foods, foodMiddleware);
 routes.post(`${foods}/nutrition-facts`, NutritionFactController.store);
 routes.put(`${foods}/nutrition-facts/:id`, NutritionFactController.update);
-// routes.delete(`${foods}/nutrition-facts/:id`, NutritionFactController.delete);
+routes.delete(`${foods}/nutrition-facts/:id`, NutritionFactController.delete);
 
 routes.get('/recipes', RecipeController.index);
 routes.get('/recipes/:id', RecipeController.index);

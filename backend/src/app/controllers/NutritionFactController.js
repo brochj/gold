@@ -118,11 +118,14 @@ class NutritionFactController {
   }
 
   async delete(req, res) {
-    const food = await Food.findByPk(req.params.id);
+    const nutritionFact = await NutritionFact.findByPk(req.params.id);
 
-    if (!food) return res.status(400).json({ error: 'Food does not exist' });
+    if (!nutritionFact)
+      return res
+        .status(400)
+        .json({ error: 'This Nutrition Fact does not exist' });
 
-    await food.destroy();
+    await nutritionFact.destroy();
     return res.send();
   }
 }
