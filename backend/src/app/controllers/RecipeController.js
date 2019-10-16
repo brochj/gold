@@ -2,10 +2,12 @@ import * as Yup from 'yup';
 import Recipe from '../models/Recipe';
 import Section from '../models/Section';
 import User from '../models/User';
+import RecipeFile from '../models/RecipeFile';
 
 class RecipeController {
   async store(req, res) {
     const schema = Yup.object().shape({
+      cover_id: Yup.number(),
       name: Yup.string()
         .min(2, 'Recipe name must be at least 2 characters')
         .required('name field is required'),
@@ -136,12 +138,12 @@ class RecipeController {
 
       const recipe = await Recipe.findOne({
         where: { is_private: false, id },
-        order: ['id'],
         attributes: [
           'id',
           'name',
           'preparation_time',
           'servings',
+          'description',
           'difficulty',
         ],
         include: [
@@ -149,6 +151,11 @@ class RecipeController {
             model: User,
             as: 'creator',
             attributes: ['id', 'name'],
+          },
+          {
+            model: RecipeFile,
+            as: 'cover',
+            attributes: ['id', 'url'],
           },
         ],
       });
@@ -159,7 +166,14 @@ class RecipeController {
     const recipes = await Recipe.findAll({
       where: { is_private: false },
       order: ['id'],
-      attributes: ['id', 'name', 'preparation_time', 'servings', 'difficulty'],
+      attributes: [
+        'id',
+        'name',
+        'preparation_time',
+        'servings',
+        'difficulty',
+        'cover_id',
+      ],
       limit: 20,
       offset: (page - 1) * 20,
       include: [
@@ -167,6 +181,11 @@ class RecipeController {
           model: User,
           as: 'creator',
           attributes: ['id', 'name'],
+        },
+        {
+          model: RecipeFile,
+          as: 'cover',
+          attributes: ['id', 'url'],
         },
       ],
     });

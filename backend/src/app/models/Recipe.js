@@ -28,6 +28,8 @@ class Recipe extends Model {
       through: models.RecipeDish,
       foreignKey: 'recipe_id',
     });
+    this.belongsTo(models.RecipeFile, { foreignKey: 'cover_id', as: 'cover' });
+    this.hasMany(models.Section, { foreignKey: 'recipe_id' });
   }
 }
 
