@@ -144,7 +144,7 @@ export default function ShowRecipe() {
               // }}
               initialTags={tags}
               onChangeTags={tags_1 => console.log(tags_1)}
-              onTagPress={(index, tagLabel, event, deleted) => {}}
+              onTagPress={(index, tagLabel, event, deleted) => { }}
               containerStyle={{ justifyContent: 'center' }}
               inputStyle={{ backgroundColor: 'white' }}
               renderTag={({
@@ -154,14 +154,14 @@ export default function ShowRecipe() {
                 deleteTagOnPress,
                 readonly,
               }) => (
-                <TouchableOpacity
-                  key={`${tag}-${index}`}
-                  onPress={onPress}
-                  style={styles.tagTouch}
-                >
-                  <Text style={styles.tagTxt}>#{capitalize(tag)}</Text>
-                </TouchableOpacity>
-              )}
+                  <TouchableOpacity
+                    key={`${tag}-${index}`}
+                    onPress={onPress}
+                    style={styles.tagTouch}
+                  >
+                    <Text style={styles.tagTxt}>#{capitalize(tag)}</Text>
+                  </TouchableOpacity>
+                )}
             />
           </View>
         </View>
@@ -178,6 +178,7 @@ export default function ShowRecipe() {
           <View style={[styles.separator, { marginBottom: 0, height: 0.9 }]} />
           {/* <IngredientsSection data={recipe.ingredients} /> */}
         </View>
+
 
         <View style={styles.intructionsView}>
           <View style={styles.ingredientsHeaderView}>
