@@ -56,22 +56,48 @@ class NutritionFactController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string().required('food name field is required'),
-      brand: Yup.string(),
-      description: Yup.string(),
+      iron: Yup.number('iron field must be a number'),
+      fiber: Yup.number('fiber field must be a number'),
+      energy: Yup.number('energy field must be a number').required(
+        'energy field is required'
+      ),
+      sodium: Yup.number('sodium field must be a number'),
+      sugars: Yup.number('sugars field must be a number'),
+      calcium: Yup.number('calcium field must be a number'),
+      proteins: Yup.number('proteins field must be a number'),
+      total_fat: Yup.number('total_fat field must be a number'),
+      trans_fat: Yup.number('trans_fat field must be a number'),
+      vitamin_a: Yup.number('vitamin_a field must be a number'),
+      vitamin_c: Yup.number('vitamin_c field must be a number'),
+      vitamin_d: Yup.number('vitamin_d field must be a number'),
+      potassium: Yup.number('potassium field must be a number'),
+      cholesterol: Yup.number('cholesterol field must be a number'),
+      carbohydrate: Yup.number('carbohydrate field must be a number'),
+      custom_value: Yup.number('custom_value field must be a number'),
+      saturated_fat: Yup.number('saturated_fat field must be a number'),
+      serving_value: Yup.number(
+        'serving_value field must be a number'
+      ).required('serving_value field is required'),
+      serving_unit: Yup.string().required('serving_unit field is required'),
+      custom_unit: Yup.string('custom_unit field must be a string'),
     });
 
     schema
       .validate(req.body)
       .catch(e => res.status(400).json({ error: e.message }));
 
-    const food = await Food.findByPk(req.params.id);
-
+    const food = await Food.findByPk(req.params.foodId);
     if (!food) return res.status(400).json({ error: 'Food does not exist' });
 
-    const { id, name, brand, description } = await food.update(req.body);
+    const nutritionFact = await NutritionFact.findByPk(req.params.id);
+    if (!nutritionFact)
+      return res
+        .status(400)
+        .json({ error: 'This Nutrition Fact does not exist' });
 
-    return res.json({ id, name, brand, description });
+    const newNutritionFact = await nutritionFact.update(req.body);
+
+    return res.json(newNutritionFact);
   }
 
   async index(req, res) {

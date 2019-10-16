@@ -33,10 +33,11 @@ routes.post('/foods', FoodController.store);
 routes.put('/foods/:id', FoodController.update);
 routes.delete('/foods/:id', FoodController.delete);
 
-// routes.get('/foods/:foodId/nutrition-facts', NutritionFactController.index);
-routes.post('/foods/:foodId/nutrition-facts', NutritionFactController.store);
-// routes.put('/foods/:foodId/nutrition-facts/:id', NutritionFactController.update);
-// routes.delete('/foods/:foodId/nutrition-facts/:id', NutritionFactController.delete);
+const foods = '/foods/:foodId';
+// routes.get(`${foods}/nutrition-facts`, NutritionFactController.index);
+routes.post(`${foods}/nutrition-facts`, NutritionFactController.store);
+routes.put(`${foods}/nutrition-facts/:id`, NutritionFactController.update);
+// routes.delete(`${foods}/nutrition-facts/:id`, NutritionFactController.delete);
 
 routes.get('/recipes', RecipeController.index);
 routes.get('/recipes/:id', RecipeController.index);
