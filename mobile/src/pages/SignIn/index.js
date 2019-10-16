@@ -8,8 +8,11 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  ImageBackground
 } from 'react-native';
 import { signInRequest } from '~/store/modules/auth/actions';
+
+import bg from '~/assets/signin.jpeg'
 
 export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
@@ -26,54 +29,53 @@ export default function SignIn({ navigation }) {
   const passwordRef = useRef(null);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.body}>
-        <Text style={styles.labelTxt}>Email</Text>
-        <TextInput
-          style={[styles.input, styles.inputEmail]}
-          autoFocus
-          blurOnSubmit={false}
-          placeholder="seu-email@email.com"
-          returnKeyType="next"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={text => setEmail(text)}
-          onSubmitEditing={() => passwordRef.current.focus()}
-        />
-        <Text style={styles.labelTxt}>Senha</Text>
-        <TextInput
-          ref={passwordRef}
-          style={[styles.input, styles.inputSenha]}
-          secureTextEntry
-          maxLength={20}
-          placeholder="Digite uma senha"
-          value={password}
-          onChangeText={text => setPassword(text)}
-          onSubmitEditing={() => {}}
-        />
-        <TouchableOpacity style={styles.buttonCadastro} onPress={handleSignIn}>
-          {loading ? (
-            <ActivityIndicator />
-          ) : (
-            <Text style={styles.buttonTxt}>Entrar</Text>
-          )}
-        </TouchableOpacity>
-        <View style={styles.loginView}>
-          <Text
-            style={styles.loginTxt}
-            onPress={() => navigation.navigate('SignUp')}
-          >
-            Criar conta gratuita
-          </Text>
-          <Text
-            style={[styles.loginTxt, styles.loginWordTxt]}
-            onPress={() => navigation.navigate('SignUp')}
-          >
-            Cadastrar
-          </Text>
+    <ImageBackground source={bg} style={{ width: '100%', height: '100%' }
+    }>
+      <View style={styles.container}>
+        <View style={styles.body}>
+          {
+            email.length > 0 &&
+            <Text style={styles.labelTxt}>Email</Text>
+          }
+          <TextInput
+            style={styles.input}
+            blurOnSubmit={false}
+            placeholder="Digite seu email"
+            returnKeyType="next"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={text => setEmail(text.toLowerCase())}
+            onSubmitEditing={() => passwordRef.current.focus()}
+          />
+          {
+            password.length > 0 &&
+            <Text style={styles.labelTxt}>Senha</Text>
+          }
+          <TextInput
+            ref={passwordRef}
+            style={styles.input}
+            secureTextEntry
+            maxLength={20}
+            placeholder="Digite sua senha"
+            value={password}
+            onChangeText={text => setPassword(text)}
+            onSubmitEditing={() => { }}
+          />
+          <TouchableOpacity style={styles.signInbutton} onPress={handleSignIn}>
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+                <Text style={styles.buttonTxt}>Entrar</Text>
+              )}
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.signUpbutton} onPress={handleSignIn}>
+            <Text style={styles.buttonTxt}>Criar conta grátis</Text>
+          </TouchableOpacity>
+
         </View>
       </View>
-    </View>
+    </ImageBackground >
   );
 }
 
@@ -87,51 +89,72 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     margin: 10,
     padding: 10,
-    backgroundColor: 'rgba(0,0,0,.5)',
-    borderRadius: 5,
+    backgroundColor: 'rgba(0,0,0,.4)',
+    borderRadius: 3,
   },
   input: {
     height: 50,
     marginBottom: 10,
     padding: 5,
     paddingHorizontal: 20,
-    backgroundColor: 'rgba(255,255,255,.80)',
+    backgroundColor: '#eee',
     color: '#196A65',
     fontSize: 17,
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
-  inputEmail: {
-    borderTopLeftRadius: 15,
-  },
-  inputSenha: {},
+
   labelTxt: {
-    color: 'white',
-    fontSize: 22,
+    color: 'rgba(255,255,255,1)',
+    fontSize: 18,
   },
-  buttonCadastro: {
+  signInbutton: {
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#196A65',
-    borderBottomRightRadius: 15,
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+
+  signUpbutton: {
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FF961C',
+    borderRadius: 5,
+    marginTop: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+
   },
   buttonTxt: {
-    color: 'white',
+    color: '#fff',
     fontSize: 22,
     fontWeight: 'bold',
-  },
-  loginView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  loginTxt: {
-    color: 'white',
-    fontSize: 16,
-  },
-  loginWordTxt: {
-    marginLeft: 5,
-    fontWeight: 'bold',
-    textDecorationLine: 'underline',
   },
 });
 

@@ -73,7 +73,7 @@ export default (isSigned = false) =>
         ),
       },
       {
-        initialRouteName: isSigned ? 'MainBottomTab' : 'Sign',
+        initialRouteName: isSigned ? 'Sign' : 'Sign',
       }
     )
   );
