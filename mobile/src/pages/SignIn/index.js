@@ -17,13 +17,17 @@ import bg from '~/assets/signin.jpeg'
 export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState('brochj@gmail.com');
-  const [password, setPassword] = useState('123456');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const loading = useSelector(state => state.auth.loading);
 
   function handleSignIn() {
     dispatch(signInRequest(email, password));
+  }
+
+  function handleSignUp() {
+    navigation.navigate('')
   }
 
   const passwordRef = useRef(null);
@@ -69,7 +73,7 @@ export default function SignIn({ navigation }) {
               )}
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.signUpbutton} onPress={handleSignIn}>
+          <TouchableOpacity style={styles.signUpbutton} onPress={handleSignUp}>
             <Text style={styles.buttonTxt}>Criar conta grátis</Text>
           </TouchableOpacity>
 

@@ -5,6 +5,9 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import SignIn from '~/pages/SignIn';
 import SignUp from '~/pages/SignUp';
+import SignUpStack from '~/pages/SignUpStack';
+
+import Name from '~/pages/SignUpStack/Name'
 
 import Dashboard from '~/pages/Dashboard';
 import DietPlan from '~/pages/DietPlan';
@@ -26,8 +29,8 @@ export default (isSigned = false) =>
     createSwitchNavigator(
       {
         Sign: createSwitchNavigator({
+          SignUpStack,
           SignIn,
-          SignUp,
         }),
         MainBottomTab: createMaterialBottomTabNavigator(
           {
