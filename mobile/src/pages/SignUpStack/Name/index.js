@@ -1,12 +1,16 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { View, Text, Dimensions } from 'react-native';
+import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
+import { format } from 'date-fns'
+import pt from 'date-fns/locale/pt'
 // import { Pages } from 'react-native-pages';
 import Pages from './Pages';
+// import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from "react-native-modal-datetime-picker";
 
-import { Container, Tip, Input, Body, Page, Headline, Footer, Label, Button } from './styles';
+import { Container, Tip, Input, Body, Page, Headline, Footer, Label, Button, BirthdayText, BirthdayButton } from './styles';
 
 const labels = ['Nome', 'Email', 'Peso', 'Altura', 'Data', 'Sexo'];
 const customStyles = {
@@ -37,11 +41,13 @@ export default function Name({ navigation }) {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [birthday, setBirthday] = useState(new Date());
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
   const [gender, setGender] = useState('');
   const [page, setPage] = useState(0);
+  const [showDate, setShowDate] = useState(false);
+
 
   const pageRef = useRef();
   const nameRef = useRef();
@@ -137,6 +143,7 @@ export default function Name({ navigation }) {
               ref={emailRef}
               value={email}
               placeholder="Digite seu email"
+              autoCapitalize='none'
               onChangeText={text => setEmail(text.trim())}
               textAlign="center"
               returnKeyType="next"
@@ -184,16 +191,14 @@ export default function Name({ navigation }) {
               ref={heightRef}
               value={height}
               placeholder="  cm"
-              onChangeText={text => setHeight(text.replace(/[^0-9]/g, ''))}
+              onChangeText={text => setHeight(text)}
               keyboardType="phone-pad"
               textAlign="center"
-              maxLength={3}
+              // maxLength={3}
               returnKeyType="next"
-              blurOnSubmit={false}
               onSubmitEditing={() => {
                 pageRef.current.scrollToPage(4);
                 setPage(4);
-                birthdayRef.current.focus();
               }}
             />
           </Body>
@@ -206,20 +211,31 @@ export default function Name({ navigation }) {
         <Page>
           <Headline>Quando você nasceu?</Headline>
           <Body>
-            <Input
-              ref={birthdayRef}
-              value={birthday}
-              placeholder="Digite seu email"
-              onChangeText={text => setBirthday(text)}
-              returnKeyType="next"
-              blurOnSubmit={false}
-              onSubmitEditing={() => {
-                pageRef.current.scrollToPage(5);
-                setPage(5);
-                emailRef.current.focus();
-              }}
-            />
+            <BirthdayButton onPress={() => setShowDate(true)} >
+              <BirthdayText>{format(birthday, 'dd/MM/yyyy', { locale: pt })}</BirthdayText>
+            </BirthdayButton>
+            {showDate &&
+
+              <DateTimePicker
+                isVisible={showDate}
+                date={birthday}
+                mode="date"
+                display="spinner"
+                datePickerModeAndroid="spinner"
+                onConfirm={(date) => {
+                  setBirthday(date)
+                  setShowDate(false)
+                }}
+                onCancel={() => setShowDate(false)}
+                maximumDate={new Date()}
+                minimumDate={new Date(1930, 1, 1)}
+              />
+            }
           </Body>
+          <Tip>
+            Essas informações serão necessárias para calcular suas calorias e
+            montar sua dieta. {'\u{1F4AA}'}
+          </Tip>
         </Page>
 
         <Page />
@@ -233,7 +249,7 @@ export default function Name({ navigation }) {
           <Label>Avançar</Label>
         </Button>
       </Footer>
-    </Container>
+    </Container >
   );
 }
 

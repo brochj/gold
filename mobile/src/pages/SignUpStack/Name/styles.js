@@ -60,3 +60,20 @@ export const Label = styled.Text`
   padding: 10px;
 `;
 
+export const BirthdayText = styled.Text`
+font-size: 30px;
+  margin: 10px 0;
+  color: rgba(0,0,0,.5)
+`;
+
+export const BirthdayButton = styled.TouchableOpacity`
+flex: 1;
+  height: 50px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin-top: 15px;
+  align-items: center;
+  justify-content: center;
+`;
+
