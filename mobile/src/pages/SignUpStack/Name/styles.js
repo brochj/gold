@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-
+import { StyleSheet } from 'react-native'
 export const Container = styled.SafeAreaView`
   flex: 1;
   margin-top: 15px;
@@ -7,10 +7,12 @@ export const Container = styled.SafeAreaView`
 `;
 
 export const Page = styled.View`
-  background: #fafafa; 
-  align-items: center;
-  padding: 15px
+  flex: 1;
+background: #fafafa; 
+align-items: center;
+padding: 15px
 `;
+
 
 export const Body = styled.View`
   flex-direction: row;
@@ -76,4 +78,3 @@ flex: 1;
   align-items: center;
   justify-content: center;
 `;
-

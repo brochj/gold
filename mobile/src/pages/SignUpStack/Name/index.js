@@ -1,18 +1,18 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Animated } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import { format } from 'date-fns'
 import pt from 'date-fns/locale/pt'
-// import { Pages } from 'react-native-pages';
-import Pages from './Pages';
-// import DateTimePicker from '@react-native-community/datetimepicker';
+import { Pages } from 'react-native-pages';
+// import Pages from './Pages';
 import DateTimePicker from "react-native-modal-datetime-picker";
+import { TextInputMask } from 'react-native-masked-text'
 
 import { Container, Tip, Input, Body, Page, Headline, Footer, Label, Button, BirthdayText, BirthdayButton } from './styles';
 
-const labels = ['Nome', 'Email', 'Peso', 'Altura', 'Data', 'Sexo'];
+const labels = ['Nome', 'Email', 'Altura', 'Peso', 'Data', 'Sexo'];
 const customStyles = {
   stepIndicatorSize: 25,
   currentStepIndicatorSize: 30,
@@ -37,6 +37,15 @@ const customStyles = {
   currentStepLabelColor: '#fe7013',
 };
 
+function TipText() {
+  return (
+    <Tip>
+      Essas informações serão necessárias para calcular suas calorias e
+            montar sua dieta. {'\u{1F4AA}'}
+    </Tip>
+  )
+}
+
 export default function Name({ navigation }) {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
@@ -45,9 +54,10 @@ export default function Name({ navigation }) {
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
   const [gender, setGender] = useState('');
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [showDate, setShowDate] = useState(false);
 
+  const opacity = new Animated.Value(0)
 
   const pageRef = useRef();
   const nameRef = useRef();
@@ -57,38 +67,54 @@ export default function Name({ navigation }) {
   const birthdayRef = useRef();
   const genderRef = useRef();
 
-  function handleFocus(num) {
-    switch (num) {
+  function animateView() {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 500
+    }).start();
+  }
+
+  useEffect(() => {
+
+    switch (page) {
       case 0:
+        animateView();
         nameRef.current.focus();
         break;
       case 1:
+        animateView();
         emailRef.current.focus();
         break;
       case 2:
-        weightRef.current.focus();
+        animateView();
+        heightRef.current.focus();
         break;
       case 3:
-        heightRef.current.focus();
+        animateView();
+        weightRef.current.focus();
+        break;
+      case 4:
+        animateView();
+        break;
+      case 5:
+        animateView();
         break;
 
       default:
         break;
     }
-  }
+  }, [page])
+
+
   function handleBack() {
     if (page - 1 >= 0) {
       setPage(page - 1)
-      pageRef.current.scrollToPage(page - 1);
-      handleFocus(page - 1)
     }
   }
 
   function handleNext() {
     if (page + 1 <= 5) {
       setPage(page + 1)
-      pageRef.current.scrollToPage(page + 1);
-      handleFocus(page + 1)
     }
   }
 
@@ -101,42 +127,34 @@ export default function Name({ navigation }) {
         labels={labels}
         stepCount={6}
         onPress={position => {
-          pageRef.current.scrollToPage(position);
           setPage(position);
         }}
       />
-      <Pages
-        scrollEnabled={false}
-        onMomentumScrollEnd={(event) => setPage(Math.round(parseFloat(event.nativeEvent.contentOffset.x / Dimensions.get('window').width)))}
-        indicatorPosition="none"
-        ref={pageRef}
-      // onScrollStart={index => setPage(index)}
-      // onScrollEnd={index => setPage(index)}
-      >
-        <Page>
-          <Headline>Qual o seu nome?</Headline>
-          <Body>
-            <Input
-              ref={nameRef}
-              value={name}
-              placeholder="Digite seu nome"
-              onChangeText={text => setName(text)}
-              textAlign="center"
-              autoFocus
-              autoCompleteType="name"
-              returnKeyType="next"
-              returnKeyLabel="próximo"
-              blurOnSubmit={false}
-              onSubmitEditing={() => {
-                pageRef.current.scrollToPage(1);
-                setPage(1);
-                emailRef.current.focus();
-              }}
-            />
-          </Body>
-        </Page>
 
-        <Page>
+      {
+        page === 0 && (
+          <Animated.View style={{ ...styles.animatedView, opacity }}>
+            <Headline>Qual o seu nome?</Headline>
+            <Body>
+              <Input
+                ref={nameRef}
+                value={name}
+                placeholder="Digite seu nome"
+                onChangeText={text => setName(text)}
+                textAlign="center"
+                autoFocus
+                autoCompleteType="name"
+                returnKeyType="next"
+                // blurOnSubmit={false}
+                onSubmitEditing={() => setPage(1)}
+
+              />
+            </Body>
+          </Animated.View>
+        )}
+
+      {page === 1 && (
+        <Animated.View style={{ ...styles.animatedView, opacity }}>
           <Headline>Seu melhor email</Headline>
           <Body>
             <Input
@@ -150,65 +168,58 @@ export default function Name({ navigation }) {
               autoCompleteType="email"
               keyboardType="email-address"
               blurOnSubmit={false}
-              onSubmitEditing={() => {
-                pageRef.current.scrollToPage(2);
-                setPage(2);
-                weightRef.current.focus();
-              }}
+              onSubmitEditing={() => setPage(2)}
+
             />
           </Body>
-        </Page>
+        </Animated.View>
+      )}
 
-        <Page>
-          <Headline>Qual seu Peso atual?</Headline>
-          <Body>
-            <Input
-              ref={weightRef}
-              value={weight}
-              placeholder="  kg"
-              onChangeText={text => setWeight(text)}
-              textAlign="center"
-              keyboardType="phone-pad"
-              returnKeyType="next"
-              blurOnSubmit={false}
-              onSubmitEditing={() => {
-                pageRef.current.scrollToPage(3);
-                setPage(3);
-                heightRef.current.focus();
-              }}
-            />
-          </Body>
-          <Tip>
-            Essas informações serão necessárias para calcular suas calorias e
-            montar sua dieta. {'\u{1F4AA}'}
-          </Tip>
-        </Page>
-
-        <Page>
+      {page === 2 && (
+        <Animated.View style={{ ...styles.animatedView, opacity }}>
           <Headline>Qual a sua Altura?</Headline>
           <Body>
             <Input
               ref={heightRef}
               value={height}
               placeholder="  cm"
-              onChangeText={text => setHeight(text)}
-              keyboardType="phone-pad"
+              onChangeText={text => setHeight(text.replace(/[^0-9]+/g, ''))}
               textAlign="center"
-              // maxLength={3}
+              keyboardType="phone-pad"
               returnKeyType="next"
-              onSubmitEditing={() => {
-                pageRef.current.scrollToPage(4);
-                setPage(4);
-              }}
+              blurOnSubmit={false}
+              maxLength={3}
+              onSubmitEditing={() => setPage(3)}
             />
           </Body>
-          <Tip>
-            Essas informações serão necessárias para calcular suas calorias e
-            montar sua dieta. {'\u{1F4AA}'}
-          </Tip>
-        </Page>
+          <TipText />
+        </Animated.View>
+      )}
 
-        <Page>
+      {page === 3 && (
+        <Animated.View style={{ ...styles.animatedView, opacity }}>
+          <Headline>Qual seu Peso atual?</Headline>
+          <Body>
+            <Input
+              ref={weightRef}
+              value={weight}
+              placeholder="  kg"
+              onChangeText={text => setWeight(text.replace(/[^0-9;,]+/g, ''))}
+              textAlign="center"
+              maxLength={5}
+              keyboardType="phone-pad"
+              returnKeyType="next"
+              blurOnSubmit={false}
+              onSubmitEditing={() => setPage(4)}
+
+            />
+          </Body>
+          <TipText />
+        </Animated.View>
+      )}
+
+      {page === 4 && (
+        <Animated.View style={{ ...styles.animatedView, opacity }}>
           <Headline>Quando você nasceu?</Headline>
           <Body>
             <BirthdayButton onPress={() => setShowDate(true)} >
@@ -232,14 +243,16 @@ export default function Name({ navigation }) {
               />
             }
           </Body>
-          <Tip>
-            Essas informações serão necessárias para calcular suas calorias e
-            montar sua dieta. {'\u{1F4AA}'}
-          </Tip>
-        </Page>
+          <TipText />
+        </Animated.View>
+      )}
 
-        <Page />
-      </Pages>
+      {page === 5 && (
+        <Animated.View style={{ ...styles.animatedView, opacity }}>
+
+        </Animated.View>
+      )}
+
       <Footer>
         <Button onPress={() => handleBack()}>
           <Label>Voltar</Label>
@@ -262,3 +275,13 @@ Name.propTypes = {
     navigate: PropTypes.func,
   }).isRequired,
 };
+
+
+const styles = StyleSheet.create({
+  animatedView: {
+    flex: 1,
+    backgroundColor: '#fafafa',
+    alignItems: 'center',
+    padding: 15,
+  }
+})
