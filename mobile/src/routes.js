@@ -13,12 +13,13 @@ import Meal from '~/pages/Meal';
 import Recipes from '~/pages/Recipes';
 import ShowRecipe from '~/pages/ShowRecipe';
 
-import PhysicalActivity from '~/pages/InitialConfig/PhysicalActivity';
-import UserBasicData from '~/pages/InitialConfig/UserBasicData';
-import Difficulty from '~/pages/InitialConfig/Difficulty';
-import CaloricExpenditure from '~/pages/InitialConfig/CaloricExpenditure';
-import Objective from '~/pages/InitialConfig/Objective';
-import MealsCalories from './pages/InitialConfig/MealsCalories';
+import InitialConfigStack from '~/pages/InitialConfigStack'
+
+// import PhysicalActivity from '~/pages/InitialConfigStack/PhysicalActivity';
+// import Difficulty from '~/pages/InitialConfigStack/Difficulty';
+// import CaloricExpenditure from '~/pages/InitialConfigStack/CaloricExpenditure';
+// import Objective from '~/pages/InitialConfigStack/Objective';
+// import MealsCalories from '~/pages/InitialConfigStack/MealsCalories';
 
 import CalorieIcon from '~/components/Icons/CalorieIcon';
 
@@ -59,22 +60,10 @@ export default (isSigned = false) =>
             },
           }
         ),
-        InitialConfig: createStackNavigator(
-          {
-            UserBasicData,
-            PhysicalActivity,
-            CaloricExpenditure,
-            Objective,
-            Difficulty,
-            MealsCalories,
-          },
-          {
-            initialRouteName: 'UserBasicData',
-          }
-        ),
+        InitialConfigStack,
       },
       {
-        initialRouteName: isSigned ? 'InitialConfig' : 'Sign',
+        initialRouteName: isSigned ? 'Sign' : 'Sign',
       }
     )
   );

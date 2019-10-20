@@ -129,7 +129,7 @@ export default function SignUp({ navigation }) {
 
   useEffect(() => {
     if (signed) {
-      navigation.navigate('InitialConfig')
+      navigation.navigate('InitialConfigStack')
     }
   }, [signed])
 
