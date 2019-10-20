@@ -1,3 +1,17 @@
+export function createRequest(user) {
+  return {
+    type: '@user/CREATE_REQUEST',
+    payload: { user },
+  };
+}
+
+export function createSuccess(user) {
+  return {
+    type: '@user/CREATE_SUCCESS',
+    payload: { user },
+  };
+}
+
 export function updateRequest(user) {
   return {
     type: '@user/UPDATE_REQUEST',

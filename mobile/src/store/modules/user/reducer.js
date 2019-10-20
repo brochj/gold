@@ -41,6 +41,21 @@ export default function user(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@user/CREATE_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+      case '@user/CREATE_SUCCESS': {
+        draft.id = action.payload.id;
+        draft.name = action.payload.name;
+        draft.email = action.payload.email;
+        draft.birthday = action.payload.birthday;
+        draft.gender = action.payload.gender;
+        draft.weight = action.payload.weight;
+        draft.height = action.payload.height;
+        draft.loading = false;
+        break;
+      }
       case '@user/UPDATE_FAILURE': {
         draft.loading = false;
         break;

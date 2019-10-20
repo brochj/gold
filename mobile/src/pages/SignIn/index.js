@@ -27,7 +27,7 @@ export default function SignIn({ navigation }) {
   }
 
   function handleSignUp() {
-    navigation.navigate('')
+    navigation.navigate('SignUp')
   }
 
   const passwordRef = useRef(null);

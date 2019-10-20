@@ -29,7 +29,7 @@ export const Headline = styled.Text`
 export const Input = styled.TextInput`
   flex: 1;
   height: 50px;
-  font-size: 20px;
+  font-size: 22px;
   border: 1px solid #999;
   border-radius: 5px;
   padding: 5px 15px;
