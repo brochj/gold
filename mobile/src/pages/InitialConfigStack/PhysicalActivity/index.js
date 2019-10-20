@@ -10,7 +10,7 @@ import { Container, Headline, ActivityButton, ActivityText, Description } from '
 function Card({ physicalActivity, level, children, onPress, description }) {
   return (
     <ActivityButton
-      // style={{ elevation: 4 }}
+      style={{ elevation: 4 }}
       active={physicalActivity === level}
       onPress={onPress}
     >
@@ -24,15 +24,6 @@ function Card({ physicalActivity, level, children, onPress, description }) {
   );
 }
 
-// title='Sedentário'
-//         description='Sentado na maior parte do tempo (ex.: trabalho em escritório)'
-//         title='Moderada'
-//         description='Em pé na maior parte do tempo (ex.: professor)'
-//         title='Elevada'
-//         description='Andando na maior parte do tempo (ex.: vendedor)'
-//         title='Intensa'
-//         description='Trabalho que exige muita atividade (ex.: pedreiro)'
-
 export default function PhysicalActivity({ navigation }) {
   const dispatch = useDispatch();
   const physicalActivity = useSelector(state => state.user.physicalActivity)
@@ -40,7 +31,7 @@ export default function PhysicalActivity({ navigation }) {
 
   function handlePhysicalActivity(level) {
     dispatch(changePhysicalActivity(level));
-    // navigation.navigate('CaloricExpenditure');
+    navigation.navigate('CaloricExpenditure');
   }
   return (
     <Container>
