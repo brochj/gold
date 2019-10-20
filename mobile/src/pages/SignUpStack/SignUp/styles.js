@@ -6,13 +6,6 @@ export const Container = styled.SafeAreaView`
   background: #fafafa;
 `;
 
-export const Page = styled.View`
-  flex: 1;
-background: #fafafa; 
-align-items: center;
-padding: 15px
-`;
-
 
 export const Body = styled.View`
   flex-direction: row;
@@ -77,4 +70,24 @@ flex: 1;
   margin-top: 15px;
   align-items: center;
   justify-content: center;
+`;
+
+
+export const Gender = styled.TouchableOpacity`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  background: ${props => props.active ? '#196a65' : '#ddd'};
+  margin: 5px;
+  border-radius: 5px;
+  margin-top: 15px;
+
+  `;
+
+export const GenderText = styled.Text`
+  color: ${props => props.active ? '#fafafa' : 'rgba(0,0,0,0.7)'};
+  /* font-weight:bold; */
+  font-size: 19px ;
+  padding: 10px;
 `;

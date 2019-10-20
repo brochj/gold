@@ -10,7 +10,7 @@ import { Pages } from 'react-native-pages';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { TextInputMask } from 'react-native-masked-text'
 
-import { Container, Tip, Input, Body, Page, Headline, Footer, Label, Button, BirthdayText, BirthdayButton } from './styles';
+import { Container, Tip, Input, Body, Headline, Footer, Label, Button, BirthdayText, BirthdayButton, Gender, GenderText } from './styles';
 
 const labels = ['Nome', 'Email', 'Altura', 'Peso', 'Data', 'Sexo'];
 const customStyles = {
@@ -54,8 +54,9 @@ export default function Name({ navigation }) {
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
   const [gender, setGender] = useState('');
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [showDate, setShowDate] = useState(false);
+  const [userData, setUserData] = useState({});
 
   const opacity = new Animated.Value(0)
 
@@ -73,6 +74,17 @@ export default function Name({ navigation }) {
       duration: 500
     }).start();
   }
+
+  // useEffect(() => {
+  //   setUserData({
+  //     name,
+  //     email,
+  //     birthday: format(birthday, "yyyy-MM-dd'T00:00:00.000Z'"),
+  //     weight: weight.replace(',', '.'),
+  //     height,
+  //     gender,
+  //   })
+  // }, [name, email, birthday, weight, height, gender,])
 
   useEffect(() => {
 
@@ -140,7 +152,7 @@ export default function Name({ navigation }) {
                 ref={nameRef}
                 value={name}
                 placeholder="Digite seu nome"
-                onChangeText={text => setName(text)}
+                onChangeText={text => setName(text.trim())}
                 textAlign="center"
                 autoFocus
                 autoCompleteType="name"
@@ -249,14 +261,44 @@ export default function Name({ navigation }) {
 
       {page === 5 && (
         <Animated.View style={{ ...styles.animatedView, opacity }}>
+          <Headline>Qual o seu Sexo?</Headline>
+          <Body>
+            <Gender active={gender === 'female'} onPress={() => {
+              setGender('female');
+            }}
+            >
+              <GenderText active={gender === 'female'}>
+                Feminino
+              </GenderText>
+            </Gender>
 
+            <Gender active={gender === 'male'} onPress={() => {
+              setGender('male');
+            }}
+            >
+              <GenderText active={gender === 'male'}>
+                Masculino
+              </GenderText>
+            </Gender>
+
+          </Body>
+          <TipText />
         </Animated.View>
       )}
 
       <Footer>
-        <Button onPress={() => handleBack()}>
-          <Label>Voltar</Label>
-        </Button>
+        {page === 0 &&
+          <Button onPress={() => navigation.navigate('SignIn')}>
+            <Label>Já tenho uma Conta</Label>
+          </Button>
+        }
+
+        {page !== 0 &&
+
+          <Button onPress={() => handleBack()}>
+            <Label>Voltar</Label>
+          </Button>
+        }
 
         <Button onPress={() => handleNext()}>
           <Label>Avançar</Label>

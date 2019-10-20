@@ -16,7 +16,7 @@ YellowBox.ignoreWarnings([
   'Warning: componentWillMount is deprecated',
   'Warning: componentWillUpdate is deprecated',
   'Warning: componentWillReceiveProps has been renamed',
-  'Warning: DatePicker has been merged'
+  'Warning: DatePickerAndroid has been merged'
 ]);
 
 export default function src() {

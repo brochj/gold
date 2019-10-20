@@ -2,15 +2,15 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 
 import UserBasicData from '~/pages/InitialConfig/UserBasicData';
-import Name from '~/pages/SignUpStack/Name';
+import SignUp from '~/pages/SignUpStack/SignUp';
 
 
 const SignUpStack = createStackNavigator({
-  Name,
+  SignUp,
   UserBasicData,
 
 }, {
-  initialRouteName: 'Name',
+  initialRouteName: 'SignUp',
   defaultNavigationOptions: {
   }
 
