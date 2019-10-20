@@ -1,14 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { StyleSheet, Animated, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { Text, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
-import { format } from 'date-fns'
+import { format, differenceInYears } from 'date-fns'
 import pt from 'date-fns/locale/pt'
 import DateTimePicker from "react-native-modal-datetime-picker";
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import { Container, Tip, Input, Body, Headline, Footer, Label, Button, BirthdayText, BirthdayButton, Gender, GenderText } from './styles';
+import { Container, Tip, Input, Body, Headline, Footer, Label, Button, BirthdayText, BirthdayButton, Gender, GenderText, Age } from './styles';
 
 import { createRequest } from '~/store/modules/user/actions'
 const labels = ['Nome', 'Email', 'Senha', 'Altura', 'Peso', 'Data', 'Sexo'];
@@ -57,6 +57,7 @@ export default function SignUp({ navigation }) {
   const [page, setPage] = useState(0);
   const [showDate, setShowDate] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const signed = useSelector(state => state.auth.signed);
 
   const opacity = new Animated.Value(0)
 
@@ -123,7 +124,15 @@ export default function SignUp({ navigation }) {
         gender,
       }
     ))
+
   }
+
+  useEffect(() => {
+    if (signed) {
+      navigation.navigate('InitialConfig')
+    }
+  }, [signed])
+
 
   function handleBack() {
     if (page - 1 >= 0) {
@@ -132,11 +141,15 @@ export default function SignUp({ navigation }) {
   }
 
   function handleNext() {
-    if (page + 1 <= 5) {
+    if (page + 1 <= 6) {
       setPage(page + 1)
     }
   }
 
+  const age = useMemo(() => {
+    const years = differenceInYears(new Date(), birthday)
+    return `${years} anos`
+  }, [birthday])
 
   return (
     <Container>
@@ -273,6 +286,7 @@ export default function SignUp({ navigation }) {
       {page === 5 && (
         <Animated.View style={{ ...styles.animatedView, opacity }}>
           <Headline>Quando você nasceu?</Headline>
+          <Age onPress={() => setShowDate(true)}>{age}</Age>
           <Body>
             <BirthdayButton onPress={() => setShowDate(true)} >
               <BirthdayText>{format(birthday, 'dd/MM/yyyy', { locale: pt })}</BirthdayText>
@@ -339,20 +353,18 @@ export default function SignUp({ navigation }) {
           </Button>
         }
 
-        {page === 5 &&
+        {page === 6 &&
 
           <Button onPress={() => handleSignUp()}>
             <Label>Cadastrar</Label>
           </Button>
         }
 
-        {page !== 5 &&
+        {page !== 6 &&
           <Button onPress={() => handleNext()}>
             <Label>Avançar</Label>
           </Button>
         }
-
-
       </Footer>
     </Container >
   );

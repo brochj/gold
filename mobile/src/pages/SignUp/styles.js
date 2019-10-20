@@ -91,3 +91,12 @@ export const GenderText = styled.Text`
   font-size: 19px ;
   padding: 10px;
 `;
+
+export const Age = styled.Text`
+  color: rgba(0,0,0,0.7);
+  /* font-weight:bold; */
+  font-size: 30px;
+  margin-top: 15px;
+  margin-bottom: -10px;
+  /* padding: 10px; */
+`;

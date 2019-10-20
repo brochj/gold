@@ -27,8 +27,8 @@ export default (isSigned = false) =>
     createSwitchNavigator(
       {
         Sign: createSwitchNavigator({
-          SignUp,
           SignIn,
+          SignUp,
         }),
         MainBottomTab: createMaterialBottomTabNavigator(
           {
@@ -74,7 +74,7 @@ export default (isSigned = false) =>
         ),
       },
       {
-        initialRouteName: isSigned ? 'Sign' : 'Sign',
+        initialRouteName: isSigned ? 'InitialConfig' : 'Sign',
       }
     )
   );
