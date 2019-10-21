@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, ScrollView } from 'react-native';
 
 import { changeCalorieGoal } from '~/store/modules/user/actions';
 import { createDietPlanRequest } from '~/store/modules/dietPlan/actions';
@@ -15,9 +15,12 @@ import {
   Description,
   CalorieText,
   CalorieValue,
+  Confirm,
   CalorieGoal,
   Tip,
+  Title,
 } from './styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 function Card({ difficulty, level, children, onPress, description }) {
   return (
@@ -27,7 +30,7 @@ function Card({ difficulty, level, children, onPress, description }) {
       onPress={onPress}
     >
       <DifficultyText active={difficulty === level}>{children}</DifficultyText>
-      {description &&
+      {difficulty === level &&
         <Description active={difficulty === level}>{description}</Description>
       }
     </DifficultyButton>
@@ -40,7 +43,7 @@ export default function Difficulty({ navigation }) {
   const calorieGoal = useSelector(state => state.user.calorieGoal);
   const calorieIntake = useSelector(state => state.user.calorieIntake);
   const physicalActivity = useSelector(state => state.user.physicalActivity);
-  const [difficulty, setDifficulty] = useState();
+  const [difficulty, setDifficulty] = useState(null);
 
   const calorieDifference = useMemo(() => calorieGoal - calorieIntake, [calorieGoal])
   const caloriePercent = useMemo(() => {
@@ -103,12 +106,11 @@ export default function Difficulty({ navigation }) {
 
   return (
     <Container>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <CalorieText>Suas gasto calórico atual</CalorieText>
-        <CalorieValue>{calorieIntake} kcal</CalorieValue>
-      </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-      </View>
+      {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <CalorieText>Suas gasto calórico atual</CalorieText>
+          <CalorieValue>{calorieIntake} kcal</CalorieValue>
+        </View> */}
+
       <CalorieGoal>Sua nova meta de calorias</CalorieGoal>
       <Input
         value={String(calorieGoal)}
@@ -116,52 +118,80 @@ export default function Difficulty({ navigation }) {
         maxLength={5}
         keyboardType='phone-pad'
       />
-      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-        <Tip>Você está {textDifference} {calorieDifference} kcal</Tip>
-      </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-        <Tip>Isso representa {percentDifference} de {caloriePercent}%</Tip>
-      </View>
-
+      {difficulty &&
+        <>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <Tip>Você está {textDifference} {calorieDifference} kcal em relação ao seu gasto calórico atual.</Tip>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <Tip>Isso representa {percentDifference} de {caloriePercent}%</Tip>
+          </View>
+        </>
+      }
       {/* <Button
         title="Meals calories"
         onPress={() => navigation.navigate('MealsCalories')}
-      />
-      <Button title="Create diet plan" onPress={handleDietPlan} /> */}
+      /> */}
+      {/* <Button title="Create diet plan" onPress={handleDietPlan} /> */}
+      <View style={{ height: 1, backgroundColor: '#ddd', marginTop: 15 }} />
+      {!difficulty &&
+        <Title>Escolha um nível de dificuldade</Title>
+      }
+      <ScrollView>
 
-      <Card
-        difficulty={difficulty}
-        level="easy"
-        onPress={() => handleDifficulty('easy')}
-        description="Fácil de manter a dieta. Sem muito stress"
-      >
-        Fácil
+        <Card
+          difficulty={difficulty}
+          level="easy"
+          onPress={() => handleDifficulty('easy')}
+          description="Fácil de manter a dieta. Sem muito stress"
+        >
+          Fácil
       </Card>
 
-      <Card
-        difficulty={difficulty}
-        level="medium"
-        onPress={() => handleDifficulty('medium')}
-        description="Será um pouco mais díficil, porém sem esforços não há ganhos. Recomendado"
-      >
-        Médio
+        <Card
+          difficulty={difficulty}
+          level="medium"
+          onPress={() => handleDifficulty('medium')}
+          description="Será um pouco mais difícil, porém sem esforços não há ganhos. Recomendado"
+        >
+          Médio
       </Card>
 
-      <Card
-        difficulty={difficulty}
-        level="hard"
-        onPress={() => handleDifficulty('hard')}
-        description="Difícil manter. Só para quem realmente está muito focado e sabe o que está fazendo."
-      >
-        Difícil
+        <Card
+          difficulty={difficulty}
+          level="hard"
+          onPress={() => handleDifficulty('hard')}
+          description="Difícil de manter a dieta. Só para quem realmente está muito focado e sabe o que está fazendo."
+        >
+          Difícil
       </Card>
+      </ScrollView>
+
+      {difficulty &&
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('MealsCalories');
+            handleDietPlan();
+          }}>
+          <Confirm>Confirmar</Confirm>
+        </TouchableOpacity>
+      }
+
     </Container>
   );
 }
 
-Difficulty.navigationOptions = {
+
+Difficulty.navigationOptions = ({ navigation }) => ({
   title: 'Dificuldade da Dieta',
-};
+  // headerRight: (
+  //   <TouchableOpacity onPress={() => {
+  //     navigation.navigate('MealsCalories');
+  //   }}>
+  //     <Confirm>Confirmar</Confirm>
+  //   </TouchableOpacity>
+  // )
+});
 
 Difficulty.propTypes = {
   navigation: PropTypes.shape({

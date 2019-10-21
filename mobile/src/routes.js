@@ -63,7 +63,7 @@ export default (isSigned = false) =>
         InitialConfigStack,
       },
       {
-        initialRouteName: isSigned ? 'Sign' : 'Sign',
+        initialRouteName: isSigned ? 'InitialConfigStack' : 'Sign',
       }
     )
   );

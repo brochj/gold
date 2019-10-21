@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Input = styled.TextInput`
-  flex: 1;
+  /* flex: 1; */
   height: 50px;
   font-size: 30px;
   border: 1px solid #999;
@@ -10,10 +10,12 @@ export const Input = styled.TextInput`
   margin: 5px;
   margin-top: 15px;
   text-align: center;
+  font-family: Quicksand-Bold;
+  color: rgba(0,0,0,0.7)
 `;
 
 
-export const Container = styled.ScrollView`
+export const Container = styled.View`
   flex: 1;
   padding: 15px;
   background: #fafafa;
@@ -46,8 +48,8 @@ export const DifficultyText = styled.Text`
 
 export const Description = styled.Text`
   color: ${props => (props.active ? '#ddd' : 'rgba(0,0,0,0.3)')};
-  font-size: 19px;
-  margin-top: 10px;
+  font-size: 17px;
+  /* margin-top: 10px; */
   text-align: center;
 `;
 
@@ -64,7 +66,7 @@ export const CalorieValue = styled.Text`
 `;
 
 export const Tip = styled.Text`
-  color: rgba(0,0,0,0.3);
+  color: rgba(0,0,0,0.5);
   font-size: 17px;
   text-align: center;
   /* font-family: Quicksand-Regular; */
@@ -75,5 +77,21 @@ export const CalorieGoal = styled.Text`
   font-size: 24px;
   text-align: center;
   font-family: Quicksand-Bold;
+  margin-top: 5px;
+`;
+
+export const Title = styled.Text`
+  color: rgba(0,0,0,0.4);
+  font-size: 20px;
   margin-top: 20px;
+`;
+
+export const Confirm = styled.Text`
+  background: #196a65;
+  color: #fafafa;
+  font-size: 20px;
+  padding: 10px 10px;
+  border-radius: 5px;
+  text-align: center;
+  
 `;
