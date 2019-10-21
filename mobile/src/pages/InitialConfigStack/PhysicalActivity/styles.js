@@ -35,4 +35,5 @@ export const Description = styled.Text`
 color: ${props => props.active ? '#ddd' : 'rgba(0,0,0,0.3)'};
   font-size: 19px ;
   padding: 10px;
+  text-align: center
 `;
