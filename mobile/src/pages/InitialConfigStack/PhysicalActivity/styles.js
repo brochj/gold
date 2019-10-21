@@ -10,7 +10,8 @@ export const Container = styled.View`
 export const Headline = styled.Text`
   font-size: 30px;
   color: rgba(0,0,0,0.7);
-  font-family: Quicksand-Bold
+  font-family: Quicksand-Bold;
+  text-align: center;
 `;
 
 export const ActivityButton = styled.TouchableOpacity`

@@ -8,11 +8,33 @@ import {
   changeCalorieGoal,
 } from '~/store/modules/user/actions';
 
-// import { Container } from './styles';
+import {
+  Container,
+  Headline,
+  ObjectiveButton,
+  ObjectiveText,
+  Description,
+} from './styles';
+
+function Card({ objective, level, children, onPress, description }) {
+  return (
+    <ObjectiveButton
+      style={{ elevation: 4 }}
+      active={objective === level}
+      onPress={onPress}
+    >
+      <ObjectiveText active={objective === level}>{children}</ObjectiveText>
+      {description &&
+        <Description active={objective === level}>{description}</Description>
+      }
+    </ObjectiveButton>
+  );
+}
 
 export default function Objective({ navigation }) {
   const dispatch = useDispatch();
   const calorieIntake = useSelector(state => state.user.calorieIntake);
+  const objective = useSelector(state => state.user.objective);
 
   function handleObjective(objective) {
     dispatch(changeObjective(objective));
@@ -26,36 +48,41 @@ export default function Objective({ navigation }) {
     }
   }
   return (
-    <View>
-      <Text>Objective</Text>
-      <Button
-        title="Difficulty"
-        onPress={() => navigation.navigate('Difficulty')}
-      />
+    <Container>
+      <Headline>Qual o seu objetivo?</Headline>
 
-      <Button
-        style={{ marginTop: 15 }}
-        title="maintainWeight"
+      <Card
+        objective={objective}
+        level="maintainWeight"
         onPress={() => handleObjective('maintainWeight')}
-      />
+      // description="Sentado na maior parte do tempo (ex.: trabalho em escritório)"
+      >
+        Manter Peso
+      </Card>
 
-      <Button
-        style={{ marginTop: 15 }}
-        title="gainMuscle"
+      <Card
+        objective={objective}
+        level="gainMuscle"
         onPress={() => handleObjective('gainMuscle')}
-      />
+      // description="Em pé na maior parte do tempo (ex.: professor)"
+      >
+        Ganhar Massa Muscular
+      </Card>
 
-      <Button
-        style={{ marginTop: 15 }}
-        title="weightLoss"
+      <Card
+        objective={objective}
+        level="weightLoss"
         onPress={() => handleObjective('weightLoss')}
-      />
-    </View>
+      // description="Andando na maior parte do tempo (ex.: vendedor)"
+      >
+        Emagrecer
+      </Card>
+    </Container>
   );
 }
 
 Objective.navigationOptions = {
-  title: 'Objective',
+  title: 'Objetivo',
 };
 
 Objective.propTypes = {

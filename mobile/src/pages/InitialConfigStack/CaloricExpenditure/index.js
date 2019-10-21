@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Animated } from 'react-native';
 import { differenceInCalendarYears, parseISO } from 'date-fns';
 
 import { changeCalorieIntake } from '~/store/modules/user/actions';
 
 import calculateCalories from '~/lib/scripts/dietScript';
 
-// import { Container } from './styles';
+import { Container, Headline, KcalIntake, Kcal, DashButton, DashText, BuildButton, BuildText } from './styles';
 
 export default function CaloricExpenditure({ navigation }) {
   const dispatch = useDispatch();
 
+  const name = useSelector(state => state.user.name);
   const calorieIntake = useSelector(state => state.user.calorieIntake);
   const birthday = useSelector(state => state.user.birthday);
   const height = useSelector(state => state.user.height);
@@ -31,24 +32,38 @@ export default function CaloricExpenditure({ navigation }) {
     dispatch(changeCalorieIntake(calculatedKcal));
   }, [birthday, dispatch, gender, height, physicalActivity, weight]);
 
+  const firstName = useMemo(() => {
+    return name.split(' ')[0]
+  }, [name])
+
+
+  // useEffect(() => {
+  //   Animated.timing(calorie, {
+  //     toValue: 100,
+  //     duration: 5000
+  //   }).start()
+  // }, [calorieIntake])
+
   return (
-    <View>
-      <Text>CaloricExpenditure</Text>
-      <Button
-        title="Build Diet Plan"
-        onPress={() => navigation.navigate('Objective')}
-      />
-      <Button
-        title="Dashboard"
-        onPress={() => navigation.navigate('Dashboard')}
-      />
-      <Text>{calorieIntake}</Text>
-    </View>
+    <Container>
+      <Headline>{firstName}, você tem um gasto calórico diário de aproximadamente</Headline>
+      <KcalIntake>{calorieIntake}</KcalIntake>
+      <Kcal>kcal</Kcal>
+
+      <BuildButton
+        style={{ elevation: 10 }}
+        onPress={() => navigation.navigate('Objective')} >
+        <BuildText>Montar Dieta</BuildText>
+      </BuildButton>
+      <DashButton onPress={() => navigation.navigate('Dashboard')} >
+        <DashText>Ir para a Home</DashText>
+      </DashButton>
+    </Container>
   );
 }
 
 CaloricExpenditure.navigationOptions = {
-  title: 'CaloricExpenditure',
+  title: 'Gasto Calórico',
 };
 
 CaloricExpenditure.propTypes = {
