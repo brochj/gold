@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { FlatList, Button } from 'react-native';
+import { Text, FlatList, Button, Alert } from 'react-native';
 
 import {
   ActionButton,
@@ -19,11 +19,14 @@ import {
   ChangeCalorieIcon,
   Input,
   TextCalories,
+  SwitchContainer,
+  SwitchButton,
+  SwitchText,
 } from './styles';
 
 import { createMultipleMealsRequest } from '~/store/modules/meal/actions';
 
-function MealItem({ data, editMode, changeCalorie }) {
+function MealItem({ data, editMode, changeCalorie, onDelete }) {
   function handleEditCalorie() {
     editMode();
   }
@@ -36,24 +39,26 @@ function MealItem({ data, editMode, changeCalorie }) {
   );
 
   return (
-    <MealCard>
-      <Header>
-        <Title>{data.title}</Title>
-        <Title>{data.isSelected}</Title>
+    <MealCard >
+      <Header >
+        <Title onLongPress={onDelete}>{data.title}</Title>
         <ActionButton onPress={handleEditCalorie}>
           {data.isSelected ? (
             <ActionIcon name="done" size={28} />
           ) : (
-            <ActionIcon />
-          )}
+              <ActionIcon />
+            )}
         </ActionButton>
       </Header>
       <Divider />
-      <DailyPercent> 20% das calorias diárias</DailyPercent>
+      {/* <DailyPercent onLongPress={onDelete}> 20% das calorias diárias</DailyPercent> */}
       {data.isSelected ? (
         <Content>
-          <ChangeCalorieIcon name="remove-circle" />
+          {/* <ChangeCalorieIcon name="remove-circle" /> */}
+          <CalorieIcon />
+
           <Input
+
             value={String(data.calorie)}
             autoFocus
             onChangeText={text =>
@@ -63,16 +68,16 @@ function MealItem({ data, editMode, changeCalorie }) {
             keyboardType="phone-pad"
             maxLength={4}
           />
-          <ChangeCalorieIcon name="add-circle" />
+          {/* <ChangeCalorieIcon name="add-circle" /> */}
           <CalorieText>kcal</CalorieText>
         </Content>
       ) : (
-        <Content>
-          <CalorieIcon />
-          <Calorie onPress={handleEditCalorie}>{data.calorie}</Calorie>
-          <CalorieText>kcal</CalorieText>
-        </Content>
-      )}
+          <Content>
+            <CalorieIcon />
+            <Calorie onPress={handleEditCalorie} onLongPress={onDelete}>{data.calorie}</Calorie>
+            <CalorieText>kcal</CalorieText>
+          </Content>
+        )}
     </MealCard>
   );
 }
@@ -88,20 +93,27 @@ MealItem.propTypes = {
   changeCalorie: PropTypes.func.isRequired,
 };
 
+function Switch({ numberOfMeals, number, title, onPress, }) {
+  return (
+    <SwitchButton
+      style={{ elevation: 4 }}
+      active={numberOfMeals === number}
+      onPress={onPress}
+    >
+      <SwitchText active={numberOfMeals === number}>{title}</SwitchText>
+
+    </SwitchButton>
+  );
+}
+
 export default function MealsCalories({ navigation }) {
   const dispatch = useDispatch();
   const calorieGoal = useSelector(state => state.user.calorieGoal);
   const dietPlanId = useSelector(state => state.dietPlan.id);
 
-  const apiMeals = [
-    { id: 31, calorie: 250, title: 'Café da manhã' },
-    { id: 33, calorie: 180, title: 'Lanche da manhã' },
-    { id: 34, calorie: 550, title: 'Almoço' },
-    { id: 35, calorie: 250, title: 'Lanche da tarde' },
-    { id: 36, calorie: 250, title: 'Jantar' },
-    { id: 37, calorie: 150, title: 'Pré-treino' },
-    { id: 38, calorie: 250, title: 'Pós-treino' },
-  ];
+  const apiMeals = [];
+
+  const [numberOfMeals, setNumberOfMeals] = useState(4);
 
   const [meals, setMeals] = useState(
     apiMeals.map(meal => ({
@@ -109,6 +121,37 @@ export default function MealsCalories({ navigation }) {
       isSelected: false,
     }))
   );
+
+  useEffect(() => {
+    switch (numberOfMeals) {
+      case 3:
+        setMeals([
+          { id: 1, calorie: Math.round(calorieGoal * .325), title: 'Café da manhã' },
+          { id: 2, calorie: Math.round(calorieGoal * .375), title: 'Almoço' },
+          { id: 3, calorie: Math.round(calorieGoal * .30), title: 'Jantar' },
+        ]);
+        break;
+      case 4:
+        setMeals([
+          { id: 1, calorie: Math.round(calorieGoal * .275), title: 'Café da manhã' },
+          { id: 2, calorie: Math.round(calorieGoal * .075), title: 'Lanche da manhã ou da tarde' },
+          { id: 3, calorie: Math.round(calorieGoal * .375), title: 'Almoço' },
+          { id: 4, calorie: Math.round(calorieGoal * .275), title: 'Jantar' },
+        ]);
+        break;
+      case 5:
+        setMeals([
+          { id: 1, calorie: Math.round(calorieGoal * .275), title: 'Café da manhã' },
+          { id: 2, calorie: Math.round(calorieGoal * .075), title: 'Lanche da manhã' },
+          { id: 3, calorie: Math.round(calorieGoal * .375), title: 'Almoço' },
+          { id: 4, calorie: Math.round(calorieGoal * .075), title: 'Lanche da tarde' },
+          { id: 5, calorie: Math.round(calorieGoal * .275), title: 'Jantar' },
+        ]);
+        break;
+      default:
+        break;
+    }
+  }, [numberOfMeals])
 
   const totalCalories = useMemo(
     () => meals.reduce((a, b) => +a + +b.calorie, 0),
@@ -139,27 +182,82 @@ export default function MealsCalories({ navigation }) {
     [meals]
   );
 
+  const handleDelete = useCallback(
+    (index) => {
+      Alert.alert(
+        'Alerta',
+        'Você deseja excluir essa refeição',
+        [
+          {
+            text: 'Cancelar',
+            onPress: () => { },
+            style: 'cancel',
+          },
+          {
+            text: 'OK', onPress: () => {
+              const newMeals = meals
+              newMeals.splice(index, 1)
+              setMeals(newMeals)
+            }
+          },
+        ],
+        { cancelable: false },
+      );
+
+    },
+    [meals]
+  );
+
+
+  // function handleNumberOfMeals(num){
+
+  // }
+
+
   function handleCreateMeals() {
     dispatch(createMultipleMealsRequest(meals, dietPlanId));
   }
 
   return (
     <Container>
-      <Button
+      {/* <Button
         title="Dashboard"
         onPress={() => navigation.navigate('Dashboard')}
       />
-      <Button title="Create Meals" onPress={handleCreateMeals} />
+
+      <Button title="Create Meals" onPress={handleCreateMeals} /> */}
+      <SwitchContainer>
+        <Switch
+          title="3 Refeições"
+          numberOfMeals={numberOfMeals}
+          number={3}
+          onPress={() => setNumberOfMeals(3)}
+        />
+        <Switch
+          title="4 Refeições"
+          numberOfMeals={numberOfMeals}
+          number={4}
+          onPress={() => setNumberOfMeals(4)}
+        />
+        <Switch
+          title="5 Refeições"
+          numberOfMeals={numberOfMeals}
+          number={5}
+          onPress={() => setNumberOfMeals(5)}
+        />
+      </SwitchContainer>
       <TextCalories>Sua meta é {calorieGoal} kcal</TextCalories>
       <TextCalories>A soma atual é {totalCalories} kcal</TextCalories>
       <FlatList
         data={meals}
         extraData={meals}
         keyExtractor={item => String(item.id)}
+        contentContainerStyle={{ paddingBottom: 50 }}
         renderItem={({ item, index }) => (
           <MealItem
             data={item}
             editMode={() => handleEditMode(index)}
+            onDelete={() => handleDelete(index)}
             changeCalorie={calorie => handleChangeCalorie(calorie, index)}
           />
         )}
@@ -173,3 +271,8 @@ MealsCalories.propTypes = {
     navigate: PropTypes.func,
   }).isRequired,
 };
+
+
+MealsCalories.navigationOptions = {
+  title: 'Refeições'
+}

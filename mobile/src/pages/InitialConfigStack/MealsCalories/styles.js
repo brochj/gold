@@ -96,3 +96,19 @@ export const TextCalories = styled.Text`
 export const DishContent = styled.View`
   padding: 5px;
 `;
+
+export const SwitchContainer = styled.View`
+  flex-direction: row;
+  justify-content: center;
+`;
+export const SwitchButton = styled.TouchableOpacity`
+  flex: 1;
+  align-items: center;
+  background: ${props => (props.active ? '#196a65' : '#fafafa')};
+  padding: 10px 0;
+`;
+export const SwitchText = styled.Text`
+  padding: 5px;
+  color: ${props => (props.active ? '#fafafa' : 'rgba(0,0,0,0.7)')};
+  font-size: 15px;
+`;
