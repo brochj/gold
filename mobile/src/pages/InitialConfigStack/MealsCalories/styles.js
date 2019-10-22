@@ -14,7 +14,7 @@ export const MealCard = styled.View.attrs({
   shadowOpacity: 0.37,
   shadowRadius: 7.49,
 
-  elevation: 12,
+  elevation: 6,
 })`
   background: #fff;
   margin: 10px 15px 15px;
@@ -91,6 +91,8 @@ export const Input = styled.TextInput`
 export const TextCalories = styled.Text`
   font-size: 20px;
   align-self: center;
+  color: rgba(0, 0, 0, 0.5);
+  padding-top: 10px;
 `;
 
 export const DishContent = styled.View`
@@ -101,14 +103,24 @@ export const SwitchContainer = styled.View`
   flex-direction: row;
   justify-content: center;
 `;
+
 export const SwitchButton = styled.TouchableOpacity`
   flex: 1;
   align-items: center;
   background: ${props => (props.active ? '#196a65' : '#fafafa')};
   padding: 10px 0;
 `;
+
 export const SwitchText = styled.Text`
   padding: 5px;
   color: ${props => (props.active ? '#fafafa' : 'rgba(0,0,0,0.7)')};
   font-size: 15px;
+`;
+
+export const Confirm = styled.Text`
+  background: #196a65;
+  color: #fafafa;
+  font-size: 20px;
+  padding: 10px 10px;
+  text-align: center;
 `;

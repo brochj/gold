@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Text, FlatList, Button, Alert } from 'react-native';
+import { Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 
 import {
   ActionButton,
@@ -22,6 +22,7 @@ import {
   SwitchContainer,
   SwitchButton,
   SwitchText,
+  Confirm,
 } from './styles';
 
 import { createMultipleMealsRequest } from '~/store/modules/meal/actions';
@@ -123,6 +124,10 @@ export default function MealsCalories({ navigation }) {
   );
 
   useEffect(() => {
+    navigation.setParams({ meals })
+  }, [meals])
+
+  useEffect(() => {
     switch (numberOfMeals) {
       case 3:
         setMeals([
@@ -141,11 +146,11 @@ export default function MealsCalories({ navigation }) {
         break;
       case 5:
         setMeals([
-          { id: 1, calorie: Math.round(calorieGoal * .275), title: 'Café da manhã' },
+          { id: 1, calorie: Math.round(calorieGoal * .250), title: 'Café da manhã' },
           { id: 2, calorie: Math.round(calorieGoal * .075), title: 'Lanche da manhã' },
-          { id: 3, calorie: Math.round(calorieGoal * .375), title: 'Almoço' },
+          { id: 3, calorie: Math.round(calorieGoal * .350), title: 'Almoço' },
           { id: 4, calorie: Math.round(calorieGoal * .075), title: 'Lanche da tarde' },
-          { id: 5, calorie: Math.round(calorieGoal * .275), title: 'Jantar' },
+          { id: 5, calorie: Math.round(calorieGoal * .250), title: 'Jantar' },
         ]);
         break;
       default:
@@ -209,17 +214,13 @@ export default function MealsCalories({ navigation }) {
   );
 
 
-  // function handleNumberOfMeals(num){
-
-  // }
-
-
   function handleCreateMeals() {
     dispatch(createMultipleMealsRequest(meals, dietPlanId));
   }
 
   return (
     <Container>
+
       {/* <Button
         title="Dashboard"
         onPress={() => navigation.navigate('Dashboard')}
@@ -253,6 +254,7 @@ export default function MealsCalories({ navigation }) {
         extraData={meals}
         keyExtractor={item => String(item.id)}
         contentContainerStyle={{ paddingBottom: 50 }}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => (
           <MealItem
             data={item}
@@ -262,6 +264,13 @@ export default function MealsCalories({ navigation }) {
           />
         )}
       />
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Dashboard');
+          handleCreateMeals();
+        }}>
+        <Confirm>Finalizar</Confirm>
+      </TouchableOpacity>
     </Container>
   );
 }
@@ -273,6 +282,12 @@ MealsCalories.propTypes = {
 };
 
 
-MealsCalories.navigationOptions = {
-  title: 'Refeições'
-}
+MealsCalories.navigationOptions = ({ navigation, ...rest }) => ({
+  title: 'Refeições',
+  // headerRight: (
+  //   <Text style={{ marginRight: 15, fontSize: 17 }}
+  //     // onPress={() => navigation.navigate('Dashboard')}
+  //     onPress={() => console.tron.log(navigation.getParam('meals', []))}
+  //   >Finalizar</Text>
+  // )
+});
