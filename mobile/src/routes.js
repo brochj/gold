@@ -63,7 +63,7 @@ export default (isSigned = false) =>
         InitialConfigStack,
       },
       {
-        initialRouteName: isSigned ? 'InitialConfigStack' : 'Sign',
+        initialRouteName: isSigned ? 'MainBottomTab' : 'Sign',
       }
     )
   );
