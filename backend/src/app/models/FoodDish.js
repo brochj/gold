@@ -6,7 +6,7 @@ class FoodDish extends Model {
       {},
       {
         freezeTableName: true,
-        tableName: 'food-dish',
+        tableName: 'food_dish',
         sequelize,
       }
     );
