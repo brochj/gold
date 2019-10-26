@@ -22,8 +22,9 @@ export function* signIn({ payload }) {
     yield put(signInSuccess(token, user));
 
     // history.push('/dashboard');
-  } catch (eer) {
-    Alert.alert('Error', 'Falha na autenticação, verifique seus dados');
+  } catch (err) {
+    Alert.alert('Error',
+      `Falha na autenticação, verifique seus dados. (${err.response.data.error})`);
     yield put(signFailure());
   }
 }

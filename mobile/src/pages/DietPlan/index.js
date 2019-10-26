@@ -23,7 +23,7 @@ export default function DietPlan({ navigation }) {
   const [resfreshing, setResfreshing] = useState(false);
 
   useEffect(() => {
-    if (!meals) {
+    if (meals.length === 0) {
       dispatch(getMealsRequest(dietPlanId));
     }
   }, [dietPlanId, dispatch, meals]);

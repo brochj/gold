@@ -5,6 +5,7 @@ import user from './user/reducer';
 import dietPlan from './dietPlan/reducer';
 import meal from './meal/reducer';
 import dish from './dish/reducer';
+import recipe from './recipe/reducer';
 
 export default combineReducers({
   auth,
@@ -12,4 +13,5 @@ export default combineReducers({
   dietPlan,
   meal,
   dish,
+  recipe,
 });

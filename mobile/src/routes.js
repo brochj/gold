@@ -6,14 +6,13 @@ import { createStackNavigator } from 'react-navigation-stack';
 import SignIn from '~/pages/SignIn';
 import SignUp from '~/pages/SignUp';
 
-
 import Dashboard from '~/pages/Dashboard';
 import DietPlan from '~/pages/DietPlan';
 import Meal from '~/pages/Meal';
-import Recipes from '~/pages/Recipes';
-import ShowRecipe from '~/pages/ShowRecipe';
 
-import InitialConfigStack from '~/pages/InitialConfigStack'
+import RecipeStack from '~/pages/RecipeStack';
+
+import InitialConfigStack from '~/pages/InitialConfigStack';
 
 // import PhysicalActivity from '~/pages/InitialConfigStack/PhysicalActivity';
 // import Difficulty from '~/pages/InitialConfigStack/Difficulty';
@@ -34,8 +33,7 @@ export default (isSigned = false) =>
         MainBottomTab: createMaterialBottomTabNavigator(
           {
             Dashboard,
-            Recipes,
-            ShowRecipe,
+            RecipeStack,
             DietPlanStack: createStackNavigator(
               {
                 DietPlan,
@@ -51,7 +49,7 @@ export default (isSigned = false) =>
             ),
           },
           {
-            initialRouteName: 'Recipes',
+            initialRouteName: 'RecipeStack',
             activeColor: '#fff',
             inactiveColor: '#ddd',
             // shifting: true,
