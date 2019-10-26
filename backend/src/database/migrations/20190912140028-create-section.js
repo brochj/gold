@@ -20,11 +20,11 @@ module.exports = {
       },
       title: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       steps: {
         type: Sequelize.TEXT('long'),
-        allowNull: true,
+        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,

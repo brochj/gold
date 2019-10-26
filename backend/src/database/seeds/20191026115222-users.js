@@ -1,8 +1,10 @@
 const faker = require('faker'); // eslint-disable-line
 
+const numberOf = require('../../config/seeds');
+
 const users = [];
 
-for (let i = 1; i <= 15; i += 1) {
+for (let i = 1; i <= numberOf.users; i += 1) {
   const date = new Date();
   users.push({
     id: i,
@@ -10,7 +12,7 @@ for (let i = 1; i <= 15; i += 1) {
     email: faker.internet.email(),
     password_hash:
       '$2a$08$yIzw6uZsyKum50NU8qp9h.rCfwghMB49rigY3LrVB4WGwH08JUN46',
-    birthday: faker.date.past(10, date),
+    birthday: faker.date.past(80, date),
     height: faker.random.number({ min: 30, max: 250 }),
     weight: faker.finance.amount(30, 300, 1),
     gender: faker.random.arrayElement(['male', 'female']),

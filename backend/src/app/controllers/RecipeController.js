@@ -155,7 +155,7 @@ class RecipeController {
           {
             model: RecipeFile,
             as: 'cover',
-            attributes: ['id', 'url'],
+            attributes: ['id', 'url', 'path'],
           },
         ],
       });
@@ -185,7 +185,7 @@ class RecipeController {
         {
           model: RecipeFile,
           as: 'cover',
-          attributes: ['id', 'url'],
+          attributes: ['id', 'url', 'path'],
         },
       ],
     });

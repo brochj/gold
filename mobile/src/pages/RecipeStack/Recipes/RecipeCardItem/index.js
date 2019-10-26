@@ -11,7 +11,7 @@ import bolo from '~/res/images/recipes/bolo.jpg';
 import styles from './styles';
 
 export default function RecipeCardItem({ data, onPress }) {
-  const { id, name, preparation_time, servings, difficulty } = data;
+  const { id, name, preparation_time, servings, difficulty, cover } = data;
   let ptbrDifficulty;
 
   switch (difficulty) {

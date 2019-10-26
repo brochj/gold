@@ -14,7 +14,7 @@ module.exports = {
         onDelete: 'SET NULL',
         allowNull: true,
       },
-      recipe_file_id: {
+      cover_id: {
         type: Sequelize.INTEGER,
         references: { model: 'recipe_file', key: 'id' },
         onUpdate: 'CASCADE',

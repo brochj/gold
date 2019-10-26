@@ -1,12 +1,13 @@
 const faker = require('faker'); // eslint-disable-line
+const numberOf = require('../../config/seeds');
 
 const recipes = [];
 
-for (let i = 1; i <= 1500; i += 1) {
+for (let i = 1; i <= numberOf.recipes; i += 1) {
   const date = new Date();
   recipes.push({
-    user_id: faker.random.number({ min: 1, max: 15 }),
-    recipe_file_id: faker.random.number({ min: 1, max: 12 }),
+    user_id: faker.random.number({ min: 1, max: numberOf.users }),
+    cover_id: faker.random.number({ min: 1, max: 12 }),
     name: faker.lorem.sentence(faker.random.number({ min: 1, max: 7 })),
     description: faker.lorem.sentences(
       faker.random.number({ min: 1, max: 7 }),
