@@ -10,7 +10,10 @@ for (let i = 1; i <= 15; i += 1) {
     email: faker.internet.email(),
     password_hash:
       '$2a$08$yIzw6uZsyKum50NU8qp9h.rCfwghMB49rigY3LrVB4WGwH08JUN46',
-    avatar_id: null,
+    birthday: faker.date.past(10, date),
+    height: faker.random.number({ min: 30, max: 250 }),
+    weight: faker.finance.amount(30, 300, 1),
+    gender: faker.random.arrayElement(['male', 'female']),
     created_at: date,
     updated_at: date,
   });
@@ -18,11 +21,11 @@ for (let i = 1; i <= 15; i += 1) {
 
 module.exports = {
   up: async queryInterface => {
-    await queryInterface.bulkInsert('users', users, {});
+    await queryInterface.bulkInsert('user', users, {});
     await queryInterface.sequelize.query(
-      `ALTER SEQUENCE "users_id_seq" RESTART WITH ${users.length + 1}`
+      `ALTER SEQUENCE "user_id_seq" RESTART WITH ${users.length + 1}`
     );
   },
 
-  down: queryInterface => queryInterface.bulkDelete('users', null, {}),
+  down: queryInterface => queryInterface.bulkDelete('user', null, {}),
 };

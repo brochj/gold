@@ -88,10 +88,10 @@ const files = [
 ];
 module.exports = {
   up: async queryInterface => {
-    await queryInterface.bulkInsert('files', files, {});
+    await queryInterface.bulkInsert('recipe_file', files, {});
     await queryInterface.sequelize.query(
-      `ALTER SEQUENCE "files_id_seq" RESTART WITH ${files.length + 1}`
+      `ALTER SEQUENCE "recipe_file_id_seq" RESTART WITH ${files.length + 1}`
     );
   },
-  down: queryInterface => queryInterface.bulkDelete('files', null, {}),
+  down: queryInterface => queryInterface.bulkDelete('recipe_file', null, {}),
 };

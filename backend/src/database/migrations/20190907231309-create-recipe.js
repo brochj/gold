@@ -26,7 +26,7 @@ module.exports = {
         allowNull: false,
       },
       description: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(1200),
         allowNull: true,
       },
       preparation_time: {
