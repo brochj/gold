@@ -4,4 +4,5 @@ module.exports = {
   sections: 500,
   dietPlans: 200, // >= users
   meals: 600, // >= 2*dietPlans
+  dishes: 1200, // >= 2*meals
 };
