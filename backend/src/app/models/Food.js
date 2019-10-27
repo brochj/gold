@@ -24,6 +24,10 @@ class Food extends Model {
       through: models.FoodDish,
       foreignKey: 'food_id',
     });
+    this.belongsToMany(models.Recipe, {
+      through: models.Ingredient,
+      foreignKey: 'recipe_id',
+    });
   }
 }
 
