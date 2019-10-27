@@ -9,4 +9,5 @@ module.exports = {
   foods: 200,
   foodDishes: 2400, // >= 2*dishes
   nutritionFacts: 200, // == foods
+  ingredients: 400, // >= recipes
 };
