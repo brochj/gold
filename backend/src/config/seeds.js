@@ -5,6 +5,8 @@ module.exports = {
   dietPlans: 200, // >= users
   meals: 600, // >= 2*dietPlans
   dishes: 1200, // >= 2*meals
-  RecipeDishes: 2400, // >= 2*dishes
+  recipeDishes: 2400, // >= 2*dishes
   foods: 200,
+  foodDishes: 2400, // >= 2*dishes
+  nutritionFacts: 200, // == foods
 };
