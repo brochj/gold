@@ -9,7 +9,7 @@ for (let i = 1; i <= numberOf.users; i += 1) {
   users.push({
     id: i,
     name: faker.name.findName(),
-    email: faker.internet.email(),
+    email: faker.internet.email().toLocaleLowerCase(),
     password_hash:
       '$2a$08$yIzw6uZsyKum50NU8qp9h.rCfwghMB49rigY3LrVB4WGwH08JUN46',
     birthday: faker.date.past(80, date),
