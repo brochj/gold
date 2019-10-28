@@ -3,6 +3,8 @@ import Recipe from '../models/Recipe';
 import Section from '../models/Section';
 import User from '../models/User';
 import RecipeFile from '../models/RecipeFile';
+import Ingredient from '../models/Ingredient';
+import Food from '../models/Food';
 
 class RecipeController {
   async store(req, res) {
@@ -156,6 +158,27 @@ class RecipeController {
             model: RecipeFile,
             as: 'cover',
             attributes: ['id', 'url', 'path'],
+          },
+          // {
+          //   model: Ingredient,
+          //   as: 'ingredients',
+          //   attributes: ['quantity', 'unit', 'preparation', 'tip'],
+          //   // include: [
+          //   //   {
+          //   //     model: Food,
+          //   //     as: 'ingredient',
+          //   //   },
+          //   // ],
+          // },
+          {
+            model: Food,
+            through: {
+              model: Ingredient,
+              attributes: ['quantity', 'unit', 'preparation', 'tip'],
+              as: 'food',
+            },
+            as: 'ingredients',
+            attributes: ['name', 'id', 'brand'],
           },
         ],
       });

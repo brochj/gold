@@ -31,6 +31,7 @@ class Recipe extends Model {
     this.belongsToMany(models.Food, {
       through: models.Ingredient,
       foreignKey: 'food_id',
+      as: 'ingredients',
     });
     this.belongsTo(models.RecipeFile, {
       foreignKey: 'cover_id',

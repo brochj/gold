@@ -28,6 +28,7 @@ class Food extends Model {
       through: models.Ingredient,
       foreignKey: 'recipe_id',
     });
+    // this.hasMany()
   }
 }
 
