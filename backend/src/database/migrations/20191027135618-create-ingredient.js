@@ -31,11 +31,11 @@ module.exports = {
       },
       preparation: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       tip: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,

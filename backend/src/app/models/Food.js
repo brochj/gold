@@ -19,7 +19,6 @@ class Food extends Model {
   }
 
   static associate(models) {
-    // this.hasMany(models.NutritionFact, { foreignKey: 'food_id' }); // necessário?
     this.belongsToMany(models.Dish, {
       through: models.FoodDish,
       foreignKey: 'food_id',
@@ -28,7 +27,6 @@ class Food extends Model {
       through: models.Ingredient,
       foreignKey: 'recipe_id',
     });
-    // this.hasMany()
   }
 }
 

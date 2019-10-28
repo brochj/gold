@@ -36,11 +36,18 @@ class RecipeController {
       .validate(req.body)
       .catch(e => res.status(400).json({ error: e.message }));
 
-    const { sections, ...recipeBasicInfo } = req.body;
+    const { sections, ingredients, ...recipeBasicInfo } = req.body;
 
     const { id } = await Recipe.create({
       user_id: req.userId,
       ...recipeBasicInfo,
+    });
+
+    await ingredients.forEach(async ingredient => {
+      await Ingredient.create({
+        ...ingredient,
+        recipe_id: id,
+      });
     });
 
     await sections.forEach(async section => {
@@ -51,16 +58,42 @@ class RecipeController {
     });
 
     const recipe = await Recipe.findOne({
-      where: { id },
+      where: { is_private: false, id },
       attributes: [
         'id',
-        'user_id',
         'name',
-        'description',
         'preparation_time',
         'servings',
+        'description',
         'difficulty',
-        'is_private',
+      ],
+      include: [
+        {
+          model: User,
+          as: 'creator',
+          attributes: ['id', 'name'],
+        },
+        {
+          model: RecipeFile,
+          as: 'cover',
+          attributes: ['id', 'url', 'path'],
+        },
+        {
+          model: Section,
+          as: 'sections',
+          attributes: ['id', 'title', 'order', 'steps'],
+        },
+        {
+          model: Food,
+          through: {
+            where: { recipe_id: id },
+            model: Ingredient,
+            attributes: ['quantity', 'unit', 'preparation', 'tip'],
+            as: 'food',
+          },
+          as: 'ingredients',
+          attributes: ['name', 'brand'],
+        },
       ],
     });
 
@@ -132,12 +165,8 @@ class RecipeController {
     const { page = 1 } = req.query;
 
     const { id } = req.params;
-    if (id) {
-      const savedSections = await Section.findAll({
-        where: { recipe_id: id },
-        attributes: ['id', 'order', 'recipe_id', 'title', 'steps'],
-      });
 
+    if (id) {
       const recipe = await Recipe.findOne({
         where: { is_private: false, id },
         attributes: [
@@ -159,31 +188,38 @@ class RecipeController {
             as: 'cover',
             attributes: ['id', 'url', 'path'],
           },
-          // {
-          //   model: Ingredient,
-          //   as: 'ingredients',
-          //   attributes: ['quantity', 'unit', 'preparation', 'tip'],
-          //   // include: [
-          //   //   {
-          //   //     model: Food,
-          //   //     as: 'ingredient',
-          //   //   },
-          //   // ],
-          // },
           {
-            model: Food,
-            through: {
-              model: Ingredient,
-              attributes: ['quantity', 'unit', 'preparation', 'tip'],
-              as: 'food',
-            },
-            as: 'ingredients',
-            attributes: ['name', 'id', 'brand'],
+            model: Section,
+            as: 'sections',
+            attributes: ['id', 'title', 'order', 'steps'],
           },
+          {
+            model: Ingredient,
+            where: { recipe_id: id },
+            as: 'ingredients',
+            attributes: ['quantity', 'unit', 'preparation', 'tip'],
+            include: [
+              {
+                model: Food,
+                as: 'food',
+                attributes: ['name', 'brand'],
+              },
+            ],
+          },
+          // {
+          //   model: Food,
+          //   through: {
+          //     model: Ingredient,
+          //     attributes: ['quantity', 'unit', 'preparation', 'tip'],
+          //     as: 'indredient',
+          //   },
+          //   as: 'ingre',
+          //   attributes: ['name', 'brand'],
+          // },
         ],
       });
 
-      return res.status(200).json({ recipe, sections: savedSections });
+      return res.status(200).json(recipe);
     }
 
     const recipes = await Recipe.findAll({
@@ -224,7 +260,7 @@ class RecipeController {
       return res.status(400).json({ error: 'Recipe does not exist' });
 
     const recipe = await Recipe.findOne({
-      where: { user_id: req.userId, id: req.params.id },
+      where: { user_id: req.userId, id },
     });
 
     if (!recipe)

@@ -10,7 +10,6 @@ class Recipe extends Model {
         servings: Sequelize.INTEGER,
         is_private: Sequelize.BOOLEAN,
         difficulty: Sequelize.ENUM('easy', 'medium', 'hard'),
-        sections: Sequelize.VIRTUAL,
       },
       {
         freezeTableName: true,
@@ -31,13 +30,17 @@ class Recipe extends Model {
     this.belongsToMany(models.Food, {
       through: models.Ingredient,
       foreignKey: 'food_id',
-      as: 'ingredients',
+      as: 'foods',
     });
     this.belongsTo(models.RecipeFile, {
       foreignKey: 'cover_id',
       as: 'cover',
     });
-    this.hasMany(models.Section, { foreignKey: 'recipe_id' });
+    this.hasMany(models.Section, { foreignKey: 'recipe_id', as: 'sections' });
+    this.hasMany(models.Ingredient, {
+      foreignKey: 'recipe_id',
+      as: 'ingredients',
+    });
   }
 }
 

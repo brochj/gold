@@ -14,11 +14,11 @@ class Ingredient extends Model {
         },
         preparation: {
           type: Sequelize.STRING,
-          allowNull: false,
+          allowNull: true,
         },
         tip: {
           type: Sequelize.STRING,
-          allowNull: false,
+          allowNull: true,
         },
       },
       {
@@ -29,6 +29,10 @@ class Ingredient extends Model {
     );
 
     return this;
+  }
+
+  static associate(models) {
+    this.belongsTo(models.Food, { foreignKey: 'food_id', as: 'food' });
   }
 }
 
