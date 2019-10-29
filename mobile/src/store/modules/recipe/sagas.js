@@ -14,7 +14,7 @@ export function* getRecipe({ payload }) {
   try {
     const response = yield call(api.get, `recipes/${recipeId}`);
 
-    const { sections, recipe } = response.data;
+    const { sections, ...recipeRest } = response.data;
 
     const newSections = sections.map(section => {
       const { steps, ...rest } = section;
@@ -24,7 +24,7 @@ export function* getRecipe({ payload }) {
       return newSection;
     });
 
-    yield put(getRecipeSuccess({ ...recipe, sections: newSections }));
+    yield put(getRecipeSuccess({ ...recipeRest, sections: newSections }));
   } catch (err) {
     Alert.alert(
       'Error',

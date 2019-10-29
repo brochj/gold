@@ -2,60 +2,57 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default class IngredientItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.stylesHeader = StyleSheet.create({
-      section: {
-        fontWeight: 'bold',
-        color: '#196a65',
-        fontSize: 20,
-        // backgroundColor: 'red',
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        textTransform: 'capitalize',
-      },
-    });
-    this.stylesItem = StyleSheet.create({
-      rowView: {
-        flexDirection: 'row',
-        paddingLeft: 10,
-      },
-      item: {
-        flex: 1,
-        fontSize: 18.5,
-        paddingLeft: 10,
-        paddingRight: 10,
-        textAlign: 'justify',
-      },
-      separator: {
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: '#eee',
-        height: 0.9,
-        paddingHorizontal: 20,
-        marginVertical: 10,
-      },
-    });
-  }
-
-  render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <View style={this.stylesItem.rowView}>
+export default function IngredientItem({ data }) {
+  return (
+    <View style={{ flex: 1 }}>
+      <View>
+        <View style={styles.rowView}>
           <Icon name="circle-medium" color="#196a65" size={25} />
-          {typeof this.props.data.unit === 'string' ? (
-            <Text style={this.stylesItem.item}>
-              {this.props.data.item} ({this.props.data.quantity}
-              {this.props.data.unit})
-            </Text>
-          ) : (
-            <Text style={this.stylesItem.item}>{this.props.data.item}</Text>
-          )}
+          <Text style={styles.item}>{data.quantity}</Text>
+          <Text style={styles.unit}>{data.unit}</Text>
+          <Text style={styles.item}>{data.food.name}</Text>
         </View>
-        <View style={this.stylesItem.separator} />
+        <Text style={styles.preparation}>Pré-preparo: {data.preparation}</Text>
+        {/* <Text style={styles.item}>({data.preparation})</Text> */}
+        <Text style={styles.tip}>{data.tip}</Text>
       </View>
-    );
-  }
+      <View style={styles.separator} />
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  rowView: {
+    flexDirection: 'row',
+    paddingLeft: 10,
+  },
+  separator: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#eee',
+    height: 0.9,
+    paddingHorizontal: 20,
+    marginVertical: 10,
+  },
+  item: {
+    fontSize: 18.5,
+    paddingLeft: 10,
+    textAlign: 'justify',
+    textAlignVertical: 'bottom',
+  },
+  unit: {
+    fontSize: 16,
+    paddingLeft: 3,
+    justifyContent: 'center',
+    textAlignVertical: 'bottom',
+  },
+  tip: {
+    color: 'rgba(0,0,0,0.5)',
+    paddingLeft: 30,
+    marginTop: 2,
+  },
+  preparation: {
+    fontSize: 16,
+    paddingLeft: 30,
+  },
+});

@@ -23,8 +23,10 @@ export function* signIn({ payload }) {
 
     // history.push('/dashboard');
   } catch (err) {
-    Alert.alert('Error',
-      `Falha na autenticação, verifique seus dados. (${err.response.data.error})`);
+    Alert.alert(
+      'Error',
+      `Falha na autenticação, verifique seus dados. (${err.response.data.error})`
+    );
     yield put(signFailure());
   }
 }

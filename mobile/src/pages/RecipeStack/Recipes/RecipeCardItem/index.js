@@ -44,7 +44,7 @@ export default function RecipeCardItem({ data, onPress }) {
         <View style={styles.row}>
           <Icon name="people" size={22} color="#666" />
           <Text style={styles.info} category="h6">
-            {servings === 1 ? `${servings  } porção` : `${servings  } porções`}
+            {servings === 1 ? `${servings} porção` : `${servings} porções`}
           </Text>
         </View>
         <View style={styles.row}>

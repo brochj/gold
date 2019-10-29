@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -13,7 +14,7 @@ import Tags from 'react-native-tags';
 import { useDispatch, useSelector } from 'react-redux';
 import R from '~/res/R';
 
-import IngredientsSection from './IngredientsSection';
+// import IngredientsSection from './IngredientsSection';
 import IngredientItem from './IngredientItem';
 import StepsSection from './StepsSection';
 import { capitalize } from '~/lib/scripts/stringScript';
@@ -30,6 +31,12 @@ export default function ShowRecipe({ navigation }) {
   // });
   // const [tags, SetTags] = useState([]);
   const recipe = useSelector(state => state.recipe.recipe);
+
+  const numberOfIngredients = useMemo(() => {
+    // if (recipe.ingredients.length > 0) {
+    //   return recipe.ingredients.length;
+    // }
+  }, []);
 
   useEffect(() => {
     const recipeId = navigation.getParam('id');
@@ -76,7 +83,7 @@ export default function ShowRecipe({ navigation }) {
               <View style={[styles.infoInsideView, styles.infoInsideRightView]}>
                 <Icon name="shopping-cart" size={25} color="#196A65" />
                 <Text style={styles.infoTxt}>
-                  {recipe.preparation_time} ingredientes
+                  {numberOfIngredients} ingredientes
                 </Text>
               </View>
               <View style={[styles.infoInsideView, styles.infoInsideRightView]}>
@@ -129,7 +136,11 @@ export default function ShowRecipe({ navigation }) {
             <Text style={styles.ingredientsTxt}>Ingredientes</Text>
           </View>
           <View style={[styles.separator, { marginBottom: 0, height: 0.9 }]} />
-          {/* <IngredientsSection data={recipe.ingredients} /> */}
+          <FlatList
+            data={recipe.ingredients}
+            renderItem={({ item }) => <IngredientItem data={item} />}
+            keyExtractor={item => item.id}
+          />
         </View>
 
         <View style={styles.intructionsView}>

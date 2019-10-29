@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { View, Text, Button, ScrollView } from 'react-native';
 
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { changeCalorieGoal } from '~/store/modules/user/actions';
 import { createDietPlanRequest } from '~/store/modules/dietPlan/actions';
 
@@ -20,7 +21,6 @@ import {
   Tip,
   Title,
 } from './styles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 function Card({ difficulty, level, children, onPress, description }) {
   return (
@@ -30,9 +30,9 @@ function Card({ difficulty, level, children, onPress, description }) {
       onPress={onPress}
     >
       <DifficultyText active={difficulty === level}>{children}</DifficultyText>
-      {difficulty === level &&
+      {difficulty === level && (
         <Description active={difficulty === level}>{description}</Description>
-      }
+      )}
     </DifficultyButton>
   );
 }
@@ -45,18 +45,23 @@ export default function Difficulty({ navigation }) {
   const physicalActivity = useSelector(state => state.user.physicalActivity);
   const [difficulty, setDifficulty] = useState(null);
 
-  const calorieDifference = useMemo(() => calorieGoal - calorieIntake, [calorieGoal])
+  const calorieDifference = useMemo(() => calorieGoal - calorieIntake, [
+    calorieGoal,
+    calorieIntake,
+  ]);
   const caloriePercent = useMemo(() => {
-    return (((calorieGoal / calorieIntake) - 1) * 100).toFixed(0)
-  }, [calorieGoal])
+    return ((calorieGoal / calorieIntake - 1) * 100).toFixed(0);
+  }, [calorieGoal, calorieIntake]);
 
-  const textDifference = useMemo(() =>
-    calorieDifference > 0 ? 'aumentando' : 'diminuindo'
-    , [calorieDifference])
+  const textDifference = useMemo(
+    () => (calorieDifference > 0 ? 'aumentando' : 'diminuindo'),
+    [calorieDifference]
+  );
 
-  const percentDifference = useMemo(() =>
-    calorieDifference > 0 ? 'um aumento' : 'uma diminuição'
-    , [calorieDifference])
+  const percentDifference = useMemo(
+    () => (calorieDifference > 0 ? 'um aumento' : 'uma diminuição'),
+    [calorieDifference]
+  );
 
   function handleDietPlan() {
     dispatch(
@@ -70,7 +75,7 @@ export default function Difficulty({ navigation }) {
   }
 
   function handleDifficulty(_difficulty) {
-    setDifficulty(_difficulty)
+    setDifficulty(_difficulty);
     // dispatch(changeDifficulty(_difficulty));
 
     if (objective === 'weightLoss') {
@@ -114,31 +119,47 @@ export default function Difficulty({ navigation }) {
       <CalorieGoal>Sua nova meta de calorias</CalorieGoal>
       <Input
         value={String(calorieGoal)}
-        onChangeText={text => dispatch(changeCalorieGoal(text.replace(/[^0-9]+/g, '')))}
+        onChangeText={text =>
+          dispatch(changeCalorieGoal(text.replace(/[^0-9]+/g, '')))
+        }
         maxLength={5}
-        keyboardType='phone-pad'
+        keyboardType="phone-pad"
       />
-      {difficulty &&
+      {difficulty && (
         <>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <Tip>Você está {textDifference} {calorieDifference} kcal em relação ao seu gasto calórico atual.</Tip>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Tip>
+              Você está {textDifference} {calorieDifference} kcal em relação ao
+              seu gasto calórico atual.
+            </Tip>
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <Tip>Isso representa {percentDifference} de {caloriePercent}%</Tip>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Tip>
+              Isso representa {percentDifference} de {caloriePercent}%
+            </Tip>
           </View>
         </>
-      }
+      )}
       {/* <Button
         title="Meals calories"
         onPress={() => navigation.navigate('MealsCalories')}
       /> */}
       {/* <Button title="Create diet plan" onPress={handleDietPlan} /> */}
       <View style={{ height: 1, backgroundColor: '#ddd', marginTop: 15 }} />
-      {!difficulty &&
-        <Title>Escolha um nível de dificuldade</Title>
-      }
+      {!difficulty && <Title>Escolha um nível de dificuldade</Title>}
       <ScrollView>
-
         <Card
           difficulty={difficulty}
           level="easy"
@@ -146,7 +167,7 @@ export default function Difficulty({ navigation }) {
           description="Fácil de manter a dieta. Sem muito stress"
         >
           Fácil
-      </Card>
+        </Card>
 
         <Card
           difficulty={difficulty}
@@ -155,7 +176,7 @@ export default function Difficulty({ navigation }) {
           description="Será um pouco mais difícil, porém sem esforços não há ganhos. Recomendado"
         >
           Médio
-      </Card>
+        </Card>
 
         <Card
           difficulty={difficulty}
@@ -164,23 +185,22 @@ export default function Difficulty({ navigation }) {
           description="Difícil de manter a dieta. Só para quem realmente está muito focado e sabe o que está fazendo."
         >
           Difícil
-      </Card>
+        </Card>
       </ScrollView>
 
-      {difficulty &&
+      {difficulty && (
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('MealsCalories');
             handleDietPlan();
-          }}>
+          }}
+        >
           <Confirm>Confirmar</Confirm>
         </TouchableOpacity>
-      }
-
+      )}
     </Container>
   );
 }
-
 
 Difficulty.navigationOptions = ({ navigation }) => ({
   title: 'Dificuldade da Dieta',

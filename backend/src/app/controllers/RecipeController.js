@@ -181,7 +181,7 @@ class RecipeController {
               {
                 model: Food,
                 as: 'food',
-                attributes: ['name', 'brand'],
+                attributes: ['id','name', 'brand'],
               },
             ],
           },

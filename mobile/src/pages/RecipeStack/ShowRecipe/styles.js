@@ -5,5 +5,4 @@ export default StyleSheet.create({
     backgroundColor: '#f2f2f2',
     flex: 1,
   },
-
 });

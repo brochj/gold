@@ -40,15 +40,15 @@ function MealItem({ data, editMode, changeCalorie, onDelete }) {
   );
 
   return (
-    <MealCard >
-      <Header >
+    <MealCard>
+      <Header>
         <Title onLongPress={onDelete}>{data.title}</Title>
         <ActionButton onPress={handleEditCalorie}>
           {data.isSelected ? (
             <ActionIcon name="done" size={28} />
           ) : (
-              <ActionIcon />
-            )}
+            <ActionIcon />
+          )}
         </ActionButton>
       </Header>
       <Divider />
@@ -59,7 +59,6 @@ function MealItem({ data, editMode, changeCalorie, onDelete }) {
           <CalorieIcon />
 
           <Input
-
             value={String(data.calorie)}
             autoFocus
             onChangeText={text =>
@@ -73,12 +72,14 @@ function MealItem({ data, editMode, changeCalorie, onDelete }) {
           <CalorieText>kcal</CalorieText>
         </Content>
       ) : (
-          <Content>
-            <CalorieIcon />
-            <Calorie onPress={handleEditCalorie} onLongPress={onDelete}>{data.calorie}</Calorie>
-            <CalorieText>kcal</CalorieText>
-          </Content>
-        )}
+        <Content>
+          <CalorieIcon />
+          <Calorie onPress={handleEditCalorie} onLongPress={onDelete}>
+            {data.calorie}
+          </Calorie>
+          <CalorieText>kcal</CalorieText>
+        </Content>
+      )}
     </MealCard>
   );
 }
@@ -94,7 +95,7 @@ MealItem.propTypes = {
   changeCalorie: PropTypes.func.isRequired,
 };
 
-function Switch({ numberOfMeals, number, title, onPress, }) {
+function Switch({ numberOfMeals, number, title, onPress }) {
   return (
     <SwitchButton
       style={{ elevation: 4 }}
@@ -102,7 +103,6 @@ function Switch({ numberOfMeals, number, title, onPress, }) {
       onPress={onPress}
     >
       <SwitchText active={numberOfMeals === number}>{title}</SwitchText>
-
     </SwitchButton>
   );
 }
@@ -124,39 +124,63 @@ export default function MealsCalories({ navigation }) {
   );
 
   useEffect(() => {
-    navigation.setParams({ meals })
-  }, [meals])
+    navigation.setParams({ meals });
+  }, [meals, navigation]);
 
   useEffect(() => {
     switch (numberOfMeals) {
       case 3:
         setMeals([
-          { id: 1, calorie: Math.round(calorieGoal * .325), title: 'Café da manhã' },
-          { id: 2, calorie: Math.round(calorieGoal * .375), title: 'Almoço' },
-          { id: 3, calorie: Math.round(calorieGoal * .30), title: 'Jantar' },
+          {
+            id: 1,
+            calorie: Math.round(calorieGoal * 0.325),
+            title: 'Café da manhã',
+          },
+          { id: 2, calorie: Math.round(calorieGoal * 0.375), title: 'Almoço' },
+          { id: 3, calorie: Math.round(calorieGoal * 0.3), title: 'Jantar' },
         ]);
         break;
       case 4:
         setMeals([
-          { id: 1, calorie: Math.round(calorieGoal * .275), title: 'Café da manhã' },
-          { id: 2, calorie: Math.round(calorieGoal * .075), title: 'Lanche da manhã ou da tarde' },
-          { id: 3, calorie: Math.round(calorieGoal * .375), title: 'Almoço' },
-          { id: 4, calorie: Math.round(calorieGoal * .275), title: 'Jantar' },
+          {
+            id: 1,
+            calorie: Math.round(calorieGoal * 0.275),
+            title: 'Café da manhã',
+          },
+          {
+            id: 2,
+            calorie: Math.round(calorieGoal * 0.075),
+            title: 'Lanche da manhã ou da tarde',
+          },
+          { id: 3, calorie: Math.round(calorieGoal * 0.375), title: 'Almoço' },
+          { id: 4, calorie: Math.round(calorieGoal * 0.275), title: 'Jantar' },
         ]);
         break;
       case 5:
         setMeals([
-          { id: 1, calorie: Math.round(calorieGoal * .250), title: 'Café da manhã' },
-          { id: 2, calorie: Math.round(calorieGoal * .075), title: 'Lanche da manhã' },
-          { id: 3, calorie: Math.round(calorieGoal * .350), title: 'Almoço' },
-          { id: 4, calorie: Math.round(calorieGoal * .075), title: 'Lanche da tarde' },
-          { id: 5, calorie: Math.round(calorieGoal * .250), title: 'Jantar' },
+          {
+            id: 1,
+            calorie: Math.round(calorieGoal * 0.25),
+            title: 'Café da manhã',
+          },
+          {
+            id: 2,
+            calorie: Math.round(calorieGoal * 0.075),
+            title: 'Lanche da manhã',
+          },
+          { id: 3, calorie: Math.round(calorieGoal * 0.35), title: 'Almoço' },
+          {
+            id: 4,
+            calorie: Math.round(calorieGoal * 0.075),
+            title: 'Lanche da tarde',
+          },
+          { id: 5, calorie: Math.round(calorieGoal * 0.25), title: 'Jantar' },
         ]);
         break;
       default:
         break;
     }
-  }, [numberOfMeals])
+  }, [calorieGoal, numberOfMeals]);
 
   const totalCalories = useMemo(
     () => meals.reduce((a, b) => +a + +b.calorie, 0),
@@ -188,31 +212,30 @@ export default function MealsCalories({ navigation }) {
   );
 
   const handleDelete = useCallback(
-    (index) => {
+    index => {
       Alert.alert(
         'Alerta',
         'Você deseja excluir essa refeição',
         [
           {
             text: 'Cancelar',
-            onPress: () => { },
+            onPress: () => {},
             style: 'cancel',
           },
           {
-            text: 'OK', onPress: () => {
-              const newMeals = meals
-              newMeals.splice(index, 1)
-              setMeals(newMeals)
-            }
+            text: 'OK',
+            onPress: () => {
+              const newMeals = meals;
+              newMeals.splice(index, 1);
+              setMeals(newMeals);
+            },
           },
         ],
-        { cancelable: false },
+        { cancelable: false }
       );
-
     },
     [meals]
   );
-
 
   function handleCreateMeals() {
     dispatch(createMultipleMealsRequest(meals, dietPlanId));
@@ -220,7 +243,6 @@ export default function MealsCalories({ navigation }) {
 
   return (
     <Container>
-
       {/* <Button
         title="Dashboard"
         onPress={() => navigation.navigate('Dashboard')}
@@ -268,7 +290,8 @@ export default function MealsCalories({ navigation }) {
         onPress={() => {
           navigation.navigate('Dashboard');
           handleCreateMeals();
-        }}>
+        }}
+      >
         <Confirm>Finalizar</Confirm>
       </TouchableOpacity>
     </Container>
@@ -280,7 +303,6 @@ MealsCalories.propTypes = {
     navigate: PropTypes.func,
   }).isRequired,
 };
-
 
 MealsCalories.navigationOptions = ({ navigation, ...rest }) => ({
   title: 'Refeições',

@@ -5,7 +5,13 @@ import { View, Text, Button } from 'react-native';
 
 import { changePhysicalActivity } from '~/store/modules/user/actions';
 
-import { Container, Headline, ActivityButton, ActivityText, Description } from './styles';
+import {
+  Container,
+  Headline,
+  ActivityButton,
+  ActivityText,
+  Description,
+} from './styles';
 
 function Card({ physicalActivity, level, children, onPress, description }) {
   return (
@@ -14,20 +20,19 @@ function Card({ physicalActivity, level, children, onPress, description }) {
       active={physicalActivity === level}
       onPress={onPress}
     >
-      <ActivityText
-        active={physicalActivity === level}
-      >{children}</ActivityText>
-      <Description
-        active={physicalActivity === level}
-      >{description}</Description>
+      <ActivityText active={physicalActivity === level}>
+        {children}
+      </ActivityText>
+      <Description active={physicalActivity === level}>
+        {description}
+      </Description>
     </ActivityButton>
   );
 }
 
 export default function PhysicalActivity({ navigation }) {
   const dispatch = useDispatch();
-  const physicalActivity = useSelector(state => state.user.physicalActivity)
-
+  const physicalActivity = useSelector(state => state.user.physicalActivity);
 
   function handlePhysicalActivity(level) {
     dispatch(changePhysicalActivity(level));
@@ -42,7 +47,8 @@ export default function PhysicalActivity({ navigation }) {
         level="light"
         onPress={() => handlePhysicalActivity('light')}
         description="Sentado na maior parte do tempo (ex.: trabalho em escritório)"
-      >LEVE
+      >
+        LEVE
       </Card>
 
       <Card
@@ -50,7 +56,8 @@ export default function PhysicalActivity({ navigation }) {
         level="moderate"
         onPress={() => handlePhysicalActivity('moderate')}
         description="Em pé na maior parte do tempo (ex.: professor)"
-      >MODERADO
+      >
+        MODERADO
       </Card>
 
       <Card
@@ -58,7 +65,8 @@ export default function PhysicalActivity({ navigation }) {
         level="high"
         onPress={() => handlePhysicalActivity('high')}
         description="Andando na maior parte do tempo (ex.: vendedor)"
-      >ALTO
+      >
+        ALTO
       </Card>
 
       <Card
@@ -66,10 +74,9 @@ export default function PhysicalActivity({ navigation }) {
         level="intense"
         onPress={() => handlePhysicalActivity('intense')}
         description="Trabalho que exige muita atividade (ex.: pedreiro)"
-      >INTENSO
+      >
+        INTENSO
       </Card>
-
-
     </Container>
   );
 }

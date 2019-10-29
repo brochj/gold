@@ -24,9 +24,9 @@ function Card({ objective, level, children, onPress, description }) {
       onPress={onPress}
     >
       <ObjectiveText active={objective === level}>{children}</ObjectiveText>
-      {description &&
+      {description && (
         <Description active={objective === level}>{description}</Description>
-      }
+      )}
     </ObjectiveButton>
   );
 }
@@ -55,7 +55,7 @@ export default function Objective({ navigation }) {
         objective={objective}
         level="maintainWeight"
         onPress={() => handleObjective('maintainWeight')}
-      // description="Sentado na maior parte do tempo (ex.: trabalho em escritório)"
+        // description="Sentado na maior parte do tempo (ex.: trabalho em escritório)"
       >
         Manter Peso
       </Card>
@@ -64,7 +64,7 @@ export default function Objective({ navigation }) {
         objective={objective}
         level="gainMuscle"
         onPress={() => handleObjective('gainMuscle')}
-      // description="Em pé na maior parte do tempo (ex.: professor)"
+        // description="Em pé na maior parte do tempo (ex.: professor)"
       >
         Ganhar Massa Muscular
       </Card>
@@ -73,7 +73,7 @@ export default function Objective({ navigation }) {
         objective={objective}
         level="weightLoss"
         onPress={() => handleObjective('weightLoss')}
-      // description="Andando na maior parte do tempo (ex.: vendedor)"
+        // description="Andando na maior parte do tempo (ex.: vendedor)"
       >
         Emagrecer
       </Card>

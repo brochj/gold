@@ -6,7 +6,7 @@ export default StyleSheet.create({
     marginBottom: 15,
     elevation: 4,
     marginHorizontal: 10,
-    borderRadius: 5
+    borderRadius: 5,
   },
 
   img: {
@@ -30,6 +30,6 @@ export default StyleSheet.create({
   },
 
   info: {
-    color: '#666'
-  }
+    color: '#666',
+  },
 });

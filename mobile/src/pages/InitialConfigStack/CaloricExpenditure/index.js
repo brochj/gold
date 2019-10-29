@@ -8,7 +8,16 @@ import { changeCalorieIntake } from '~/store/modules/user/actions';
 
 import calculateCalories from '~/lib/scripts/dietScript';
 
-import { Container, Headline, KcalIntake, Kcal, DashButton, DashText, BuildButton, BuildText } from './styles';
+import {
+  Container,
+  Headline,
+  KcalIntake,
+  Kcal,
+  DashButton,
+  DashText,
+  BuildButton,
+  BuildText,
+} from './styles';
 
 export default function CaloricExpenditure({ navigation }) {
   const dispatch = useDispatch();
@@ -33,9 +42,8 @@ export default function CaloricExpenditure({ navigation }) {
   }, [birthday, dispatch, gender, height, physicalActivity, weight]);
 
   const firstName = useMemo(() => {
-    return name.split(' ')[0]
-  }, [name])
-
+    return name.split(' ')[0];
+  }, [name]);
 
   // useEffect(() => {
   //   Animated.timing(calorie, {
@@ -46,16 +54,19 @@ export default function CaloricExpenditure({ navigation }) {
 
   return (
     <Container>
-      <Headline>{firstName}, você tem um gasto calórico diário de aproximadamente</Headline>
+      <Headline>
+        {firstName}, você tem um gasto calórico diário de aproximadamente
+      </Headline>
       <KcalIntake>{calorieIntake}</KcalIntake>
       <Kcal>kcal</Kcal>
 
       <BuildButton
         style={{ elevation: 10 }}
-        onPress={() => navigation.navigate('Objective')} >
+        onPress={() => navigation.navigate('Objective')}
+      >
         <BuildText>Montar Dieta</BuildText>
       </BuildButton>
-      <DashButton onPress={() => navigation.navigate('Dashboard')} >
+      <DashButton onPress={() => navigation.navigate('Dashboard')}>
         <DashText>Ir para a Home</DashText>
       </DashButton>
     </Container>

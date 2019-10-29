@@ -18,9 +18,7 @@ export default function StepsSection({ data }) {
           <Icon name="circle-medium" color="#196a65" size={25} />
           <Text style={stylesItem.item}>{item.text}</Text>
         </View>
-        {typeof item.tip === 'string' && (
-          <Text style={stylesItem.item}>{item.tip}</Text>
-        )}
+        {item.tip && <Text style={stylesItem.tip}>Dica: {item.tip}</Text>}
         <View style={stylesItem.separator} />
       </View>
     );
@@ -48,6 +46,7 @@ const stylesHeader = StyleSheet.create({
     textTransform: 'capitalize',
   },
 });
+
 const stylesItem = StyleSheet.create({
   rowView: {
     flexDirection: 'row',
@@ -67,5 +66,11 @@ const stylesItem = StyleSheet.create({
     height: 0.9,
     paddingHorizontal: 20,
     marginVertical: 10,
+  },
+  tip: {
+    color: 'rgba(0,0,0,0.5)',
+    fontSize: 15,
+    marginLeft: 30,
+    marginTop: 10,
   },
 });

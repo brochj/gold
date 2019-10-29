@@ -8,11 +8,11 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
-  ImageBackground
+  ImageBackground,
 } from 'react-native';
 import { signInRequest } from '~/store/modules/auth/actions';
 
-import bg from '~/assets/signin.jpeg'
+import bg from '~/assets/signin.jpeg';
 
 export default function SignIn({ navigation }) {
   const dispatch = useDispatch();
@@ -27,20 +27,16 @@ export default function SignIn({ navigation }) {
   }
 
   function handleSignUp() {
-    navigation.navigate('SignUp')
+    navigation.navigate('SignUp');
   }
 
   const passwordRef = useRef(null);
 
   return (
-    <ImageBackground source={bg} style={{ width: '100%', height: '100%' }
-    }>
+    <ImageBackground source={bg} style={{ width: '100%', height: '100%' }}>
       <View style={styles.container}>
         <View style={styles.body}>
-          {
-            email.length > 0 &&
-            <Text style={styles.labelTxt}>Email</Text>
-          }
+          {email.length > 0 && <Text style={styles.labelTxt}>Email</Text>}
           <TextInput
             style={styles.input}
             blurOnSubmit={false}
@@ -48,13 +44,10 @@ export default function SignIn({ navigation }) {
             returnKeyType="next"
             keyboardType="email-address"
             value={email}
-            onChangeText={text => setEmail(text.toLowerCase())}
+            onChangeText={text => setEmail(text)}
             onSubmitEditing={() => passwordRef.current.focus()}
           />
-          {
-            password.length > 0 &&
-            <Text style={styles.labelTxt}>Senha</Text>
-          }
+          {password.length > 0 && <Text style={styles.labelTxt}>Senha</Text>}
           <TextInput
             ref={passwordRef}
             style={styles.input}
@@ -63,23 +56,22 @@ export default function SignIn({ navigation }) {
             placeholder="Digite sua senha"
             value={password}
             onChangeText={text => setPassword(text)}
-            onSubmitEditing={() => { }}
+            onSubmitEditing={() => {}}
           />
           <TouchableOpacity style={styles.signInbutton} onPress={handleSignIn}>
             {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
-                <Text style={styles.buttonTxt}>Entrar</Text>
-              )}
+              <Text style={styles.buttonTxt}>Entrar</Text>
+            )}
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.signUpbutton} onPress={handleSignUp}>
             <Text style={styles.buttonTxt}>Criar conta grátis</Text>
           </TouchableOpacity>
-
         </View>
       </View>
-    </ImageBackground >
+    </ImageBackground>
   );
 }
 
@@ -105,7 +97,7 @@ const styles = StyleSheet.create({
     color: '#196A65',
     fontSize: 17,
     borderRadius: 5,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -126,7 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#196A65',
     borderRadius: 5,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -144,7 +136,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF961C',
     borderRadius: 5,
     marginTop: 10,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -153,7 +145,6 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
 
     elevation: 5,
-
   },
   buttonTxt: {
     color: '#fff',

@@ -3,14 +3,29 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Text, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
-import { format, differenceInYears } from 'date-fns'
-import pt from 'date-fns/locale/pt'
-import DateTimePicker from "react-native-modal-datetime-picker";
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { format, differenceInYears } from 'date-fns';
+import pt from 'date-fns/locale/pt';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { Container, Tip, Input, Body, Headline, Footer, Label, Button, BirthdayText, BirthdayButton, Gender, GenderText, Age } from './styles';
+import {
+  Container,
+  Tip,
+  Input,
+  Body,
+  Headline,
+  Footer,
+  Label,
+  Button,
+  BirthdayText,
+  BirthdayButton,
+  Gender,
+  GenderText,
+  Age,
+} from './styles';
 
-import { createRequest } from '~/store/modules/user/actions'
+import { createRequest } from '~/store/modules/user/actions';
+
 const labels = ['Nome', 'Email', 'Senha', 'Altura', 'Peso', 'Data', 'Sexo'];
 const customStyles = {
   stepIndicatorSize: 25,
@@ -39,10 +54,10 @@ const customStyles = {
 function TipText() {
   return (
     <Tip>
-      Essas informações serão necessárias para calcular suas calorias e
-            montar sua dieta. {'\u{1F4AA}'}
+      Essas informações serão necessárias para calcular suas calorias e montar
+      sua dieta. {'\u{1F4AA}'}
     </Tip>
-  )
+  );
 }
 
 export default function SignUp({ navigation }) {
@@ -59,7 +74,7 @@ export default function SignUp({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
   const signed = useSelector(state => state.auth.signed);
 
-  const opacity = new Animated.Value(0)
+  const opacity = new Animated.Value(0);
 
   const pageRef = useRef();
   const nameRef = useRef();
@@ -73,12 +88,11 @@ export default function SignUp({ navigation }) {
   function animateView() {
     Animated.timing(opacity, {
       toValue: 1,
-      duration: 500
+      duration: 500,
     }).start();
   }
 
   useEffect(() => {
-
     switch (page) {
       case 0:
         animateView();
@@ -110,11 +124,11 @@ export default function SignUp({ navigation }) {
       default:
         break;
     }
-  }, [page])
+  }, [animateView, page]);
 
   function handleSignUp() {
-    dispatch(createRequest(
-      {
+    dispatch(
+      createRequest({
         name,
         email,
         password,
@@ -122,34 +136,32 @@ export default function SignUp({ navigation }) {
         weight: weight.replace(',', '.'),
         height,
         gender,
-      }
-    ))
-
+      })
+    );
   }
 
   useEffect(() => {
     if (signed) {
-      navigation.navigate('InitialConfigStack')
+      navigation.navigate('InitialConfigStack');
     }
-  }, [signed])
-
+  }, [navigation, signed]);
 
   function handleBack() {
     if (page - 1 >= 0) {
-      setPage(page - 1)
+      setPage(page - 1);
     }
   }
 
   function handleNext() {
     if (page + 1 <= 6) {
-      setPage(page + 1)
+      setPage(page + 1);
     }
   }
 
   const age = useMemo(() => {
-    const years = differenceInYears(new Date(), birthday)
-    return `${years} anos`
-  }, [birthday])
+    const years = differenceInYears(new Date(), birthday);
+    return `${years} anos`;
+  }, [birthday]);
 
   return (
     <Container>
@@ -163,27 +175,25 @@ export default function SignUp({ navigation }) {
         }}
       />
 
-      {
-        page === 0 && (
-          <Animated.View style={{ ...styles.animatedView, opacity }}>
-            <Headline>Qual o seu nome?</Headline>
-            <Body>
-              <Input
-                ref={nameRef}
-                value={name}
-                placeholder="Digite seu nome"
-                onChangeText={text => setName(text.trim())}
-                textAlign="center"
-                autoFocus
-                autoCompleteType="name"
-                returnKeyType="next"
-                // blurOnSubmit={false}
-                onSubmitEditing={() => setPage(1)}
-
-              />
-            </Body>
-          </Animated.View>
-        )}
+      {page === 0 && (
+        <Animated.View style={{ ...styles.animatedView, opacity }}>
+          <Headline>Qual o seu nome?</Headline>
+          <Body>
+            <Input
+              ref={nameRef}
+              value={name}
+              placeholder="Digite seu nome"
+              onChangeText={text => setName(text.trim())}
+              textAlign="center"
+              autoFocus
+              autoCompleteType="name"
+              returnKeyType="next"
+              // blurOnSubmit={false}
+              onSubmitEditing={() => setPage(1)}
+            />
+          </Body>
+        </Animated.View>
+      )}
 
       {page === 1 && (
         <Animated.View style={{ ...styles.animatedView, opacity }}>
@@ -193,7 +203,7 @@ export default function SignUp({ navigation }) {
               ref={emailRef}
               value={email}
               placeholder="Digite seu email"
-              autoCapitalize='none'
+              autoCapitalize="none"
               onChangeText={text => setEmail(text.trim())}
               textAlign="center"
               returnKeyType="next"
@@ -202,7 +212,6 @@ export default function SignUp({ navigation }) {
               keyboardType="email-address"
               blurOnSubmit={false}
               onSubmitEditing={() => setPage(2)}
-
             />
           </Body>
         </Animated.View>
@@ -232,7 +241,7 @@ export default function SignUp({ navigation }) {
             style={styles.passwordIcon}
           >
             <Icon
-              name={showPassword ? "visibility" : "visibility-off"}
+              name={showPassword ? 'visibility' : 'visibility-off'}
               size={30}
               color="rgba(0,0,0,0.6)"
             />
@@ -276,7 +285,6 @@ export default function SignUp({ navigation }) {
               returnKeyType="next"
               blurOnSubmit={false}
               onSubmitEditing={() => setPage(5)}
-
             />
           </Body>
           <TipText />
@@ -288,26 +296,27 @@ export default function SignUp({ navigation }) {
           <Headline>Quando você nasceu?</Headline>
           <Age onPress={() => setShowDate(true)}>{age}</Age>
           <Body>
-            <BirthdayButton onPress={() => setShowDate(true)} >
-              <BirthdayText>{format(birthday, 'dd/MM/yyyy', { locale: pt })}</BirthdayText>
+            <BirthdayButton onPress={() => setShowDate(true)}>
+              <BirthdayText>
+                {format(birthday, 'dd/MM/yyyy', { locale: pt })}
+              </BirthdayText>
             </BirthdayButton>
-            {showDate &&
-
+            {showDate && (
               <DateTimePicker
                 isVisible={showDate}
                 date={birthday}
                 mode="date"
                 display="spinner"
                 datePickerModeAndroid="spinner"
-                onConfirm={(date) => {
-                  setBirthday(date)
-                  setShowDate(false)
+                onConfirm={date => {
+                  setBirthday(date);
+                  setShowDate(false);
                 }}
                 onCancel={() => setShowDate(false)}
                 maximumDate={new Date()}
                 minimumDate={new Date(1930, 1, 1)}
               />
-            }
+            )}
           </Body>
           <TipText />
         </Animated.View>
@@ -317,56 +326,54 @@ export default function SignUp({ navigation }) {
         <Animated.View style={{ ...styles.animatedView, opacity }}>
           <Headline>Qual o seu Sexo?</Headline>
           <Body>
-            <Gender active={gender === 'female'} onPress={() => {
-              setGender('female');
-            }}
+            <Gender
+              active={gender === 'female'}
+              onPress={() => {
+                setGender('female');
+              }}
             >
-              <GenderText active={gender === 'female'}>
-                Feminino
-              </GenderText>
+              <GenderText active={gender === 'female'}>Feminino</GenderText>
             </Gender>
 
-            <Gender active={gender === 'male'} onPress={() => {
-              setGender('male');
-            }}
+            <Gender
+              active={gender === 'male'}
+              onPress={() => {
+                setGender('male');
+              }}
             >
-              <GenderText active={gender === 'male'}>
-                Masculino
-              </GenderText>
+              <GenderText active={gender === 'male'}>Masculino</GenderText>
             </Gender>
-
           </Body>
           <TipText />
         </Animated.View>
       )}
 
       <Footer>
-        {page === 0 &&
+        {page === 0 && (
           <Button onPress={() => navigation.navigate('SignIn')}>
             <Label>Já tenho uma Conta</Label>
           </Button>
-        }
+        )}
 
-        {page !== 0 &&
+        {page !== 0 && (
           <Button onPress={() => handleBack()}>
             <Label>Voltar</Label>
           </Button>
-        }
+        )}
 
-        {page === 6 &&
-
+        {page === 6 && (
           <Button onPress={() => handleSignUp()}>
             <Label>Cadastrar</Label>
           </Button>
-        }
+        )}
 
-        {page !== 6 &&
+        {page !== 6 && (
           <Button onPress={() => handleNext()}>
             <Label>Avançar</Label>
           </Button>
-        }
+        )}
       </Footer>
-    </Container >
+    </Container>
   );
 }
 
@@ -380,7 +387,6 @@ SignUp.propTypes = {
   }).isRequired,
 };
 
-
 const styles = StyleSheet.create({
   animatedView: {
     flex: 1,
@@ -391,9 +397,8 @@ const styles = StyleSheet.create({
   passwordIcon: {
     zIndex: 1,
     alignSelf: 'stretch',
-    alignItems: "flex-end",
+    alignItems: 'flex-end',
     marginRight: 20,
     marginTop: -40,
-  }
-
-})
+  },
+});

@@ -11,9 +11,8 @@ export const Input = styled.TextInput`
   margin-top: 15px;
   text-align: center;
   font-family: Quicksand-Bold;
-  color: rgba(0,0,0,0.7)
+  color: rgba(0, 0, 0, 0.7);
 `;
-
 
 export const Container = styled.View`
   flex: 1;
@@ -54,26 +53,26 @@ export const Description = styled.Text`
 `;
 
 export const CalorieText = styled.Text`
-  color: rgba(0,0,0,0.7);
+  color: rgba(0, 0, 0, 0.7);
   font-size: 19px;
   text-align: center;
 `;
 
 export const CalorieValue = styled.Text`
-  color: rgba(0,0,0,0.7);
+  color: rgba(0, 0, 0, 0.7);
   font-size: 19px;
   text-align: center;
 `;
 
 export const Tip = styled.Text`
-  color: rgba(0,0,0,0.5);
+  color: rgba(0, 0, 0, 0.5);
   font-size: 17px;
   text-align: center;
   /* font-family: Quicksand-Regular; */
 `;
 
 export const CalorieGoal = styled.Text`
-  color: rgba(0,0,0,0.7);
+  color: rgba(0, 0, 0, 0.7);
   font-size: 24px;
   text-align: center;
   font-family: Quicksand-Bold;
@@ -81,7 +80,7 @@ export const CalorieGoal = styled.Text`
 `;
 
 export const Title = styled.Text`
-  color: rgba(0,0,0,0.4);
+  color: rgba(0, 0, 0, 0.4);
   font-size: 20px;
   margin-top: 20px;
 `;
@@ -93,5 +92,4 @@ export const Confirm = styled.Text`
   padding: 10px 10px;
   border-radius: 5px;
   text-align: center;
-  
 `;
