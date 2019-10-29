@@ -47,6 +47,11 @@ module.exports = {
         values: ['easy', 'medium', 'hard'],
         allowNull: false,
       },
+      active: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: true,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

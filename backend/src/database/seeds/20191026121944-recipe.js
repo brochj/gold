@@ -16,6 +16,7 @@ for (let i = 1; i <= numberOf.recipes; i += 1) {
     preparation_time: faker.random.number({ min: 1, max: 300 }),
     servings: faker.random.number({ min: 1, max: 30 }),
     is_private: faker.random.boolean(),
+    active: faker.random.boolean(),
     difficulty: faker.random.arrayElement(['easy', 'medium', 'hard']),
     created_at: date,
     updated_at: date,
