@@ -78,31 +78,10 @@ class RecipeController {
           as: 'cover',
           attributes: ['id', 'url', 'path'],
         },
-        {
-          model: Section,
-          as: 'sections',
-          attributes: ['id', 'title', 'order', 'steps'],
-        },
-        {
-          model: Food,
-          through: {
-            where: { recipe_id: id },
-            model: Ingredient,
-            attributes: ['quantity', 'unit', 'preparation', 'tip'],
-            as: 'food',
-          },
-          as: 'ingredients',
-          attributes: ['name', 'brand'],
-        },
       ],
     });
 
-    const savedSections = await Section.findAll({
-      where: { recipe_id: id },
-      attributes: ['id', 'order', 'recipe_id', 'title', 'steps'],
-    });
-
-    return res.json({ recipe, sections: savedSections });
+    return res.json(recipe);
   }
 
   async update(req, res) {
