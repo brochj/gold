@@ -19,7 +19,6 @@ class UserController {
         .max(250, 'height field: max value is 250')
         .required('height field is required'),
       weight: Yup.number()
-        .integer()
         .positive()
         .min(20, 'weight field: min value is 20')
         .max(500, 'weight field: max value is 500')
@@ -73,7 +72,6 @@ class UserController {
         .min(60, 'height field: min value is 60')
         .max(250, 'height field: max value is 250'),
       weight: Yup.number()
-        .integer()
         .positive()
         .min(20, 'weight field: min value is 20')
         .max(500, 'weight field: max value is 500'),
@@ -90,8 +88,8 @@ class UserController {
       confirmPassword: Yup.string().when('password', (password, field) =>
         password
           ? field
-              .required('please confirm your new password')
-              .oneOf([Yup.ref('password')])
+            .required('please confirm your new password')
+            .oneOf([Yup.ref('password')])
           : field
       ),
     });
