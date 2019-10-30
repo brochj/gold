@@ -171,17 +171,19 @@ class RecipeController {
             model: Section,
             as: 'sections',
             attributes: ['id', 'title', 'order', 'steps'],
+            required: false,
           },
           {
             model: Ingredient,
             where: { recipe_id: id },
             as: 'ingredients',
             attributes: ['quantity', 'unit', 'preparation', 'tip'],
+            required: false,
             include: [
               {
                 model: Food,
                 as: 'food',
-                attributes: ['id','name', 'brand'],
+                attributes: ['id', 'name', 'brand'],
               },
             ],
           },

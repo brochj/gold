@@ -13,6 +13,7 @@ import Meal from '~/pages/Meal';
 import RecipeStack from '~/pages/RecipeStack';
 
 import InitialConfigStack from '~/pages/InitialConfigStack';
+import ProfileStack from '~/pages/ProfileStack';
 
 // import PhysicalActivity from '~/pages/InitialConfigStack/PhysicalActivity';
 // import Difficulty from '~/pages/InitialConfigStack/Difficulty';
@@ -47,6 +48,7 @@ export default (isSigned = false) =>
                 },
               }
             ),
+            ProfileStack,
           },
           {
             initialRouteName: 'RecipeStack',

@@ -17,7 +17,7 @@ export function* create({ payload }) {
     const { user } = payload;
     const response = yield call(api.post, 'users', user);
 
-    console.tron.log('usuario', response.data);
+    // console.tron.log('usuario', response.data);
     yield put(createSuccess(response.data));
     yield put(signInRequest(user.email, user.password));
   } catch (err) {
@@ -33,7 +33,7 @@ export function* create({ payload }) {
 export function* update({ payload }) {
   if (!payload) return;
 
-  console.tron.log(payload);
+  // console.tron.log(payload);
 
   try {
     const response = yield call(api.put, 'users', payload);
@@ -42,7 +42,7 @@ export function* update({ payload }) {
 
     yield put(updateSuccess(user));
   } catch (err) {
-    Alert.alert('Error', `Falha na atualização, verifique seus dados ${err}`);
+    Alert.alert('Error', `Falha na atualização, verifique seus dados ${err.response.data.error}`);
 
     yield put(updateFailure());
   }

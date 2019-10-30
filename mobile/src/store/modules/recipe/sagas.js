@@ -28,7 +28,8 @@ export function* getRecipe({ payload }) {
   } catch (err) {
     Alert.alert(
       'Error',
-      `Falha em carregar essa receita. ${err.response.data.error}`
+      `Falha em carregar essa receita.`
+      // `Falha em carregar essa receita. ${err.response.data.error}`
     );
 
     yield put(recipeFailure());
