@@ -2,9 +2,6 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Text, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
-import { format, differenceInYears } from 'date-fns';
-import pt from 'date-fns/locale/pt';
-import DateTimePicker from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {
@@ -15,14 +12,9 @@ import {
   Footer,
   Label,
   Button,
-  BirthdayText,
-  BirthdayButton,
-  Gender,
-  GenderText,
-  Age,
 } from './styles';
 
-import { createRequest } from '~/store/modules/user/actions';
+import { updateRequest } from '~/store/modules/user/actions';
 
 function EyeIcon({ showPassword, onPress }) {
   return (
@@ -42,7 +34,6 @@ function EyeIcon({ showPassword, onPress }) {
 export default function Account({ navigation }) {
   const dispatch = useDispatch();
 
-  const signed = useSelector(state => state.auth.signed);
   const nameInit = useSelector(state => state.user.name);
   const emailInit = useSelector(state => state.user.email);
 
@@ -51,13 +42,11 @@ export default function Account({ navigation }) {
   const [oldPassword, setOldPassword] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [birthday, setBirthday] = useState(new Date());
-  const [weight, setWeight] = useState('');
-  const [height, setHeight] = useState('');
-  const [gender, setGender] = useState('');
-  const [page, setPage] = useState(0);
-  const [showDate, setShowDate] = useState(false);
+
+  const [showOldPassword, setShowOldPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [changePassword, setChangePassword] = useState(false);
 
 
@@ -65,31 +54,21 @@ export default function Account({ navigation }) {
   const nameRef = useRef();
   const emailRef = useRef();
   const oldPasswordRef = useRef();
+  const passwordRef = useRef();
+  const confirmPasswordRef = useRef();
   const weightRef = useRef();
   const heightRef = useRef();
   const birthdayRef = useRef();
   const genderRef = useRef();
 
 
-  function handleSignUp() {
+  function handleUserUpdate() {
     dispatch(
-      createRequest({
-        name,
+      updateRequest({
         email,
-        password,
-        birthday: format(birthday, "yyyy-MM-dd'T00:00:00.000Z'"),
-        weight: weight.replace(',', '.'),
-        height,
-        gender,
       })
     );
   }
-
-
-  const age = useMemo(() => {
-    const years = differenceInYears(new Date(), birthday);
-    return `${years} anos`;
-  }, [birthday]);
 
   return (
     <Container>
@@ -107,7 +86,7 @@ export default function Account({ navigation }) {
               autoCompleteType="name"
               returnKeyType="next"
               // blurOnSubmit={false}
-              onSubmitEditing={() => setPage(1)}
+              onSubmitEditing={() => emailRef.current.focus()}
             />
           </Body>
         </View>
@@ -126,8 +105,8 @@ export default function Account({ navigation }) {
               autoCorrect={false}
               autoCompleteType="email"
               keyboardType="email-address"
-              blurOnSubmit={false}
-              onSubmitEditing={() => setPage(2)}
+            // blurOnSubmit={false}
+            // onSubmitEditing={() => setPage(2)}
             />
           </Body>
         </View>
@@ -143,7 +122,7 @@ export default function Account({ navigation }) {
                     ref={oldPasswordRef}
                     value={oldPassword}
                     placeholder="Digite uma senha"
-                    secureTextEntry={!showPassword}
+                    secureTextEntry={!showOldPassword}
                     onChangeText={text => setOldPassword(text.trim())}
                     textAlign="center"
                     returnKeyType="next"
@@ -151,11 +130,11 @@ export default function Account({ navigation }) {
                     autoCapitalize="none"
                     autoCompleteType="password"
                     blurOnSubmit={false}
-                    onSubmitEditing={() => setPage(3)}
+                    onSubmitEditing={() => passwordRef.current.focus()}
                   />
                   <EyeIcon
-                    showPassword={showPassword}
-                    onPress={() => setShowPassword(!showPassword)}
+                    showPassword={showOldPassword}
+                    onPress={() => setShowOldPassword(!showOldPassword)}
                   />
                 </Body>
               </View>
@@ -164,18 +143,18 @@ export default function Account({ navigation }) {
                 <Headline>Sua nova senha</Headline>
                 <Body>
                   <Input
-                    ref={oldPasswordRef}
-                    value={oldPassword}
+                    ref={passwordRef}
+                    value={password}
                     placeholder="Digite uma senha"
                     secureTextEntry={!showPassword}
-                    onChangeText={text => setOldPassword(text.trim())}
+                    onChangeText={text => setPassword(text.trim())}
                     textAlign="center"
                     returnKeyType="next"
                     autoCorrect={false}
                     autoCapitalize="none"
                     autoCompleteType="password"
                     blurOnSubmit={false}
-                    onSubmitEditing={() => setPage(3)}
+                    onSubmitEditing={() => confirmPasswordRef.current.focus()}
                   />
 
                   <EyeIcon
@@ -189,22 +168,22 @@ export default function Account({ navigation }) {
                 <Headline>Confirme a nova senha</Headline>
                 <Body>
                   <Input
-                    ref={oldPasswordRef}
-                    value={oldPassword}
+                    ref={confirmPasswordRef}
+                    value={confirmPassword}
                     placeholder="Digite uma senha"
-                    secureTextEntry={!showPassword}
-                    onChangeText={text => setOldPassword(text.trim())}
+                    secureTextEntry={!showConfirmPassword}
+                    onChangeText={text => setConfirmPassword(text.trim())}
                     textAlign="center"
                     returnKeyType="next"
                     autoCorrect={false}
                     autoCapitalize="none"
                     autoCompleteType="password"
-                    blurOnSubmit={false}
-                    onSubmitEditing={() => setPage(3)}
+                  // blurOnSubmit={false}
+                  // onSubmitEditing={() => setPage(3)}
                   />
                   <EyeIcon
-                    showPassword={showPassword}
-                    onPress={() => setShowPassword(!showPassword)}
+                    showPassword={showConfirmPassword}
+                    onPress={() => setShowConfirmPassword(!showConfirmPassword)}
                   />
                 </Body>
               </View>
@@ -220,12 +199,12 @@ export default function Account({ navigation }) {
         }
 
 
-      </ScrollView>
-      <Footer>
         <Button onPress={() => navigation.navigate('SignIn')}>
           <Label>Atualizar</Label>
         </Button>
-      </Footer>
+      </ScrollView>
+      {/* <Footer>
+      </Footer> */}
     </Container>
   );
 }
