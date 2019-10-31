@@ -33,14 +33,18 @@ export const Input = styled.TextInput`
 
 export const Footer = styled.View`
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 `;
 
 export const Button = styled.TouchableOpacity`
+  flex: 1;
   background: #196a65;
   align-items: center;
-  flex: 1;
   justify-content: center;
+  margin: 15px;
+  border-radius: 5px;
+  height: 50px;
+
 `;
 
 export const Label = styled.Text`

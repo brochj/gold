@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Text, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, StyleSheet, View, ActivityIndicator, ScrollView } from 'react-native';
 import { format, differenceInYears, parseISO } from 'date-fns';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
@@ -137,12 +137,20 @@ export default function Profile({ navigation }) {
           </Gender>
 
         </View>
+        <Button disabled={loading} onPress={handleUserUpdate}>
+          {loading ?
+            <ActivityIndicator />
+            :
+            <Label>Atualizar</Label>
+
+          }
+        </Button>
       </ScrollView>
-      <Footer>
+      {/* <Footer>
         <Button onPress={handleUserUpdate}>
           <Label>Atualizar</Label>
         </Button>
-      </Footer>
+      </Footer> */}
     </Container >
   );
 }
