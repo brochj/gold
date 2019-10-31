@@ -24,11 +24,33 @@ import {
 
 import { createRequest } from '~/store/modules/user/actions';
 
+function EyeIcon({ showPassword, onPress }) {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={styles.passwordIcon}
+    >
+      <Icon
+        name={showPassword ? 'visibility' : 'visibility-off'}
+        size={25}
+        color="rgba(0,0,0,0.6)"
+      />
+    </TouchableOpacity>
+  )
+}
+
 export default function Account({ navigation }) {
   const dispatch = useDispatch();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+
+  const signed = useSelector(state => state.auth.signed);
+  const nameInit = useSelector(state => state.user.name);
+  const emailInit = useSelector(state => state.user.email);
+
+  const [name, setName] = useState(nameInit);
+  const [email, setEmail] = useState(emailInit);
+  const [oldPassword, setOldPassword] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [birthday, setBirthday] = useState(new Date());
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
@@ -36,43 +58,18 @@ export default function Account({ navigation }) {
   const [page, setPage] = useState(0);
   const [showDate, setShowDate] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const signed = useSelector(state => state.auth.signed);
+  const [changePassword, setChangePassword] = useState(false);
 
 
   const pageRef = useRef();
   const nameRef = useRef();
   const emailRef = useRef();
-  const passwordRef = useRef();
+  const oldPasswordRef = useRef();
   const weightRef = useRef();
   const heightRef = useRef();
   const birthdayRef = useRef();
   const genderRef = useRef();
 
-
-
-  // useEffect(() => {
-  //   switch (page) {
-  //     case 0:
-  //       nameRef.current.focus();
-  //       break;
-  //     case 1:
-  //       emailRef.current.focus();
-  //       break;
-  //     case 2:
-  //       passwordRef.current.focus();
-  //       break;
-  //     case 3:
-  //       heightRef.current.focus();
-  //       break;
-  //     case 4:
-  //       weightRef.current.focus();
-  //       break;
-  //     case 5:
-
-  //     default:
-  //       break;
-  //   }
-  // }, [page]);
 
   function handleSignUp() {
     dispatch(
@@ -99,7 +96,7 @@ export default function Account({ navigation }) {
       <ScrollView>
 
         <View style={styles.animatedView}>
-          <Headline>Qual o seu nome?</Headline>
+          <Headline>Nome</Headline>
           <Body>
             <Input
               ref={nameRef}
@@ -116,7 +113,7 @@ export default function Account({ navigation }) {
         </View>
 
         <View style={styles.animatedView}>
-          <Headline>Seu melhor email</Headline>
+          <Headline>Email</Headline>
           <Body>
             <Input
               ref={emailRef}
@@ -135,130 +132,98 @@ export default function Account({ navigation }) {
           </Body>
         </View>
 
-        <View style={styles.animatedView}>
-          <Headline>Digite uma Senha</Headline>
-          <Body>
-            <Input
-              ref={passwordRef}
-              value={password}
-              placeholder="Digite uma senha"
-              secureTextEntry={!showPassword}
-              onChangeText={text => setPassword(text.trim())}
-              textAlign="center"
-              returnKeyType="next"
-              autoCorrect={false}
-              autoCapitalize="none"
-              autoCompleteType="password"
-              blurOnSubmit={false}
-              onSubmitEditing={() => setPage(3)}
-            />
-          </Body>
-          <TouchableOpacity
-            onPress={() => setShowPassword(!showPassword)}
-            style={styles.passwordIcon}
+        {changePassword ?
+
+          (
+            <>
+              <View style={styles.animatedView}>
+                <Headline>Senha atual</Headline>
+                <Body>
+                  <Input
+                    ref={oldPasswordRef}
+                    value={oldPassword}
+                    placeholder="Digite uma senha"
+                    secureTextEntry={!showPassword}
+                    onChangeText={text => setOldPassword(text.trim())}
+                    textAlign="center"
+                    returnKeyType="next"
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    autoCompleteType="password"
+                    blurOnSubmit={false}
+                    onSubmitEditing={() => setPage(3)}
+                  />
+                  <EyeIcon
+                    showPassword={showPassword}
+                    onPress={() => setShowPassword(!showPassword)}
+                  />
+                </Body>
+              </View>
+
+              <View style={styles.animatedView}>
+                <Headline>Sua nova senha</Headline>
+                <Body>
+                  <Input
+                    ref={oldPasswordRef}
+                    value={oldPassword}
+                    placeholder="Digite uma senha"
+                    secureTextEntry={!showPassword}
+                    onChangeText={text => setOldPassword(text.trim())}
+                    textAlign="center"
+                    returnKeyType="next"
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    autoCompleteType="password"
+                    blurOnSubmit={false}
+                    onSubmitEditing={() => setPage(3)}
+                  />
+
+                  <EyeIcon
+                    showPassword={showPassword}
+                    onPress={() => setShowPassword(!showPassword)}
+                  />
+                </Body>
+              </View>
+
+              <View style={styles.animatedView}>
+                <Headline>Confirme a nova senha</Headline>
+                <Body>
+                  <Input
+                    ref={oldPasswordRef}
+                    value={oldPassword}
+                    placeholder="Digite uma senha"
+                    secureTextEntry={!showPassword}
+                    onChangeText={text => setOldPassword(text.trim())}
+                    textAlign="center"
+                    returnKeyType="next"
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    autoCompleteType="password"
+                    blurOnSubmit={false}
+                    onSubmitEditing={() => setPage(3)}
+                  />
+                  <EyeIcon
+                    showPassword={showPassword}
+                    onPress={() => setShowPassword(!showPassword)}
+                  />
+                </Body>
+              </View>
+            </>
+          )
+          :
+          (<Button
+            onPress={() => setChangePassword(true)}
+            color="#196d84"
           >
-            <Icon
-              name={showPassword ? 'visibility' : 'visibility-off'}
-              size={30}
-              color="rgba(0,0,0,0.6)"
-            />
-          </TouchableOpacity>
-        </View>
+            <Label>Alterar minha senha</Label>
+          </Button>)
+        }
 
-        <View style={styles.animatedView}>
-          <Headline>Qual a sua Altura?</Headline>
-          <Body>
-            <Input
-              ref={heightRef}
-              value={height}
-              placeholder="  cm"
-              onChangeText={text => setHeight(text.replace(/[^0-9]+/g, ''))}
-              textAlign="center"
-              keyboardType="phone-pad"
-              returnKeyType="next"
-              blurOnSubmit={false}
-              maxLength={3}
-              onSubmitEditing={() => setPage(4)}
-            />
-          </Body>
 
-        </View>
-
-        <View style={styles.animatedView}>
-          <Headline>Qual seu Peso atual?</Headline>
-          <Body>
-            <Input
-              ref={weightRef}
-              value={weight}
-              placeholder="  kg"
-              onChangeText={text => setWeight(text.replace(/[^0-9;,]+/g, ''))}
-              textAlign="center"
-              maxLength={5}
-              keyboardType="phone-pad"
-              returnKeyType="next"
-              blurOnSubmit={false}
-              onSubmitEditing={() => setPage(5)}
-            />
-          </Body>
-
-        </View>
-
-        <View style={styles.animatedView}>
-          <Headline>Quando você nasceu?</Headline>
-          <Age onPress={() => setShowDate(true)}>{age}</Age>
-          <Body>
-            <BirthdayButton onPress={() => setShowDate(true)}>
-              <BirthdayText>
-                {format(birthday, 'dd/MM/yyyy', { locale: pt })}
-              </BirthdayText>
-            </BirthdayButton>
-            {showDate && (
-              <DateTimePicker
-                isVisible={showDate}
-                date={birthday}
-                mode="date"
-                display="spinner"
-                datePickerModeAndroid="spinner"
-                onConfirm={date => {
-                  setBirthday(date);
-                  setShowDate(false);
-                }}
-                onCancel={() => setShowDate(false)}
-                maximumDate={new Date()}
-                minimumDate={new Date(1930, 1, 1)}
-              />
-            )}
-          </Body>
-
-        </View>
-
-        <View style={styles.animatedView}>
-          <Headline>Qual o seu Sexo?</Headline>
-          <Body>
-            <Gender
-              active={gender === 'female'}
-              onPress={() => {
-                setGender('female');
-              }}
-            >
-              <GenderText active={gender === 'female'}>Feminino</GenderText>
-            </Gender>
-
-            <Gender
-              active={gender === 'male'}
-              onPress={() => {
-                setGender('male');
-              }}
-            >
-              <GenderText active={gender === 'male'}>Masculino</GenderText>
-            </Gender>
-          </Body>
-
-        </View>
       </ScrollView>
       <Footer>
         <Button onPress={() => navigation.navigate('SignIn')}>
-          <Label>Já tenho uma Conta</Label>
+          <Label>Atualizar</Label>
         </Button>
       </Footer>
     </Container>
@@ -283,10 +248,12 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   passwordIcon: {
+    position: 'absolute',
     zIndex: 1,
-    alignSelf: 'stretch',
-    alignItems: 'flex-end',
-    marginRight: 20,
-    marginTop: -40,
+    paddingRight: 20,
+    paddingLeft: 20,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

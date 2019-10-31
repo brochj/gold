@@ -8,14 +8,15 @@ export const Container = styled.SafeAreaView`
 
 export const Body = styled.View`
   flex-direction: row;
-  margin-top: 10px;
+  margin-top: 5px;
   background: #fafafa;
   align-items: center;
+  justify-content: flex-end
 `;
 
 
 export const Headline = styled.Text`
-  font-size: 20px;
+  font-size: 18px;
   color: rgba(0, 0, 0, 0.7);
   font-family: Quicksand-Bold;
 `;
@@ -23,11 +24,10 @@ export const Headline = styled.Text`
 export const Input = styled.TextInput`
   flex: 1;
   height: 50px;
-  font-size: 22px;
+  font-size: 18px;
   border: 1px solid #999;
   border-radius: 5px;
   padding: 5px 15px;
-  margin-top: 5px;
 `;
 
 export const Footer = styled.View`
@@ -36,10 +36,14 @@ export const Footer = styled.View`
 `;
 
 export const Button = styled.TouchableOpacity`
-  background: #196a65;
+flex: 1;
+  background: ${props => props.color ? props.color : "#196a65"};
   align-items: center;
-  flex: 1;
   justify-content: center;
+  margin: 15px;
+  border-radius: 5px;
+  height: 50px;
+
 `;
 
 export const Label = styled.Text`
