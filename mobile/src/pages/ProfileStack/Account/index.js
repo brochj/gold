@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { ActivityIndicator, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { ActivityIndicator, StyleSheet, View, ScrollView } from 'react-native';
 
+import EyeIcon from '~/components/EyeIcon'
 import {
   Container,
   Input,
@@ -16,20 +16,6 @@ import {
 import { updateRequest } from '~/store/modules/user/actions';
 import { signOut } from '~/store/modules/auth/actions';
 
-function EyeIcon({ showPassword, onPress }) {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={styles.passwordIcon}
-    >
-      <Icon
-        name={showPassword ? 'visibility' : 'visibility-off'}
-        size={25}
-        color="rgba(0,0,0,0.6)"
-      />
-    </TouchableOpacity>
-  )
-}
 
 export default function Account() {
   const dispatch = useDispatch();
@@ -179,8 +165,6 @@ export default function Account() {
                     autoCorrect={false}
                     autoCapitalize="none"
                     autoCompleteType="password"
-                  // blurOnSubmit={false}
-                  // onSubmitEditing={() => setPage(3)}
                   />
                   <EyeIcon
                     showPassword={showConfirmPassword}
