@@ -4,6 +4,7 @@ import { call, put, all, takeLatest } from 'redux-saga/effects';
 import api from '~/services/api';
 
 import { signInSuccess, signFailure } from './actions';
+import { updateRequest } from '~/store/modules/user/actions'
 
 export function* signIn({ payload }) {
   try {
@@ -20,6 +21,7 @@ export function* signIn({ payload }) {
 
     // put é para disparar actions
     yield put(signInSuccess(token, user));
+    yield put(updateRequest({ email }));
 
     // history.push('/dashboard');
   } catch (err) {

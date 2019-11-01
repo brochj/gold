@@ -9,7 +9,6 @@ import {
   Container,
   Input,
   Headline,
-  Footer,
   Label,
   Button,
   AgeInput,
@@ -20,7 +19,7 @@ import {
 
 import { updateRequest } from '~/store/modules/user/actions';
 
-export default function Profile({ navigation }) {
+export default function Profile() {
   const dispatch = useDispatch();
 
   const birthdayInit = useSelector(state => state.user.birthday);
@@ -32,7 +31,7 @@ export default function Profile({ navigation }) {
 
 
   const [birthday, setBirthday] = useState(parseISO(birthdayInit) || new Date());
-  const [weight, setWeight] = useState(String(weightInit));
+  const [weight, setWeight] = useState(String(weightInit.replace('.', ',')));
   const [height, setHeight] = useState(String(heightInit));
   const [gender, setGender] = useState(genderInit);
 
@@ -146,11 +145,7 @@ export default function Profile({ navigation }) {
           }
         </Button>
       </ScrollView>
-      {/* <Footer>
-        <Button onPress={handleUserUpdate}>
-          <Label>Atualizar</Label>
-        </Button>
-      </Footer> */}
+
     </Container >
   );
 }
