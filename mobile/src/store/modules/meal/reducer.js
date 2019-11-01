@@ -48,7 +48,13 @@ export default function meal(state = INITIAL_STATE, action) {
         draft.title = action.payload.title;
         break;
       }
-
+      case '@auth/SIGN_OUT': {
+        draft.id = null;
+        draft.calorie = null;
+        draft.title = null;
+        draft.meals = [];
+        break;
+      }
       default:
         break;
     }

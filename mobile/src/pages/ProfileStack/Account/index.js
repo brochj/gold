@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Text, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
+import { ActivityIndicator, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {
@@ -9,12 +9,12 @@ import {
   Input,
   Body,
   Headline,
-  Footer,
   Label,
   Button,
 } from './styles';
 
 import { updateRequest } from '~/store/modules/user/actions';
+import { signOut } from '~/store/modules/auth/actions';
 
 function EyeIcon({ showPassword, onPress }) {
   return (
@@ -31,11 +31,12 @@ function EyeIcon({ showPassword, onPress }) {
   )
 }
 
-export default function Account({ navigation }) {
+export default function Account() {
   const dispatch = useDispatch();
 
   const nameInit = useSelector(state => state.user.name);
   const emailInit = useSelector(state => state.user.email);
+  const loading = useSelector(state => state.user.loading);
 
   const [name, setName] = useState(nameInit);
   const [email, setEmail] = useState(emailInit);
@@ -49,25 +50,28 @@ export default function Account({ navigation }) {
 
   const [changePassword, setChangePassword] = useState(false);
 
-
-  const pageRef = useRef();
   const nameRef = useRef();
   const emailRef = useRef();
   const oldPasswordRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const weightRef = useRef();
-  const heightRef = useRef();
-  const birthdayRef = useRef();
-  const genderRef = useRef();
+
 
 
   function handleUserUpdate() {
     dispatch(
       updateRequest({
+        name,
         email,
       })
     );
+    setOldPassword('');
+    setPassword('');
+    setConfirmPassword('');
+  }
+
+  function handleSignOut() {
+    dispatch(signOut());
   }
 
   return (
@@ -85,7 +89,6 @@ export default function Account({ navigation }) {
               textAlign="center"
               autoCompleteType="name"
               returnKeyType="next"
-              // blurOnSubmit={false}
               onSubmitEditing={() => emailRef.current.focus()}
             />
           </Body>
@@ -105,8 +108,6 @@ export default function Account({ navigation }) {
               autoCorrect={false}
               autoCompleteType="email"
               keyboardType="email-address"
-            // blurOnSubmit={false}
-            // onSubmitEditing={() => setPage(2)}
             />
           </Body>
         </View>
@@ -199,12 +200,19 @@ export default function Account({ navigation }) {
         }
 
 
-        <Button onPress={() => navigation.navigate('SignIn')}>
-          <Label>Atualizar</Label>
+        <Button disabled={loading} onPress={handleUserUpdate}>
+          {loading ?
+            <ActivityIndicator />
+            :
+            <Label>Atualizar</Label>
+
+          }
+        </Button>
+        <Button color="#fafafa" disabled={loading} onPress={handleSignOut}>
+          <Label style={{ color: '#196a65' }}>Sair da Conta</Label>
         </Button>
       </ScrollView>
-      {/* <Footer>
-      </Footer> */}
+
     </Container>
   );
 }

@@ -48,6 +48,12 @@ export default function dish(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@auth/SIGN_OUT': {
+        draft.id = null;
+        draft.title = null;
+        draft.dishes = [];
+        break;
+      }
 
       default:
         break;

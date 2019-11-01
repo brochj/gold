@@ -29,6 +29,14 @@ export default function dietPlan(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@auth/SIGN_OUT': {
+        draft.id = null;
+        draft.objective = 'maintainWeight';
+        draft.calorieGoal = null;
+        draft.calorieIntake = null;
+        draft.physicalActivity = 'light';
+        break;
+      }
 
       default:
         break;

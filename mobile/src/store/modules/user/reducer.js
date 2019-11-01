@@ -77,6 +77,22 @@ export default function user(state = INITIAL_STATE, action) {
         break;
       }
 
+      case '@auth/SIGN_OUT': {
+        draft.id = null;
+        draft.name = null;
+        draft.email = null;
+        draft.birthday = null;
+        draft.gender = null;
+        draft.weight = null;
+        draft.height = null;
+        draft.loading = false;
+        draft.profile = null;
+        draft.physicalActivity = 'light';
+        draft.calorieIntake = null;
+        draft.objective = 'maintainWeight';
+        draft.calorieGoal = null;
+        break;
+      }
       default:
     }
   });
