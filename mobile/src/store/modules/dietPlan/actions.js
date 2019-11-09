@@ -12,6 +12,19 @@ export function createDietPlanSuccess(dietPlan) {
   };
 }
 
+export function getDietPlansRequest() {
+  return {
+    type: '@dietPlan/GET_DIET_PLANS_REQUEST',
+  };
+}
+
+export function getDietPlansSuccess(dietPlans) {
+  return {
+    type: '@dietPlan/GET_DIET_PLANS_SUCCESS',
+    payload: { dietPlans },
+  };
+}
+
 export function createDietPlanFailure() {
   return {
     type: '@dietPlan/DIET_PLAN_FAILURE',

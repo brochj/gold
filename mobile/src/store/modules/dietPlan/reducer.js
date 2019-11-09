@@ -2,6 +2,7 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
   id: null,
+  dietPlans: [],
   objective: 'maintainWeight',
   calorieGoal: null,
   calorieIntake: null,
@@ -22,6 +23,15 @@ export default function dietPlan(state = INITIAL_STATE, action) {
         draft.calorieGoal = action.payload.calorie_goal;
         draft.calorieIntake = action.payload.calorie_intake;
         draft.physicalActivity = action.payload.physical_activity;
+        draft.loading = false;
+        break;
+      }
+      case '@dietPlan/GET_DIET_PLANS_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+      case '@dietPlan/GET_DIET_PLANS_SUCCESS': {
+        draft.dietPlans = action.payload.dietPlans;
         draft.loading = false;
         break;
       }

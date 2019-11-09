@@ -1,39 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, FlatList } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux'
 
 import DietPlantItem from './DietPlanItem'
 // import { Container } from './styles';
 
-const dietPlans = [
-  {
-    "difficulty": "medium",
-    "id": 202,
-    "objective": "gainMuscle",
-    "calorie_goal": 2000,
-    "calorie_intake": 1600,
-    "physical_activity": "light",
-    "creator": {
-      "id": 2,
-      "name": "Edd Prohaska"
-    }
-  },
-  {
-    "difficulty": "medium",
-    "id": 203,
-    "objective": "gainMuscle",
-    "calorie_goal": 2000,
-    "calorie_intake": 1600,
-    "physical_activity": "light",
-    "creator": {
-      "id": 2,
-      "name": "Edd Prohaska"
-    }
-  }
-]
+import { getDietPlansRequest } from '~/store/modules/dietPlan/actions'
+
 export default function DietsPlans() {
+  const dispatch = useDispatch();
+
+  const dietPlans = useSelector(state => state.dietPlan.dietPlans);
+  const loading = useSelector(state => state.dietPlan.loading);
+
+  useEffect(() => {
+    if (dietPlans === []) {
+      dispatch(getDietPlansRequest());
+    }
+  }, [dietPlans])
+
   return (
     <View >
       <FlatList
+        refreshing={loading}
+        onRefresh={() => dispatch(getDietPlansRequest())}
         data={dietPlans}
         renderItem={({ item, index }) => <DietPlantItem item={item} index={index} />}
       />

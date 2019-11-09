@@ -3,6 +3,7 @@ import { call, put, all, takeLatest } from 'redux-saga/effects';
 
 import {
   createDietPlanSuccess,
+  getDietPlansSuccess,
   createDietPlanFailure,
 } from '~/store/modules/dietPlan/actions';
 
@@ -26,4 +27,24 @@ export function* create({ payload }) {
   }
 }
 
-export default all([takeLatest('@dietPlan/CREATE_DIET_PLAN_REQUEST', create)]);
+export function* getDietPlans() {
+
+  try {
+    const response = yield call(api.get, 'diet-plans');
+    const dietPlans = response.data;
+
+    yield put(getDietPlansSuccess(dietPlans));
+  } catch (err) {
+    Alert.alert(
+      'Error',
+      `Falha em buscar os planos de dietas (${err.response.data.error})`
+    );
+
+    yield put(createDietPlanFailure());
+  }
+}
+
+export default all([
+  takeLatest('@dietPlan/CREATE_DIET_PLAN_REQUEST', create),
+  takeLatest('@dietPlan/GET_DIET_PLANS_REQUEST', getDietPlans),
+]);
