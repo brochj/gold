@@ -5,7 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import DietPlantItem from './DietPlanItem'
 // import { Container } from './styles';
 
-import { getDietPlansRequest, deleteDietPlanRequest } from '~/store/modules/dietPlan/actions'
+import {
+  getDietPlansRequest,
+  deleteDietPlanRequest,
+  changeActiveDietPlan,
+} from '~/store/modules/dietPlan/actions'
 
 export default function DietsPlans() {
   const dispatch = useDispatch();
@@ -48,7 +52,7 @@ export default function DietsPlans() {
               item={item}
               index={index}
               onLongPress={() => handleDeleteDietPlan(item, index)}
-
+              onPress={() => dispatch(changeActiveDietPlan(item.id))}
             />)}
         // showsVerticalScrollIndicator={false}
 

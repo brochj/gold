@@ -48,6 +48,18 @@ export default function dietPlan(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@dietPlan/CHANGE_ACTIVE_DIET_PLAN': {
+        const { id } = action.payload;
+        console.tron.log(id);
+        console.tron.log(draft.dietPlans);
+        const dietPlan = draft.dietPlans.find(diet => diet.id === id);
+        draft.id = dietPlan.id;
+        draft.objective = dietPlan.objective;
+        draft.calorieGoal = dietPlan.calorie_goal;
+        draft.calorieIntake = dietPlan.calorie_intake;
+        draft.physicalActivity = dietPlan.physical_activity;
+        break;
+      }
       case '@auth/SIGN_OUT': {
         draft.id = null;
         draft.objective = 'maintainWeight';

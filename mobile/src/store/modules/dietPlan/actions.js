@@ -39,6 +39,13 @@ export function deleteDietPlanSuccess(dietPlans) {
   };
 }
 
+export function changeActiveDietPlan(id) {
+  return {
+    type: '@dietPlan/CHANGE_ACTIVE_DIET_PLAN',
+    payload: { id },
+  }
+}
+
 export function createDietPlanFailure() {
   return {
     type: '@dietPlan/DIET_PLAN_FAILURE',

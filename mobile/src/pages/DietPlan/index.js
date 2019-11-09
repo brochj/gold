@@ -19,14 +19,12 @@ export default function DietPlan({ navigation }) {
   const dispatch = useDispatch();
   const dietPlanId = useSelector(state => state.dietPlan.id);
   const meals = useSelector(state => state.meal.meals);
+  const loading = useSelector(state => state.meal.loading);
 
-  const [resfreshing, setResfreshing] = useState(false);
 
   useEffect(() => {
-    if (meals.length === 0) {
-      dispatch(getMealsRequest(dietPlanId));
-    }
-  }, [dietPlanId, dispatch, meals]);
+    dispatch(getMealsRequest(dietPlanId));
+  }, [dietPlanId, dispatch]);
 
   function handleMeal(meal) {
     dispatch(changeActiveMeal(meal));
@@ -45,7 +43,7 @@ export default function DietPlan({ navigation }) {
 
       <FlatList
         data={meals}
-        refreshing={resfreshing}
+        refreshing={loading}
         onRefresh={() => handleRefresh()}
         renderItem={({ item }) => (
           <MealCardItem data={item} onPress={handleMeal} />
