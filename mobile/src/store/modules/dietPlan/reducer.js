@@ -35,6 +35,15 @@ export default function dietPlan(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@dietPlan/DELETE_DIET_PLAN_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+      case '@dietPlan/DELETE_DIET_PLAN_SUCCESS': {
+        draft.dietPlans = action.payload.dietPlans;
+        draft.loading = false;
+        break;
+      }
       case '@dietPlan/DIET_PLAN_FAILURE': {
         draft.loading = false;
         break;

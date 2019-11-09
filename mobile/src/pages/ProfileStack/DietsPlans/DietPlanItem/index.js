@@ -52,7 +52,7 @@ export default function DietPlanItem({ item, onPress, onLongPress, index }) {
   }, [item.physical_activity]);
 
   return (
-    <Container style={{ elevation: 5 }}>
+    <Container onPress={onPress} onLongPress={onLongPress}style={{ elevation: 5 }}>
       <Header>
         <Title>DIETA {index + 1}</Title>
       </Header>

@@ -25,6 +25,20 @@ export function getDietPlansSuccess(dietPlans) {
   };
 }
 
+export function deleteDietPlanRequest(id) {
+  return {
+    type: '@dietPlan/DELETE_DIET_PLAN_REQUEST',
+    payload: { id },
+  };
+}
+
+export function deleteDietPlanSuccess(dietPlans) {
+  return {
+    type: '@dietPlan/DELETE_DIET_PLAN_SUCCESS',
+    payload: { dietPlans },
+  };
+}
+
 export function createDietPlanFailure() {
   return {
     type: '@dietPlan/DIET_PLAN_FAILURE',

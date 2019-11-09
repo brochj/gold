@@ -44,7 +44,29 @@ export function* getDietPlans() {
   }
 }
 
+export function* deleteDietPlans({ payload }) {
+  if (!payload) return;
+  const { id } = payload;
+
+  try {
+    yield call(api.delete, `diet-plans/${id}`);
+    
+    const response = yield call(api.get, 'diet-plans');
+    const dietPlans = response.data;
+
+    yield put(getDietPlansSuccess(dietPlans));
+  } catch (err) {
+    Alert.alert(
+      'Error',
+      `Falha em Deletar o Plano de dieta (${err.response.data.error})`
+    );
+
+    yield put(createDietPlanFailure());
+  }
+}
+
 export default all([
   takeLatest('@dietPlan/CREATE_DIET_PLAN_REQUEST', create),
   takeLatest('@dietPlan/GET_DIET_PLANS_REQUEST', getDietPlans),
+  takeLatest('@dietPlan/DELETE_DIET_PLAN_REQUEST', deleteDietPlans),
 ]);
