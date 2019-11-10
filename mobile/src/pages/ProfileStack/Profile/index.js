@@ -152,6 +152,7 @@ export default function Profile() {
 
 Profile.navigationOptions = {
   header: null,
+  title: 'Meu Perfil'
 };
 
 Profile.propTypes = {
@@ -159,6 +160,8 @@ Profile.propTypes = {
     navigate: PropTypes.func,
   }).isRequired,
 };
+
+
 
 const styles = StyleSheet.create({
   animatedView: {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, Text, Alert } from 'react-native';
+import { View, FlatList, Text, Alert, StatusBar } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import DietPlantItem from './DietPlanItem'
 // import { Container } from './styles';
@@ -39,6 +40,7 @@ export default function DietsPlans() {
 
   return (
     <View >
+      <StatusBar backgroundColor="#196a65" barStyle="light-content" />
       {dietPlans === [] ?
 
         <Text>Sem planos de dieta</Text>
@@ -54,7 +56,7 @@ export default function DietsPlans() {
               onLongPress={() => handleDeleteDietPlan(item, index)}
               onPress={() => dispatch(changeActiveDietPlan(item.id))}
             />)}
-        // showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
 
         />
         )
@@ -62,3 +64,9 @@ export default function DietsPlans() {
     </View>
   );
 }
+
+
+DietsPlans.navigationOptions = {
+  header: null,
+  title: 'Dietas',
+};

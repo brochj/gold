@@ -57,7 +57,6 @@ export default function DietPlan({ navigation }) {
 DietPlan.navigationOptions = ({ navigation }) => {
   return {
     title: 'Sua Dieta',
-
     headerRight: <HeaderCalorie calorie="2233" />,
   };
 };

@@ -203,6 +203,7 @@ export default function Account() {
 
 Account.navigationOptions = {
   header: null,
+  title: 'Minha Conta'
 };
 
 Account.propTypes = {
