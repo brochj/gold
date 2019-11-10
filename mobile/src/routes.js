@@ -1,69 +1,66 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import { createStackNavigator } from 'react-navigation-stack';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import SignIn from '~/pages/SignIn';
-import SignUp from '~/pages/SignUp';
+import SignSwitch from '~/pages/SignSwitch'
 
 import Dashboard from '~/pages/Dashboard';
-import DietPlan from '~/pages/DietPlan';
-import Meal from '~/pages/Meal';
 
 import RecipeStack from '~/pages/RecipeStack';
+
+import DietPlanStack from '~/pages/DietPlanStack';
 
 import InitialConfigStack from '~/pages/InitialConfigStack';
 import ProfileStack from '~/pages/ProfileStack';
 
-// import PhysicalActivity from '~/pages/InitialConfigStack/PhysicalActivity';
-// import Difficulty from '~/pages/InitialConfigStack/Difficulty';
-// import CaloricExpenditure from '~/pages/InitialConfigStack/CaloricExpenditure';
-// import Objective from '~/pages/InitialConfigStack/Objective';
-// import MealsCalories from '~/pages/InitialConfigStack/MealsCalories';
 
-import CalorieIcon from '~/components/Icons/CalorieIcon';
+
+const MainBottomTab = createMaterialBottomTabNavigator(
+  {
+    Dashboard,
+    RecipeStack,
+    DietPlanStack,
+    ProfileStack,
+  },
+  {
+    initialRouteName: 'RecipeStack',
+    activeColor: '#fff',
+    inactiveColor: '#ddd',
+    barStyle: {
+      backgroundColor: '#196a65',
+    },
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        let iconName;
+
+        if (routeName === 'Dashboard') {
+          iconName = 'person-pin';
+        } else if (routeName === 'RecipeStack') {
+          iconName = `verified-user`;
+        } else if (routeName === 'DietPlanStack') {
+          iconName = `restaurant`;
+        }
+
+        return <Icon name={iconName} size={25} color={tintColor} />;
+      },
+    }),
+  }
+);
 
 export default (isSigned = false) =>
   createAppContainer(
     createSwitchNavigator(
       {
-        Sign: createSwitchNavigator({
-          SignIn,
-          SignUp,
-        }),
-        MainBottomTab: createMaterialBottomTabNavigator(
-          {
-            Dashboard,
-            RecipeStack,
-            DietPlanStack: createStackNavigator(
-              {
-                DietPlan,
-                Meal,
-              },
-              {
-                navigationOptions: {
-                  title: 'Dieta',
-                  tabBarColor: '#196a65',
-                  tabBaricon: <CalorieIcon />,
-                },
-              }
-            ),
-            ProfileStack,
-          },
-          {
-            initialRouteName: 'RecipeStack',
-            activeColor: '#fff',
-            inactiveColor: '#ddd',
-            // shifting: true,
-            barStyle: {
-              backgroundColor: '#196a65',
-            },
-          }
-        ),
+        SignSwitch,
+        MainBottomTab,
         InitialConfigStack,
       },
       {
-        initialRouteName: isSigned ? 'MainBottomTab' : 'Sign',
+        initialRouteName: isSigned ? 'MainBottomTab' : 'SignSwitch',
       }
     )
   );
+
+
