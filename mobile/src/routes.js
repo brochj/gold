@@ -14,8 +14,6 @@ import DietPlanStack from '~/pages/DietPlanStack';
 import InitialConfigStack from '~/pages/InitialConfigStack';
 import ProfileStack from '~/pages/ProfileStack';
 
-
-
 const MainBottomTab = createMaterialBottomTabNavigator(
   {
     Dashboard,
@@ -26,7 +24,7 @@ const MainBottomTab = createMaterialBottomTabNavigator(
   {
     initialRouteName: 'RecipeStack',
     activeColor: '#fff',
-    inactiveColor: '#ddd',
+    inactiveColor: '#bbb',
     barStyle: {
       backgroundColor: '#196a65',
     },
@@ -36,14 +34,30 @@ const MainBottomTab = createMaterialBottomTabNavigator(
         let iconName;
 
         if (routeName === 'Dashboard') {
-          iconName = 'person-pin';
+          iconName = 'dashboard';
         } else if (routeName === 'RecipeStack') {
-          iconName = `verified-user`;
+          iconName = `book`;
         } else if (routeName === 'DietPlanStack') {
           iconName = `restaurant`;
+        } else if (routeName === 'ProfileStack') {
+          iconName = `person-pin`;
         }
 
         return <Icon name={iconName} size={25} color={tintColor} />;
+      },
+      tabBarColor: () => {
+        const { routeName } = navigation.state;
+
+        if (routeName === 'Dashboard') {
+          return '#f3f4';
+        } else if (routeName === 'RecipeStack') {
+          return '#f5f134';
+        } else if (routeName === 'DietPlanStack') {
+          return '#f1d';
+        } else if (routeName === 'ProfileStack') {
+          return '#12d';
+        }
+
       },
     }),
   }

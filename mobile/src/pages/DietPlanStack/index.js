@@ -14,7 +14,7 @@ const DietPlanStack = createStackNavigator(
   },
   {
     navigationOptions: {
-      title: 'Dieta',
+      title: 'Sua Dieta',
       tabBarColor: '#196a65',
       tabBaricon: <CalorieIcon />,
     },

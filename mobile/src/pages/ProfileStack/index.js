@@ -14,6 +14,10 @@ const ProfileStack = createMaterialTopTabNavigator(
   },
   {
     initialRouteName: 'Profile',
+    navigationOptions: {
+      // tabBarColor: "#f32343",
+      title: "Perfil",
+    },
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;

@@ -10,6 +10,9 @@ const RecipeStack = createStackNavigator(
   },
   {
     initialRouteName: 'Recipes',
+    navigationOptions: {
+      title: "Receitas"
+    }
   }
 );
 
