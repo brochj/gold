@@ -44,7 +44,7 @@ export default function DietPlan({ navigation }) {
       <FlatList
         data={meals}
         refreshing={loading}
-        onRefresh={() => handleRefresh()}
+        onRefresh={handleRefresh}
         renderItem={({ item }) => (
           <MealCardItem data={item} onPress={handleMeal} />
         )}
@@ -57,7 +57,7 @@ export default function DietPlan({ navigation }) {
 DietPlan.navigationOptions = ({ navigation }) => {
   return {
     title: 'Sua Dieta',
-    headerRight: <HeaderCalorie calorie="2233" />,
+    // headerRight: <HeaderCalorie calorie={useSelector(state => state.dietPlan.calorie)} />,
   };
 };
 

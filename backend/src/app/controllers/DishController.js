@@ -3,6 +3,7 @@ import Meal from '../models/Meal';
 import Dish from '../models/Dish';
 import Food from '../models/Food';
 import Recipe from '../models/Recipe';
+import RecipeFile from '../models/RecipeFile';
 
 class DishController {
   async store(req, res) {
@@ -85,6 +86,13 @@ class DishController {
               'difficulty',
             ],
             through: { attributes: [] },
+            include: [
+              {
+                model: RecipeFile,
+                as: 'cover',
+                attributes: ['id', 'url', 'path'],
+              },
+            ]
           },
           {
             model: Food,
@@ -123,6 +131,13 @@ class DishController {
             'difficulty',
           ],
           through: { attributes: [] },
+          include: [
+            {
+              model: RecipeFile,
+              as: 'cover',
+              attributes: ['id', 'url', 'path'],
+            },
+          ]
         },
         {
           model: Food,

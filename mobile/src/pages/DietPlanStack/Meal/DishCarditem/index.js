@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, FlatList, Text, TouchableOpacity } from 'react-native';
 
+import RecipeItem from './RecipeItem'
+
 import {
   DishCard,
   DishHeader,
@@ -19,14 +21,14 @@ export default function DishCardItem({ data, onLongPress, onPress }) {
         <DishHeader>
           <DishTitle>{data.title}</DishTitle>
           <View style={{ flexDirection: 'row' }}>
-            <CalorieIcon />
-            <Calorie>350 </Calorie>
+            {/* <CalorieIcon /> */}
+            {/* <Calorie>350 </Calorie> */}
           </View>
         </DishHeader>
       </TouchableOpacity>
       <FlatList
         data={data.recipes}
-        renderItem={({ item }) => <Text>recipe: {item.name}</Text>}
+        renderItem={({ item }) => <RecipeItem item={item} />}
         keyExtractor={item => String(item.id)}
         listKey={item => String(item.id)}
       />

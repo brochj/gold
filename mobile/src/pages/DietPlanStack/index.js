@@ -4,8 +4,8 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import CalorieIcon from '~/components/Icons/CalorieIcon';
 
-import DietPlan from '~/pages/DietPlan';
-import Meal from '~/pages/Meal';
+import DietPlan from '~/pages/DietPlanStack/DietPlan';
+import Meal from '~/pages/DietPlanStack/Meal';
 
 const DietPlanStack = createStackNavigator(
   {
