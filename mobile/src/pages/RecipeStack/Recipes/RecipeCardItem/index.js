@@ -1,10 +1,8 @@
 import React from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, Text } from 'react-native';
 import PropTypes from 'prop-types';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
-import { Text } from 'react-native-ui-kitten';
 
 import bolo from '~/res/images/recipes/bolo.jpg';
 
@@ -16,13 +14,13 @@ export default function RecipeCardItem({ data, onPress }) {
 
   switch (difficulty) {
     case 'easy':
-      ptbrDifficulty = 'fácil';
+      ptbrDifficulty = 'Fácil';
       break;
     case 'medium':
-      ptbrDifficulty = 'médio';
+      ptbrDifficulty = 'Médio';
       break;
     case 'hard':
-      ptbrDifficulty = 'difícil';
+      ptbrDifficulty = 'Difícil';
       break;
     default:
       break;
@@ -31,24 +29,28 @@ export default function RecipeCardItem({ data, onPress }) {
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image style={styles.img} source={bolo} />
       <Text style={styles.title} numberOfLines={1} category="h5">
-        {id} {name}
+        {name}
       </Text>
       <View style={styles.stats}>
         <View style={styles.row}>
-          <Icon name="timer" size={22} color="#666" />
+          <Icon name="timer" size={16} color="#666" />
           <Text style={styles.info} category="h6">
             {' '}
             {preparation_time} min
           </Text>
         </View>
         <View style={styles.row}>
-          <Icon name="people" size={22} color="#666" />
+          <Icon
+            name={servings === 1 ? 'person' : 'people'}
+            size={18} color="#666"
+          />
           <Text style={styles.info} category="h6">
+            {' '}
             {servings === 1 ? `${servings} porção` : `${servings} porções`}
           </Text>
         </View>
         <View style={styles.row}>
-          <Icon name="network-check" size={22} color="#666" />
+          <Icon name="network-check" size={18} color="#666" />
           <Text style={styles.info} category="h6">
             {' '}
             {ptbrDifficulty}

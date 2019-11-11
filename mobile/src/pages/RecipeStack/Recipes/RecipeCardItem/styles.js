@@ -17,10 +17,15 @@ export default StyleSheet.create({
   title: {
     paddingTop: 5,
     paddingLeft: 15,
-  },
+    paddingRight: 15,
+    fontSize: 21,
+    fontFamily: "Quicksand-Bold",
+    color: '#333'
 
+  },
   row: {
     flexDirection: 'row',
+    alignItems: 'center'
   },
   stats: {
     flexDirection: 'row',
@@ -30,6 +35,6 @@ export default StyleSheet.create({
   },
 
   info: {
-    color: '#666',
+    color: '#777',
   },
 });
