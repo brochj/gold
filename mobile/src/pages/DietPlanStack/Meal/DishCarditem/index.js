@@ -11,7 +11,7 @@ import {
   Calorie,
 } from './styles';
 
-export default function DishCardItem({ data, onLongPress, onPress }) {
+export default function DishCardItem({ data, onLongPress, onPress, onRecipePress }) {
   return (
     <DishCard>
       <TouchableOpacity
@@ -28,7 +28,7 @@ export default function DishCardItem({ data, onLongPress, onPress }) {
       </TouchableOpacity>
       <FlatList
         data={data.recipes}
-        renderItem={({ item }) => <RecipeItem item={item} />}
+        renderItem={({ item }) => <RecipeItem item={item} onPress={() => onRecipePress(item.id)} />}
         keyExtractor={item => String(item.id)}
         listKey={item => String(item.id)}
       />

@@ -16,7 +16,7 @@ import {
   changeActiveDish,
 } from '~/store/modules/dish/actions';
 
-export default function Meal() {
+export default function Meal({ navigation }) {
   const dispatch = useDispatch();
 
   const mealId = useSelector(state => state.meal.id);
@@ -62,6 +62,7 @@ export default function Meal() {
               data={item}
               onLongPress={() => handleDeleteDish(item.id)}
               onPress={() => handleActiveDish(item)}
+              onRecipePress={id => navigation.navigate('ShowRecipe', { id })}
             />
           )}
           keyExtractor={item => String(item.id)}

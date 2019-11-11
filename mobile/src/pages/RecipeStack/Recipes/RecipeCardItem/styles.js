@@ -23,10 +23,6 @@ export default StyleSheet.create({
     color: '#333'
 
   },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
   stats: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -34,7 +30,4 @@ export default StyleSheet.create({
     paddingVertical: 8,
   },
 
-  info: {
-    color: '#777',
-  },
 });

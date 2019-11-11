@@ -14,7 +14,7 @@ export const Body = styled.View`
 `;
 
 export const Cover = styled.Image`
-  background: #333;
+  background: #444;
   height: 50px;
   width: 50px;
   border-radius: 100px;
@@ -22,6 +22,7 @@ export const Cover = styled.Image`
 
 export const Name = styled.Text`
   font-size: 17px;
+  color: #444;
   
 `;
 
