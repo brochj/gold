@@ -5,9 +5,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FloatingAction } from 'react-native-floating-action';
 import { Text } from 'react-native-ui-kitten';
 import DishCardItem from './DishCarditem';
+import ShowRecipeModal from '~/components/ShowRecipe'
 
 import CalorieIcon from '~/components/Icons/CalorieIcon';
 import { Container, Header, Title, CalorieGoal } from './styles';
+import { getRecipeRequest } from '~/store/modules/recipe/actions';
+
 
 import {
   getDishesRequest,
@@ -26,10 +29,17 @@ export default function Meal({ navigation }) {
   const [showModal, setShowModal] = useState(false);
   const [DishTitle, setDishTitle] = useState('');
   const [refreshing, setRefreshing] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [recipeId, setRecipeId] = useState('');
+
 
   useEffect(() => {
     dispatch(getDishesRequest(dietPlanId, mealId));
   }, [mealId, showModal]); // eslint-disable-line
+
+  useEffect(() => {
+
+  }, [recipeId])
 
   function handleCreateDish() {
     dispatch(createDishRequest({ title: DishTitle }, dietPlanId, mealId));
@@ -53,6 +63,11 @@ export default function Meal({ navigation }) {
   return (
     <>
       <Container>
+        <ShowRecipeModal
+          recipeId={recipeId}
+          visible={visible}
+          changeVisible={() => setVisible(false)}
+        />
         <FlatList
           data={dishes}
           refreshing={refreshing}
@@ -62,7 +77,11 @@ export default function Meal({ navigation }) {
               data={item}
               onLongPress={() => handleDeleteDish(item.id)}
               onPress={() => handleActiveDish(item)}
-              onRecipePress={id => navigation.navigate('ShowRecipe', { id })}
+              onRecipePress={id => {
+                dispatch(getRecipeRequest(id))
+                setVisible(true);
+                alert(id);
+              }}
             />
           )}
           keyExtractor={item => String(item.id)}

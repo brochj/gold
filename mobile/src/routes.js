@@ -16,7 +16,7 @@ import ProfileStack from '~/pages/ProfileStack';
 
 const MainBottomTab = createMaterialBottomTabNavigator(
   {
-    // Dashboard,
+    Dashboard,
     RecipeStack,
     DietPlanStack,
     ProfileStack,
