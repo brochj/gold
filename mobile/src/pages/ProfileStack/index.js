@@ -19,7 +19,7 @@ const ProfileStack = createMaterialTopTabNavigator(
       title: 'Perfil',
     },
     defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+      tabBarIcon: ({ tintColor }) => { // eslint-disable-line
         const { routeName } = navigation.state;
         let iconName;
 
