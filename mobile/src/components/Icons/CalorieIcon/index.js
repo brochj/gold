@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
 
@@ -15,11 +15,15 @@ CalorieIcon.defaultProps = {
   name: 'whatshot',
   size: 22,
   color: '#fff',
+  style: {},
 };
 
 CalorieIcon.propTypes = {
   name: PropTypes.string,
   size: PropTypes.number,
   color: PropTypes.string,
-  style: PropTypes.oneOf(PropTypes.object, PropTypes.arrayOf(PropTypes.object)),
+  style: PropTypes.oneOf([
+    PropTypes.object,
+    PropTypes.arrayOf(PropTypes.object),
+  ]),
 };
