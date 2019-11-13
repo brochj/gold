@@ -5,24 +5,19 @@ export const Container = styled.TouchableOpacity`
   color: #fafafa;
 `;
 
-export const Header = styled.View`
-  
-`;
+export const Header = styled.View``;
 
 export const Title = styled.Text`
-  color: rgba(0,0,0,0.7);
+  color: rgba(0, 0, 0, 0.7);
   font-family: Quicksand-Bold;
   font-size: 18px;
   margin-bottom: 15px;
 `;
 
-export const Body = styled.View`
-  
-`;
+export const Body = styled.View``;
 export const Row = styled.View`
   flex-direction: row;
   align-items: center;
-
 `;
 
 export const Kcal = styled.Text`
@@ -39,7 +34,7 @@ export const Label = styled.Text`
   font-size: 15px;
   text-align: right;
   padding-right: 15px;
-  color: rgba(0,0,0,0.5)
+  color: rgba(0, 0, 0, 0.5);
 `;
 
 export const Value = styled.View`
@@ -50,13 +45,12 @@ export const Value = styled.View`
 
 export const ValueText = styled.Text`
   font-size: 15px;
-  color: rgba(0,0,0,0.7)
+  color: rgba(0, 0, 0, 0.7);
 `;
 
 export const Divider = styled.View.attrs({
   borderBottomWidth: 0.5,
   borderColor: 'rgba(0, 0, 0, 0.5)',
-
 })`
   margin-left: 35px;
   margin-right: 35px;

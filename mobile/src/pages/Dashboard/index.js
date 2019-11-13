@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
-import ShowRecipeModal from '~/components/ShowRecipe'
+import ShowRecipeModal from '~/components/ShowRecipe';
 
 // import { Container } from './styles';
 
 export default function Dashboard() {
-
   const [visible, setVisible] = useState(false);
   return (
     <View>
@@ -21,6 +20,5 @@ export default function Dashboard() {
         changeVisible={() => setVisible(false)}
       />
     </View>
-
   );
 }

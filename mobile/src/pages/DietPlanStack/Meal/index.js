@@ -5,12 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FloatingAction } from 'react-native-floating-action';
 import { Text } from 'react-native-ui-kitten';
 import DishCardItem from './DishCarditem';
-import ShowRecipeModal from '~/components/ShowRecipe'
+import ShowRecipeModal from '~/components/ShowRecipe';
 
 import CalorieIcon from '~/components/Icons/CalorieIcon';
 import { Container, Header, Title, CalorieGoal } from './styles';
 import { getRecipeRequest } from '~/store/modules/recipe/actions';
-
 
 import {
   getDishesRequest,
@@ -32,14 +31,11 @@ export default function Meal({ navigation }) {
   const [visible, setVisible] = useState(false);
   const [recipeId, setRecipeId] = useState('');
 
-
   useEffect(() => {
     dispatch(getDishesRequest(dietPlanId, mealId));
   }, [mealId, showModal]); // eslint-disable-line
 
-  useEffect(() => {
-
-  }, [recipeId])
+  useEffect(() => {}, [recipeId]);
 
   function handleCreateDish() {
     dispatch(createDishRequest({ title: DishTitle }, dietPlanId, mealId));
@@ -78,7 +74,7 @@ export default function Meal({ navigation }) {
               onLongPress={() => handleDeleteDish(item.id)}
               onPress={() => handleActiveDish(item)}
               onRecipePress={id => {
-                dispatch(getRecipeRequest(id))
+                dispatch(getRecipeRequest(id));
                 setVisible(true);
                 alert(id);
               }}

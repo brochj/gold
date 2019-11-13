@@ -28,7 +28,6 @@ export function* create({ payload }) {
 }
 
 export function* getDietPlans() {
-
   try {
     const response = yield call(api.get, 'diet-plans');
     const dietPlans = response.data;
@@ -50,7 +49,7 @@ export function* deleteDietPlans({ payload }) {
 
   try {
     yield call(api.delete, `diet-plans/${id}`);
-    
+
     const response = yield call(api.get, 'diet-plans');
     const dietPlans = response.data;
 

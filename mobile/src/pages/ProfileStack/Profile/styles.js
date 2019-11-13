@@ -12,7 +12,6 @@ export const Body = styled.View`
   background: #fafafa;
 `;
 
-
 export const Headline = styled.Text`
   flex: 1;
   font-size: 18px;
@@ -44,7 +43,6 @@ export const Button = styled.TouchableOpacity`
   margin: 15px;
   border-radius: 5px;
   height: 50px;
-
 `;
 
 export const Label = styled.Text`

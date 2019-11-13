@@ -3,19 +3,11 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { ActivityIndicator, StyleSheet, View, ScrollView } from 'react-native';
 
-import EyeIcon from '~/components/EyeIcon'
-import {
-  Container,
-  Input,
-  Body,
-  Headline,
-  Label,
-  Button,
-} from './styles';
+import EyeIcon from '~/components/EyeIcon';
+import { Container, Input, Body, Headline, Label, Button } from './styles';
 
 import { updateRequest } from '~/store/modules/user/actions';
 import { signOut } from '~/store/modules/auth/actions';
-
 
 export default function Account() {
   const dispatch = useDispatch();
@@ -42,8 +34,6 @@ export default function Account() {
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
 
-
-
   function handleUserUpdate() {
     dispatch(
       updateRequest({
@@ -63,7 +53,6 @@ export default function Account() {
   return (
     <Container>
       <ScrollView>
-
         <View style={styles.animatedView}>
           <Headline>Nome</Headline>
           <Body>
@@ -98,112 +87,99 @@ export default function Account() {
           </Body>
         </View>
 
-        {changePassword ?
+        {changePassword ? (
+          <>
+            <View style={styles.animatedView}>
+              <Headline>Senha atual</Headline>
+              <Body>
+                <Input
+                  ref={oldPasswordRef}
+                  value={oldPassword}
+                  placeholder="Digite uma senha"
+                  secureTextEntry={!showOldPassword}
+                  onChangeText={text => setOldPassword(text.trim())}
+                  textAlign="center"
+                  returnKeyType="next"
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  autoCompleteType="password"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => passwordRef.current.focus()}
+                />
+                <EyeIcon
+                  showPassword={showOldPassword}
+                  onPress={() => setShowOldPassword(!showOldPassword)}
+                />
+              </Body>
+            </View>
 
-          (
-            <>
-              <View style={styles.animatedView}>
-                <Headline>Senha atual</Headline>
-                <Body>
-                  <Input
-                    ref={oldPasswordRef}
-                    value={oldPassword}
-                    placeholder="Digite uma senha"
-                    secureTextEntry={!showOldPassword}
-                    onChangeText={text => setOldPassword(text.trim())}
-                    textAlign="center"
-                    returnKeyType="next"
-                    autoCorrect={false}
-                    autoCapitalize="none"
-                    autoCompleteType="password"
-                    blurOnSubmit={false}
-                    onSubmitEditing={() => passwordRef.current.focus()}
-                  />
-                  <EyeIcon
-                    showPassword={showOldPassword}
-                    onPress={() => setShowOldPassword(!showOldPassword)}
-                  />
-                </Body>
-              </View>
+            <View style={styles.animatedView}>
+              <Headline>Sua nova senha</Headline>
+              <Body>
+                <Input
+                  ref={passwordRef}
+                  value={password}
+                  placeholder="Digite uma senha"
+                  secureTextEntry={!showPassword}
+                  onChangeText={text => setPassword(text.trim())}
+                  textAlign="center"
+                  returnKeyType="next"
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  autoCompleteType="password"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => confirmPasswordRef.current.focus()}
+                />
 
-              <View style={styles.animatedView}>
-                <Headline>Sua nova senha</Headline>
-                <Body>
-                  <Input
-                    ref={passwordRef}
-                    value={password}
-                    placeholder="Digite uma senha"
-                    secureTextEntry={!showPassword}
-                    onChangeText={text => setPassword(text.trim())}
-                    textAlign="center"
-                    returnKeyType="next"
-                    autoCorrect={false}
-                    autoCapitalize="none"
-                    autoCompleteType="password"
-                    blurOnSubmit={false}
-                    onSubmitEditing={() => confirmPasswordRef.current.focus()}
-                  />
+                <EyeIcon
+                  showPassword={showPassword}
+                  onPress={() => setShowPassword(!showPassword)}
+                />
+              </Body>
+            </View>
 
-                  <EyeIcon
-                    showPassword={showPassword}
-                    onPress={() => setShowPassword(!showPassword)}
-                  />
-                </Body>
-              </View>
-
-              <View style={styles.animatedView}>
-                <Headline>Confirme a nova senha</Headline>
-                <Body>
-                  <Input
-                    ref={confirmPasswordRef}
-                    value={confirmPassword}
-                    placeholder="Digite uma senha"
-                    secureTextEntry={!showConfirmPassword}
-                    onChangeText={text => setConfirmPassword(text.trim())}
-                    textAlign="center"
-                    returnKeyType="next"
-                    autoCorrect={false}
-                    autoCapitalize="none"
-                    autoCompleteType="password"
-                  />
-                  <EyeIcon
-                    showPassword={showConfirmPassword}
-                    onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-                  />
-                </Body>
-              </View>
-            </>
-          )
-          :
-          (<Button
-            onPress={() => setChangePassword(true)}
-            color="#196d84"
-          >
+            <View style={styles.animatedView}>
+              <Headline>Confirme a nova senha</Headline>
+              <Body>
+                <Input
+                  ref={confirmPasswordRef}
+                  value={confirmPassword}
+                  placeholder="Digite uma senha"
+                  secureTextEntry={!showConfirmPassword}
+                  onChangeText={text => setConfirmPassword(text.trim())}
+                  textAlign="center"
+                  returnKeyType="next"
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  autoCompleteType="password"
+                />
+                <EyeIcon
+                  showPassword={showConfirmPassword}
+                  onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+                />
+              </Body>
+            </View>
+          </>
+        ) : (
+          <Button onPress={() => setChangePassword(true)} color="#196d84">
             <Label>Alterar minha senha</Label>
-          </Button>)
-        }
-
+          </Button>
+        )}
 
         <Button disabled={loading} onPress={handleUserUpdate}>
-          {loading ?
-            <ActivityIndicator />
-            :
-            <Label>Atualizar</Label>
-
-          }
+          {loading ? <ActivityIndicator /> : <Label>Atualizar</Label>}
         </Button>
         <Button color="#fafafa" disabled={loading} onPress={handleSignOut}>
           <Label style={{ color: '#196a65' }}>Sair da Conta</Label>
         </Button>
       </ScrollView>
-
     </Container>
   );
 }
 
 Account.navigationOptions = {
   header: null,
-  title: 'Minha Conta'
+  title: 'Minha Conta',
 };
 
 Account.propTypes = {

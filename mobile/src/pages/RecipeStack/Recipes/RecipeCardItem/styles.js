@@ -19,9 +19,8 @@ export default StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     fontSize: 21,
-    fontFamily: "Quicksand-Bold",
-    color: '#333'
-
+    fontFamily: 'Quicksand-Bold',
+    color: '#333',
   },
   stats: {
     flexDirection: 'row',
@@ -29,5 +28,4 @@ export default StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 8,
   },
-
 });

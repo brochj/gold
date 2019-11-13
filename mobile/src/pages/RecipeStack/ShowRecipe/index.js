@@ -45,7 +45,7 @@ export default function ShowRecipe({ navigation }) {
 
   return (
     <View style={styles.body}>
-      <ScrollView style={styles.scrollContainer} >
+      <ScrollView style={styles.scrollContainer}>
         {/* <Text>{JSON.stringify(this.state.recipeData, null, 3)}</Text> */}
         {/* <Image
           source={{ uri: recipe.cover.url }}
@@ -104,7 +104,7 @@ export default function ShowRecipe({ navigation }) {
               // }}
               initialTags={tags}
               onChangeTags={tags_1 => console.log(tags_1)}
-              onTagPress={(index, tagLabel, event, deleted) => { }}
+              onTagPress={(index, tagLabel, event, deleted) => {}}
               containerStyle={{ justifyContent: 'center' }}
               inputStyle={{ backgroundColor: 'white' }}
               renderTag={({
@@ -114,14 +114,14 @@ export default function ShowRecipe({ navigation }) {
                 deleteTagOnPress,
                 readonly,
               }) => (
-                  <TouchableOpacity
-                    key={`${tag}-${index}`}
-                    onPress={onPress}
-                    style={styles.tagTouch}
-                  >
-                    <Text style={styles.tagTxt}>#{capitalize(tag)}</Text>
-                  </TouchableOpacity>
-                )}
+                <TouchableOpacity
+                  key={`${tag}-${index}`}
+                  onPress={onPress}
+                  style={styles.tagTouch}
+                >
+                  <Text style={styles.tagTxt}>#{capitalize(tag)}</Text>
+                </TouchableOpacity>
+              )}
             />
           </View>
         </View>

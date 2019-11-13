@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, FlatList, Text, TouchableOpacity } from 'react-native';
 
-import RecipeItem from './RecipeItem'
+import RecipeItem from './RecipeItem';
 
 import {
   DishCard,
@@ -11,7 +11,12 @@ import {
   Calorie,
 } from './styles';
 
-export default function DishCardItem({ data, onLongPress, onPress, onRecipePress }) {
+export default function DishCardItem({
+  data,
+  onLongPress,
+  onPress,
+  onRecipePress,
+}) {
   return (
     <DishCard>
       <TouchableOpacity
@@ -28,7 +33,9 @@ export default function DishCardItem({ data, onLongPress, onPress, onRecipePress
       </TouchableOpacity>
       <FlatList
         data={data.recipes}
-        renderItem={({ item }) => <RecipeItem item={item} onPress={() => onRecipePress(item.id)} />}
+        renderItem={({ item }) => (
+          <RecipeItem item={item} onPress={() => onRecipePress(item.id)} />
+        )}
         keyExtractor={item => String(item.id)}
         listKey={item => String(item.id)}
       />

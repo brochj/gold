@@ -1,4 +1,4 @@
-import { createSwitchNavigator } from 'react-navigation'
+import { createSwitchNavigator } from 'react-navigation';
 
 import SignIn from '~/pages/SignSwitch/SignIn';
 import SignUp from '~/pages/SignSwitch/SignUp';

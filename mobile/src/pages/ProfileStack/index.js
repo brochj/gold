@@ -1,6 +1,6 @@
-import React from 'react'
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import React from 'react';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Profile from '~/pages/ProfileStack/Profile';
 import Account from '~/pages/ProfileStack/Account';
@@ -16,7 +16,7 @@ const ProfileStack = createMaterialTopTabNavigator(
     initialRouteName: 'Profile',
     navigationOptions: {
       // tabBarColor: "#f32343",
-      title: "Perfil",
+      title: 'Perfil',
     },
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
@@ -40,12 +40,12 @@ const ProfileStack = createMaterialTopTabNavigator(
       upperCaseLabel: false,
       showIcon: true,
       indicatorStyle: {
-        backgroundColor: "#fff"
+        backgroundColor: '#fff',
       },
       style: {
         backgroundColor: '#196a65',
       },
-    }
+    },
   }
 );
 

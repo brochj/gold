@@ -21,7 +21,6 @@ export default function DietPlan({ navigation }) {
   const meals = useSelector(state => state.meal.meals);
   const loading = useSelector(state => state.meal.loading);
 
-
   useEffect(() => {
     dispatch(getMealsRequest(dietPlanId));
   }, [dietPlanId, dispatch]);

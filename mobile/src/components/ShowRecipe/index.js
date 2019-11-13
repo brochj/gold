@@ -22,7 +22,7 @@ import { capitalize } from '~/lib/scripts/stringScript';
 
 import { getRecipeRequest } from '~/store/modules/recipe/actions';
 
-import HeaderBar from './HeaderBar'
+import HeaderBar from './HeaderBar';
 
 const tags = ['high protein', 'low carb', 'chicken', 'lunch', 'easy'];
 
@@ -48,7 +48,7 @@ export default function ShowRecipe({ recipeId, visible, changeVisible }) {
 
   useEffect(() => {
     dispatch(getRecipeRequest(recipeId));
-  }, []);
+  }, [dispatch, recipeId]);
 
   useEffect(() => {
     if (scrollPosition > 20) {
@@ -56,32 +56,17 @@ export default function ShowRecipe({ recipeId, visible, changeVisible }) {
     } else {
       setShowBar(false);
     }
-  }, [scrollPosition])
+  }, [scrollPosition]);
 
   return (
-    <Modal
-      style={styles.body}
-      animationType="slide"
-      visible={visible}
-    >
-
-      {showBar &&
-        <HeaderBar
-          onClose={changeVisible}
-          onAdd={() => { }}
-        />
-      }
-      {!showBar &&
-        <HeaderBar
-          onClose={changeVisible}
-          onAdd={() => { }}
-        />
-      }
+    <Modal style={styles.body} animationType="slide" visible={visible}>
+      {showBar && <HeaderBar onClose={changeVisible} onAdd={() => {}} />}
+      {!showBar && <HeaderBar onClose={changeVisible} onAdd={() => {}} />}
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.scrollContainer}
         onScroll={event => {
-          setScrollPosition(event.nativeEvent.contentOffset.y)
+          setScrollPosition(event.nativeEvent.contentOffset.y);
         }}
       >
         {/* <Text>{JSON.stringify(this.state.recipeData, null, 3)}</Text> */}
@@ -206,7 +191,7 @@ const styles = StyleSheet.create({
   recipeImage: {
     height: 300,
     width: '100%',
-    backgroundColor: '#555'
+    backgroundColor: '#555',
   },
   headerView: {
     marginBottom: 20,

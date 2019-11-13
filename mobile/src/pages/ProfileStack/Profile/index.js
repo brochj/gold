@@ -1,7 +1,13 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Text, StyleSheet, View, ActivityIndicator, ScrollView } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  ScrollView,
+} from 'react-native';
 import { format, differenceInYears, parseISO } from 'date-fns';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
@@ -29,8 +35,9 @@ export default function Profile() {
   const email = useSelector(state => state.user.email);
   const loading = useSelector(state => state.user.loading);
 
-
-  const [birthday, setBirthday] = useState(parseISO(birthdayInit) || new Date());
+  const [birthday, setBirthday] = useState(
+    parseISO(birthdayInit) || new Date()
+  );
   const [weight, setWeight] = useState(String(weightInit.replace('.', ',')));
   const [height, setHeight] = useState(String(heightInit));
   const [gender, setGender] = useState(genderInit);
@@ -60,7 +67,6 @@ export default function Profile() {
   return (
     <Container>
       <ScrollView>
-
         <View style={styles.animatedView}>
           <Headline>Altura (cm)</Headline>
           <Input
@@ -114,7 +120,6 @@ export default function Profile() {
               minimumDate={new Date(1930, 1, 1)}
             />
           )}
-
         </View>
 
         <View style={styles.animatedView}>
@@ -134,25 +139,18 @@ export default function Profile() {
           >
             <GenderText active={gender === 'male'}>Masculino</GenderText>
           </Gender>
-
         </View>
         <Button disabled={loading} onPress={handleUserUpdate}>
-          {loading ?
-            <ActivityIndicator />
-            :
-            <Label>Atualizar</Label>
-
-          }
+          {loading ? <ActivityIndicator /> : <Label>Atualizar</Label>}
         </Button>
       </ScrollView>
-
-    </Container >
+    </Container>
   );
 }
 
 Profile.navigationOptions = {
   header: null,
-  title: 'Meu Perfil'
+  title: 'Meu Perfil',
 };
 
 Profile.propTypes = {
@@ -160,8 +158,6 @@ Profile.propTypes = {
     navigate: PropTypes.func,
   }).isRequired,
 };
-
-
 
 const styles = StyleSheet.create({
   animatedView: {

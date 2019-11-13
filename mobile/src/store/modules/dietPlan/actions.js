@@ -43,7 +43,7 @@ export function changeActiveDietPlan(id) {
   return {
     type: '@dietPlan/CHANGE_ACTIVE_DIET_PLAN',
     payload: { id },
-  }
+  };
 }
 
 export function createDietPlanFailure() {

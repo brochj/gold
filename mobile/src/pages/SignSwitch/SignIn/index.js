@@ -11,7 +11,7 @@ import {
   ImageBackground,
 } from 'react-native';
 
-import EyeIcon from '~/components/EyeIcon'
+import EyeIcon from '~/components/EyeIcon';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 
@@ -53,7 +53,7 @@ export default function SignIn({ navigation }) {
             onSubmitEditing={() => passwordRef.current.focus()}
           />
           {password.length > 0 && <Text style={styles.labelTxt}>Senha</Text>}
-          <View style={styles.passView} >
+          <View style={styles.passView}>
             <TextInput
               ref={passwordRef}
               style={styles.passInput}
@@ -73,13 +73,12 @@ export default function SignIn({ navigation }) {
             />
           </View>
 
-
           <TouchableOpacity style={styles.signInbutton} onPress={handleSignIn}>
             {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
-                <Text style={styles.buttonTxt}>Entrar</Text>
-              )}
+              <Text style={styles.buttonTxt}>Entrar</Text>
+            )}
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.signUpbutton} onPress={handleSignUp}>

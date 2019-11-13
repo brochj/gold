@@ -1,9 +1,9 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import SignSwitch from '~/pages/SignSwitch'
+import SignSwitch from '~/pages/SignSwitch';
 
 import Dashboard from '~/pages/Dashboard';
 
@@ -63,5 +63,3 @@ export default (isSigned = false) =>
       }
     )
   );
-
-

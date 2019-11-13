@@ -11,9 +11,8 @@ export const Body = styled.View`
   margin-top: 5px;
   background: #fafafa;
   align-items: center;
-  justify-content: flex-end
+  justify-content: flex-end;
 `;
-
 
 export const Headline = styled.Text`
   font-size: 18px;
@@ -36,14 +35,13 @@ export const Footer = styled.View`
 `;
 
 export const Button = styled.TouchableOpacity`
-flex: 1;
-  background: ${props => props.color ? props.color : "#196a65"};
+  flex: 1;
+  background: ${props => (props.color ? props.color : '#196a65')};
   align-items: center;
   justify-content: center;
   margin: 15px;
   border-radius: 5px;
   height: 50px;
-
 `;
 
 export const Label = styled.Text`

@@ -26,25 +26,26 @@ export default function RecipeInfos({ item, iconColor, color }) {
   return (
     <View style={styles.stats}>
       <View style={styles.row}>
-        <Icon name="timer" size={16} color={iconColor || "#666"} />
-        <Text style={{ color: color || "#777" }} category="h6">
+        <Icon name="timer" size={16} color={iconColor || '#666'} />
+        <Text style={{ color: color || '#777' }} category="h6">
           {' '}
           {preparation_time} min
-          </Text>
+        </Text>
       </View>
       <View style={styles.row}>
         <Icon
           name={servings === 1 ? 'person' : 'people'}
-          size={18} color={iconColor || "#666"}
+          size={18}
+          color={iconColor || '#666'}
         />
-        <Text style={{ color: color || "#777" }} category="h6">
+        <Text style={{ color: color || '#777' }} category="h6">
           {' '}
           {servings === 1 ? `${servings} porção` : `${servings} porções`}
         </Text>
       </View>
       <View style={styles.row}>
-        <Icon name="network-check" size={18} color={iconColor || "#666"} />
-        <Text style={{ color: color || "#777" }} category="h6">
+        <Icon name="network-check" size={18} color={iconColor || '#666'} />
+        <Text style={{ color: color || '#777' }} category="h6">
           {' '}
           {ptbrDifficulty}
         </Text>
@@ -53,16 +54,15 @@ export default function RecipeInfos({ item, iconColor, color }) {
   );
 }
 
-
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   stats: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: 8,
-    width: '100%'
+    width: '100%',
   },
 });

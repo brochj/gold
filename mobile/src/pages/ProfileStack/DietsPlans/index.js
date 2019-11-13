@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Text, Alert, StatusBar } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { useDispatch, useSelector } from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import DietPlantItem from './DietPlanItem'
+import DietPlantItem from './DietPlanItem';
 // import { Container } from './styles';
 
 import {
   getDietPlansRequest,
   deleteDietPlanRequest,
   changeActiveDietPlan,
-} from '~/store/modules/dietPlan/actions'
+} from '~/store/modules/dietPlan/actions';
 
 export default function DietsPlans() {
   const dispatch = useDispatch();
@@ -22,10 +22,12 @@ export default function DietsPlans() {
     // if (dietPlans.length === 0) {
     dispatch(getDietPlansRequest());
     // }
-  }, [])
+  }, [dispatch]);
 
   function handleDeleteDietPlan({ id }, index) {
-    Alert.alert('Cuidado!', `Deseja excluir a Dieta ${index}?`,
+    Alert.alert(
+      'Cuidado!',
+      `Deseja excluir a Dieta ${index}?`,
       [
         {
           text: 'Cancelar',
@@ -33,38 +35,35 @@ export default function DietsPlans() {
           style: 'cancel',
         },
         { text: 'Excluir', onPress: () => dispatch(deleteDietPlanRequest(id)) },
-      ],
+      ]
       // { cancelable: false },
-    )
+    );
   }
 
   return (
-    <View >
+    <View>
       <StatusBar backgroundColor="#196a65" barStyle="light-content" />
-      {dietPlans === [] ?
-
+      {dietPlans === [] ? (
         <Text>Sem planos de dieta</Text>
-        :
-        (<FlatList
+      ) : (
+        <FlatList
           refreshing={loading}
           onRefresh={() => dispatch(getDietPlansRequest())}
           data={dietPlans}
-          renderItem={({ item, index }) =>
-            (<DietPlantItem
+          renderItem={({ item, index }) => (
+            <DietPlantItem
               item={item}
               index={index}
               onLongPress={() => handleDeleteDietPlan(item, index)}
               onPress={() => dispatch(changeActiveDietPlan(item.id))}
-            />)}
+            />
+          )}
           showsVerticalScrollIndicator={false}
-
         />
-        )
-      }
+      )}
     </View>
   );
 }
-
 
 DietsPlans.navigationOptions = {
   header: null,

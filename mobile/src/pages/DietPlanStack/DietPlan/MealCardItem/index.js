@@ -15,7 +15,7 @@ function FlashIcon() {
   return <Icon name="flash" />;
 }
 
-export default function MealCardItem({ data, onPress, }) {
+export default function MealCardItem({ data, onPress }) {
   return (
     <MealCard>
       <Icon name="star" />

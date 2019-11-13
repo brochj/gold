@@ -42,7 +42,10 @@ export function* update({ payload }) {
 
     yield put(updateSuccess(user));
   } catch (err) {
-    Alert.alert('Error', `Falha na atualização, verifique seus dados ${err.response.data.error}`);
+    Alert.alert(
+      'Error',
+      `Falha na atualização, verifique seus dados ${err.response.data.error}`
+    );
 
     yield put(updateFailure());
   }

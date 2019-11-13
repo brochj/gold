@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, TouchableOpacity, Text } from 'react-native';
 
-import RecipeInfos from '~/components/RecipeInfos'
+import RecipeInfos from '~/components/RecipeInfos';
 import bolo from '~/res/images/recipes/bolo.jpg';
 
 import styles from './styles';

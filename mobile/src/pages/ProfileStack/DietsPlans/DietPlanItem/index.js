@@ -1,15 +1,22 @@
 import React, { useMemo } from 'react';
 import { View, Text } from 'react-native';
 
-import CalorieIcon from '~/components/Icons/CalorieIcon'
+import CalorieIcon from '~/components/Icons/CalorieIcon';
 import {
-  Container, Header, Title, Body, Row, Kcal, CalorieGoal,
-  Label, Value, ValueText, Divider
+  Container,
+  Header,
+  Title,
+  Body,
+  Row,
+  Kcal,
+  CalorieGoal,
+  Label,
+  Value,
+  ValueText,
+  Divider,
 } from './styles';
 
-
 export default function DietPlanItem({ item, onPress, onLongPress, index }) {
-
   const difficultyTranslated = useMemo(() => {
     switch (item.difficulty) {
       case 'easy':
@@ -52,12 +59,15 @@ export default function DietPlanItem({ item, onPress, onLongPress, index }) {
   }, [item.physical_activity]);
 
   return (
-    <Container onPress={onPress} onLongPress={onLongPress}style={{ elevation: 5 }}>
+    <Container
+      onPress={onPress}
+      onLongPress={onLongPress}
+      style={{ elevation: 5 }}
+    >
       <Header>
         <Title>DIETA {index + 1}</Title>
       </Header>
       <Body>
-
         <Row>
           <Label>Minha Meta é</Label>
           <Value>
@@ -101,7 +111,6 @@ export default function DietPlanItem({ item, onPress, onLongPress, index }) {
           </Value>
         </Row>
         <Divider />
-
       </Body>
     </Container>
   );

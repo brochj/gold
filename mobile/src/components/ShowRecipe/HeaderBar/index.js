@@ -12,7 +12,6 @@ export default function HeaderBar({ onClose, onAdd }) {
       <TouchableOpacity style={styles.button} onPress={onClose}>
         <Text style={styles.title}>Fechar</Text>
       </TouchableOpacity>
-
     </View>
   );
 }
@@ -42,6 +41,6 @@ const styles = StyleSheet.create({
   button: {
     paddingHorizontal: 20,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 });

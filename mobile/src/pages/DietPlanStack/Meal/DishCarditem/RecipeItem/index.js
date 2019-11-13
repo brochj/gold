@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Container, Cover, Name, Body } from './styles';
 
-import RecipeInfos from '~/components/RecipeInfos'
+import RecipeInfos from '~/components/RecipeInfos';
 
 export default function RecipeItem({ item, onPress, ...rest }) {
   const { name } = item;
