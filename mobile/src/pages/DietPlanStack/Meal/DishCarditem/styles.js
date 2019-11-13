@@ -1,21 +1,6 @@
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export const Container = styled.ScrollView`
-  flex: 1;
-`;
-
-export const Header = styled.View``;
-
-export const Title = styled.Text`
-  color: #333;
-  font-size: 22px;
-`;
-
-export const CalorieGoal = styled.Text`
-  color: #333;
-`;
-
 export const CalorieIcon = styled(Icon).attrs(props => ({
   size: props.size || 28,
   name: props.name || 'whatshot',
@@ -47,8 +32,4 @@ export const DishTitle = styled.Text`
 export const Calorie = styled.Text`
   color: #fff;
   font-size: 22px;
-`;
-
-export const DishContent = styled.View`
-  padding: 5px;
 `;

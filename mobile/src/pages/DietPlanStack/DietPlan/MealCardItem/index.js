@@ -36,6 +36,6 @@ MealCardItem.propTypes = {
   onPress: PropTypes.func.isRequired,
   data: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    calorie: PropTypes.string.isRequired,
+    calorie: PropTypes.number.isRequired,
   }).isRequired,
 };

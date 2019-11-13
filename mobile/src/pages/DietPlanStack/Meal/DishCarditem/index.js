@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, FlatList, Text, TouchableOpacity } from 'react-native';
 
 import RecipeItem from './RecipeItem';
@@ -7,8 +8,8 @@ import {
   DishCard,
   DishHeader,
   DishTitle,
-  CalorieIcon,
-  Calorie,
+  // CalorieIcon,
+  // Calorie,
 } from './styles';
 
 export default function DishCardItem({
@@ -48,3 +49,14 @@ export default function DishCardItem({
     </DishCard>
   );
 }
+
+DishCardItem.propTypes = {
+  data: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    recipes: PropTypes.arrayOf(PropTypes.object),
+    foods: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+  onLongPress: PropTypes.func.isRequired,
+  onPress: PropTypes.func.isRequired,
+  onRecipePress: PropTypes.func.isRequired,
+};
