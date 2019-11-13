@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { View, FlatList, ActivityIndicator } from 'react-native';
 
 import RecipeCardItem from './RecipeCardItem';
@@ -8,7 +9,7 @@ import styles from './styles';
 
 export default function Recipes({ navigation }) {
   const [recipes, setRecipes] = useState([]);
-  const [refreshing, _] = useState(false);
+  const [refreshing] = useState(false);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -69,9 +70,15 @@ export default function Recipes({ navigation }) {
   );
 }
 
-Recipes.navigationOptions = ({ navigation }) => {
+Recipes.navigationOptions = () => {
   return {
     title: 'Sua Dieta',
     header: null,
   };
+};
+
+Recipes.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
 };

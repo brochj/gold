@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, Image, TouchableOpacity, Text } from 'react-native';
 
 import RecipeInfos from '~/components/RecipeInfos';
@@ -21,3 +22,10 @@ export default function RecipeCardItem({ data, onPress }) {
     </TouchableOpacity>
   );
 }
+
+RecipeCardItem.propTypes = {
+  data: PropTypes.shape({
+    name: PropTypes.string,
+  }).isRequired,
+  onPress: PropTypes.func.isRequired,
+};
