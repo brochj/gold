@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, Text, Button, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { changeCalorieGoal } from '~/store/modules/user/actions';
@@ -9,13 +9,13 @@ import { createDietPlanRequest } from '~/store/modules/dietPlan/actions';
 
 import {
   Container,
-  Headline,
+  // Headline,
   Input,
   DifficultyButton,
   DifficultyText,
   Description,
-  CalorieText,
-  CalorieValue,
+  // CalorieText,
+  // CalorieValue,
   Confirm,
   CalorieGoal,
   Tip,
@@ -36,6 +36,14 @@ function Card({ difficulty, level, children, onPress, description }) {
     </DifficultyButton>
   );
 }
+
+Card.propTypes = {
+  difficulty: PropTypes.string.isRequired,
+  level: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
+  description: PropTypes.string.isRequired,
+};
 
 export default function Difficulty({ navigation }) {
   const dispatch = useDispatch();
@@ -202,7 +210,7 @@ export default function Difficulty({ navigation }) {
   );
 }
 
-Difficulty.navigationOptions = ({ navigation }) => ({
+Difficulty.navigationOptions = () => ({
   title: 'Dificuldade da Dieta',
   // headerRight: (
   //   <TouchableOpacity onPress={() => {

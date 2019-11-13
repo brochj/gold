@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, Text, Animated } from 'react-native';
 import { differenceInCalendarYears, parseISO } from 'date-fns';
 
 import { changeCalorieIntake } from '~/store/modules/user/actions';

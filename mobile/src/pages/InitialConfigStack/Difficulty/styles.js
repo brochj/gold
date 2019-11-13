@@ -20,13 +20,13 @@ export const Container = styled.View`
   background: #fafafa;
 `;
 
-export const Headline = styled.Text`
-  font-size: 30px;
-  color: rgba(0, 0, 0, 0.7);
-  font-family: Quicksand-Bold;
-  text-align: center;
-  margin-bottom: 25px;
-`;
+// export const Headline = styled.Text`
+//   font-size: 30px;
+//   color: rgba(0, 0, 0, 0.7);
+//   font-family: Quicksand-Bold;
+//   text-align: center;
+//   margin-bottom: 25px;
+// `;
 
 export const DifficultyButton = styled.TouchableOpacity`
   align-items: center;
@@ -52,17 +52,17 @@ export const Description = styled.Text`
   text-align: center;
 `;
 
-export const CalorieText = styled.Text`
-  color: rgba(0, 0, 0, 0.7);
-  font-size: 19px;
-  text-align: center;
-`;
+// export const CalorieText = styled.Text`
+//   color: rgba(0, 0, 0, 0.7);
+//   font-size: 19px;
+//   text-align: center;
+// `;
 
-export const CalorieValue = styled.Text`
-  color: rgba(0, 0, 0, 0.7);
-  font-size: 19px;
-  text-align: center;
-`;
+// export const CalorieValue = styled.Text`
+//   color: rgba(0, 0, 0, 0.7);
+//   font-size: 19px;
+//   text-align: center;
+// `;
 
 export const Tip = styled.Text`
   color: rgba(0, 0, 0, 0.5);
