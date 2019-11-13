@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, Text, Button } from 'react-native';
 
 import { changePhysicalActivity } from '~/store/modules/user/actions';
 
@@ -29,6 +28,14 @@ function Card({ physicalActivity, level, children, onPress, description }) {
     </ActivityButton>
   );
 }
+
+Card.propTypes = {
+  physicalActivity: PropTypes.string.isRequired,
+  level: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
+};
 
 export default function PhysicalActivity({ navigation }) {
   const dispatch = useDispatch();

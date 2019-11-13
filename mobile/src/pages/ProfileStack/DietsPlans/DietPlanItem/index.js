@@ -1,5 +1,11 @@
 import React, { useMemo } from 'react';
-import { View, Text } from 'react-native';
+import PropTypes from 'prop-types';
+
+import {
+  translatedDifficulty,
+  translatedObjective,
+  translatedActivity,
+} from '~/lib/strings/enToPtbr';
 
 import CalorieIcon from '~/components/Icons/CalorieIcon';
 import {
@@ -17,46 +23,20 @@ import {
 } from './styles';
 
 export default function DietPlanItem({ item, onPress, onLongPress, index }) {
-  const difficultyTranslated = useMemo(() => {
-    switch (item.difficulty) {
-      case 'easy':
-        return 'Fácil';
-      case 'medium':
-        return 'Médio';
-      case 'hard':
-        return 'Difícil';
-      default:
-        break;
-    }
-  }, [item.difficulty]);
+  const difficultyTranslated = useMemo(
+    () => translatedDifficulty(item.difficulty),
+    [item.difficulty]
+  );
 
-  const objectiveTranslated = useMemo(() => {
-    switch (item.objective) {
-      case 'gainMuscle':
-        return 'Ganhar Massa Muscular';
-      case 'maintainWeight':
-        return 'Manter o Peso';
-      case 'weightLoss':
-        return 'Perder Peso';
-      default:
-        break;
-    }
-  }, [item.objective]);
+  const objectiveTranslated = useMemo(
+    () => translatedObjective(item.objective),
+    [item.objective]
+  );
 
-  const activityTranslated = useMemo(() => {
-    switch (item.physical_activity) {
-      case 'light':
-        return 'Leve';
-      case 'moderate':
-        return 'Moderado';
-      case 'high':
-        return 'Elevado';
-      case 'intense':
-        return 'Intenso';
-      default:
-        break;
-    }
-  }, [item.physical_activity]);
+  const activityTranslated = useMemo(
+    () => translatedActivity(item.physical_activity),
+    [item.physical_activity]
+  );
 
   return (
     <Container
@@ -115,3 +95,16 @@ export default function DietPlanItem({ item, onPress, onLongPress, index }) {
     </Container>
   );
 }
+
+DietPlanItem.propTypes = {
+  item: PropTypes.shape({
+    difficulty: PropTypes.string.isRequired,
+    objective: PropTypes.string.isRequired,
+    physical_activity: PropTypes.string.isRequired,
+    calorie_intake: PropTypes.string.isRequired,
+    calorie_goal: PropTypes.string.isRequired,
+  }).isRequired,
+  onPress: PropTypes.func.isRequired,
+  onLongPress: PropTypes.func.isRequired,
+  index: PropTypes.func.isRequired,
+};
