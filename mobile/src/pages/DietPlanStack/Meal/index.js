@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { View, FlatList, TextInput } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,7 +9,7 @@ import DishCardItem from './DishCarditem';
 import ShowRecipeModal from '~/components/ShowRecipe';
 
 import CalorieIcon from '~/components/Icons/CalorieIcon';
-import { Container, Header, Title, CalorieGoal } from './styles';
+import { Container } from './styles';
 import { getRecipeRequest } from '~/store/modules/recipe/actions';
 
 import {
@@ -18,7 +19,7 @@ import {
   changeActiveDish,
 } from '~/store/modules/dish/actions';
 
-export default function Meal({ navigation }) {
+export default function Meal() {
   const dispatch = useDispatch();
 
   const mealId = useSelector(state => state.meal.id);
@@ -29,13 +30,11 @@ export default function Meal({ navigation }) {
   const [DishTitle, setDishTitle] = useState('');
   const [refreshing, setRefreshing] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [recipeId, setRecipeId] = useState('');
+  const [recipeId] = useState('');
 
   useEffect(() => {
     dispatch(getDishesRequest(dietPlanId, mealId));
   }, [mealId, showModal]); // eslint-disable-line
-
-  useEffect(() => {}, [recipeId]);
 
   function handleCreateDish() {
     dispatch(createDishRequest({ title: DishTitle }, dietPlanId, mealId));
@@ -76,7 +75,6 @@ export default function Meal({ navigation }) {
               onRecipePress={id => {
                 dispatch(getRecipeRequest(id));
                 setVisible(true);
-                alert(id);
               }}
             />
           )}
@@ -150,3 +148,7 @@ function HeaderCalorie({ calorie }) {
     </View>
   );
 }
+
+HeaderCalorie.propTypes = {
+  calorie: PropTypes.number.isRequired,
+};
