@@ -1,30 +1,30 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   Text,
   View,
   Image,
-  TouchableOpacity,
+  // TouchableOpacity,
   ScrollView,
-  FlatList,
+  // FlatList,
   Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Tags from 'react-native-tags';
+// import Tags from 'react-native-tags';
 import { useDispatch, useSelector } from 'react-redux';
 import R from '~/res/R';
 
 // import IngredientsSection from './IngredientsSection';
 // import IngredientItem from './IngredientItem';
 import StepsSection from './StepsSection';
-import { capitalize } from '~/lib/scripts/stringScript';
 
 import { getRecipeRequest } from '~/store/modules/recipe/actions';
 
 import HeaderBar from './HeaderBar';
 
-const tags = ['high protein', 'low carb', 'chicken', 'lunch', 'easy'];
+// const tags = ['high protein', 'low carb', 'chicken', 'lunch', 'easy'];
 
 export default function ShowRecipe({ recipeId, visible, changeVisible }) {
   const dispatch = useDispatch();
@@ -35,16 +35,12 @@ export default function ShowRecipe({ recipeId, visible, changeVisible }) {
   // const [tags, SetTags] = useState([]);
   const recipe = useSelector(state => state.recipe.recipe);
 
-  const [isVisible, setIsVisible] = useState(visible);
   const [showBar, setShowBar] = useState(false);
   const [scrollPosition, setScrollPosition] = useState();
-  // const [isVisible, setIsVisible] = useState(visible);
 
   const numberOfIngredients = useMemo(() => {
-    // if (recipe.ingredients.length > 0) {
-    //   return recipe.ingredients.length;
-    // }
-  }, []);
+    return recipe.ingredients.length;
+  }, [recipe.ingredients]);
 
   useEffect(() => {
     dispatch(getRecipeRequest(recipeId));
@@ -138,13 +134,13 @@ export default function ShowRecipe({ recipeId, visible, changeVisible }) {
                 deleteTagOnPress,
                 readonly,
               }) => (
-                  <TouchableOpacity
+                  // <TouchableOpacity
                     key={`${tag}-${index}`}
                     onPress={onPress}
                     style={styles.tagTouch}
                   >
                     <Text style={styles.tagTxt}>#{capitalize(tag)}</Text>
-                  </TouchableOpacity>
+                  // </TouchableOpacity>
                 )}
             />
           </View> */}
@@ -321,3 +317,9 @@ const styles = StyleSheet.create({
     paddingTop: 24,
   },
 });
+
+ShowRecipe.propTypes = {
+  recipeId: PropTypes.number.isRequired,
+  visible: PropTypes.bool.isRequired,
+  changeVisible: PropTypes.func.isRequired,
+};
