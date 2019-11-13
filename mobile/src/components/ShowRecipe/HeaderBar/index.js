@@ -1,7 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-
-// import { Container } from './styles';
 
 export default function HeaderBar({ onClose, onAdd }) {
   return (
@@ -44,3 +43,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+HeaderBar.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  onAdd: PropTypes.func.isRequired,
+};

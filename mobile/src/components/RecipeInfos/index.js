@@ -62,7 +62,7 @@ RecipeInfos.propTypes = {
   color: PropTypes.string,
   iconColor: PropTypes.string,
   item: PropTypes.shape({
-    preparation_time: PropTypes.string.isRequired,
+    preparation_time: PropTypes.number.isRequired,
     servings: PropTypes.string.isRequired,
     difficulty: PropTypes.string.isRequired,
   }).isRequired,
