@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, FlatList, Text, Alert, StatusBar } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import DietPlantItem from './DietPlanItem';
 // import { Container } from './styles';
@@ -31,7 +30,7 @@ export default function DietsPlans() {
       [
         {
           text: 'Cancelar',
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => {},
           style: 'cancel',
         },
         { text: 'Excluir', onPress: () => dispatch(deleteDietPlanRequest(id)) },

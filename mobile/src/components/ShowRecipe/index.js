@@ -39,7 +39,10 @@ export default function ShowRecipe({ recipeId, visible, changeVisible }) {
   const [scrollPosition, setScrollPosition] = useState();
 
   const numberOfIngredients = useMemo(() => {
-    return recipe.ingredients.length;
+    if (recipe.ingredients.length > 0) {
+      return recipe.ingredients.length;
+    }
+    return 0;
   }, [recipe.ingredients]);
 
   useEffect(() => {
@@ -319,7 +322,7 @@ const styles = StyleSheet.create({
 });
 
 ShowRecipe.propTypes = {
-  recipeId: PropTypes.number.isRequired,
+  recipeId: PropTypes.string.isRequired,
   visible: PropTypes.bool.isRequired,
   changeVisible: PropTypes.func.isRequired,
 };
