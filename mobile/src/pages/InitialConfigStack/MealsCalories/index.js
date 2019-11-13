@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Text, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { FlatList, TouchableOpacity, Alert } from 'react-native';
 
 import {
   ActionButton,
@@ -11,12 +11,10 @@ import {
   CalorieText,
   Container,
   Content,
-  DailyPercent,
   Divider,
   Header,
   MealCard,
   Title,
-  ChangeCalorieIcon,
   Input,
   TextCalories,
   SwitchContainer,
@@ -93,6 +91,7 @@ MealItem.propTypes = {
   }).isRequired,
   editMode: PropTypes.func.isRequired,
   changeCalorie: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 function Switch({ numberOfMeals, number, title, onPress }) {
@@ -106,6 +105,13 @@ function Switch({ numberOfMeals, number, title, onPress }) {
     </SwitchButton>
   );
 }
+
+Switch.propTypes = {
+  numberOfMeals: PropTypes.number.isRequired,
+  number: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
+};
 
 export default function MealsCalories({ navigation }) {
   const dispatch = useDispatch();
@@ -301,10 +307,11 @@ export default function MealsCalories({ navigation }) {
 MealsCalories.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
+    setParams: PropTypes.func,
   }).isRequired,
 };
 
-MealsCalories.navigationOptions = ({ navigation, ...rest }) => ({
+MealsCalories.navigationOptions = () => ({
   title: 'Refeições',
   // headerRight: (
   //   <Text style={{ marginRight: 15, fontSize: 17 }}
