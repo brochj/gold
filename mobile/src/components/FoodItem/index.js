@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Container,
   Image,
@@ -36,3 +37,13 @@ export default function FoodItem({ data }) {
     </>
   );
 }
+
+FoodItem.propTypes = {
+  data: PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    amount: PropTypes.string.isRequired,
+    unit: PropTypes.string.isRequired,
+    calorie: PropTypes.string.isRequired,
+  }).isRequired,
+};
