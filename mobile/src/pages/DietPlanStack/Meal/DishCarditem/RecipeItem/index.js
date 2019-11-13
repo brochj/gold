@@ -1,10 +1,10 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { Container, Cover, Name, Body } from './styles';
 
 import RecipeInfos from '~/components/RecipeInfos';
 
-export default function RecipeItem({ item, onPress, ...rest }) {
+export default function RecipeItem({ item, onPress }) {
   const { name } = item;
 
   return (
@@ -17,3 +17,10 @@ export default function RecipeItem({ item, onPress, ...rest }) {
     </Container>
   );
 }
+
+RecipeItem.propTypes = {
+  onPress: PropTypes.func.isRequired,
+  item: PropTypes.shape({
+    name: PropTypes.string,
+  }).isRequired,
+};
