@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, Text, View, SectionList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -40,7 +41,6 @@ const stylesHeader = StyleSheet.create({
     fontWeight: 'bold',
     color: '#196a65',
     fontSize: 20,
-    // backgroundColor: 'red',
     paddingVertical: 5,
     paddingHorizontal: 10,
     textTransform: 'capitalize',
@@ -74,3 +74,7 @@ const stylesItem = StyleSheet.create({
     marginTop: 10,
   },
 });
+
+StepsSection.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
