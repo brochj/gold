@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { FlatList, View } from 'react-native';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { FlatList } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Text } from 'react-native-ui-kitten';
-
-import CalorieIcon from '~/components/Icons/CalorieIcon';
 
 import MealCardItem from './MealCardItem';
 
@@ -53,20 +52,26 @@ export default function DietPlan({ navigation }) {
   );
 }
 
-DietPlan.navigationOptions = ({ navigation }) => {
+DietPlan.navigationOptions = () => {
   return {
     title: 'Sua Dieta',
     // headerRight: <HeaderCalorie calorie={useSelector(state => state.dietPlan.calorie)} />,
   };
 };
 
-function HeaderCalorie({ calorie }) {
-  return (
-    <View
-      style={{ flexDirection: 'row', marginRight: 15, alignItems: 'center' }}
-    >
-      <CalorieIcon color="#333" />
-      <Text category="h5">{calorie}</Text>
-    </View>
-  );
-}
+// function HeaderCalorie({ calorie }) {
+//   return (
+//     <View
+//       style={{ flexDirection: 'row', marginRight: 15, alignItems: 'center' }}
+//     >
+//       <CalorieIcon color="#333" />
+//       <Text category="h5">{calorie}</Text>
+//     </View>
+//   );
+// }
+
+DietPlan.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};
