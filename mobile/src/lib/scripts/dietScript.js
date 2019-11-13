@@ -60,4 +60,5 @@ export function calculateCaloriesGoal(objective, difficulty, calorieIntake) {
       return calorieIntake + 800;
     }
   }
+  return '';
 }

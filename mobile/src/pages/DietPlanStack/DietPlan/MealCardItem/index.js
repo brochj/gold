@@ -1,15 +1,10 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Layout, Text, Icon, Button } from 'react-native-ui-kitten';
+import PropTypes from 'prop-types';
+import { TouchableOpacity } from 'react-native';
+import { Text, Icon } from 'react-native-ui-kitten';
 import CalorieIcon from '~/components/Icons/CalorieIcon';
 
-import {
-  MealCard,
-  MealHeader,
-  MealTitle,
-  CalorieView,
-  Calorie,
-} from './styles';
+import { MealCard, MealHeader, CalorieView } from './styles';
 
 function FlashIcon() {
   return <Icon name="flash" />;
@@ -36,3 +31,11 @@ export default function MealCardItem({ data, onPress }) {
     </MealCard>
   );
 }
+
+MealCardItem.propTypes = {
+  onPress: PropTypes.func.isRequired,
+  data: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    calorie: PropTypes.string.isRequired,
+  }).isRequired,
+};
