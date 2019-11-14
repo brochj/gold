@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -56,3 +57,15 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
   },
 });
+
+IngredientItem.propTypes = {
+  data: PropTypes.shape({
+    quantity: PropTypes.number.isRequired,
+    unit: PropTypes.string.isRequired,
+    preparation: PropTypes.string,
+    tip: PropTypes.string,
+    food: PropTypes.shape({
+      name: PropTypes.string,
+    }).isRequired,
+  }).isRequired,
+};
