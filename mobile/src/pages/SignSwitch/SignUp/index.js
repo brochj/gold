@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Text, StyleSheet, Animated, TouchableOpacity } from 'react-native';
+import { StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import { format, differenceInYears } from 'date-fns';
 import pt from 'date-fns/locale/pt';
@@ -76,14 +76,11 @@ export default function SignUp({ navigation }) {
 
   const opacity = new Animated.Value(0);
 
-  const pageRef = useRef();
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const weightRef = useRef();
   const heightRef = useRef();
-  const birthdayRef = useRef();
-  const genderRef = useRef();
 
   function animateView() {
     Animated.timing(opacity, {
@@ -124,7 +121,7 @@ export default function SignUp({ navigation }) {
       default:
         break;
     }
-  }, [animateView, page]);
+  }, [page]); // eslint-disable-line
 
   function handleSignUp() {
     dispatch(

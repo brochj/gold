@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   Text,
   View,
-  Image,
+  // Image,
   TouchableOpacity,
   ScrollView,
   FlatList,
@@ -103,16 +104,16 @@ export default function ShowRecipe({ navigation }) {
               //     placeholder: "Any type of animal"
               // }}
               initialTags={tags}
-              onChangeTags={tags_1 => console.log(tags_1)}
-              onTagPress={(index, tagLabel, event, deleted) => {}}
+              onChangeTags={tags_1 => console.tron.log(tags_1)}
+              onTagPress={(index, tagLabel, event, deleted) => { }}// eslint-disable-line
               containerStyle={{ justifyContent: 'center' }}
               inputStyle={{ backgroundColor: 'white' }}
               renderTag={({
                 tag,
                 index,
                 onPress,
-                deleteTagOnPress,
-                readonly,
+                // deleteTagOnPress,
+                // readonly,
               }) => (
                 <TouchableOpacity
                   key={`${tag}-${index}`}
@@ -282,3 +283,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
 });
+
+ShowRecipe.propTypes = {
+  navigation: PropTypes.shape({
+    getParam: PropTypes.func,
+  }).isRequired,
+};
