@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, Text, View, SectionList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function IngrdientsSection({ data }) {
+export default function IngredientsSection({ data }) {
   function renderSectionHeader(section) {
     return (
       <View>
@@ -69,3 +70,7 @@ const stylesItem = StyleSheet.create({
     marginVertical: 10,
   },
 });
+
+IngredientsSection.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
