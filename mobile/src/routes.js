@@ -30,7 +30,7 @@ const MainBottomTab = createMaterialBottomTabNavigator(
       backgroundColor: '#196a65',
     },
     defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+      tabBarIcon: ({ focused, horizontal, tintColor }) => { // eslint-disable-line
         const { routeName } = navigation.state;
         let iconName;
 
