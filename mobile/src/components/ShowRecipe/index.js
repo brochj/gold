@@ -39,11 +39,11 @@ export default function ShowRecipe({ recipeId, visible, changeVisible }) {
   const [scrollPosition, setScrollPosition] = useState();
 
   const numberOfIngredients = useMemo(() => {
-    if (recipe.ingredients.length > 0) {
-      return recipe.ingredients.length;
-    }
+    // if (recipe.ingredients.length > 0) {
+    //   return recipe.ingredients.length;
+    // }
     return 0;
-  }, [recipe.ingredients]);
+  }, []);
 
   useEffect(() => {
     dispatch(getRecipeRequest(recipeId));
