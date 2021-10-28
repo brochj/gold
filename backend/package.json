@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "p": "git push origin master",
+    "p": "git push origin main",
     "build": "sucrase ./src -d ./dist --transforms imports",
     "pretest": "NODE_ENV=test sequelize db:migrate",
     "test": "NODE_ENV=test jest",

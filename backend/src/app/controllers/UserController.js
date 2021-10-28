@@ -32,14 +32,14 @@ class UserController {
       .validate(req.body)
       .catch(e => res.status(400).json({ error: e.message }));
 
-    // Verificando se ja existe usuário com email cadastrado
+    // Check if there is already a user with this email registered
     const userExists = await User.findOne({ where: { email: req.body.email } });
 
     if (userExists) {
       return res.status(400).json({ error: 'User already exists.' });
     }
 
-    // Salvando usuario no banco de dados
+    // Save the new user into the database
     const {
       id,
       name,
@@ -88,8 +88,8 @@ class UserController {
       confirmPassword: Yup.string().when('password', (password, field) =>
         password
           ? field
-            .required('please confirm your new password')
-            .oneOf([Yup.ref('password')])
+              .required('please confirm your new password')
+              .oneOf([Yup.ref('password')])
           : field
       ),
     });
