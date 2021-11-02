@@ -11,11 +11,11 @@ export default {
       // req, tem aquele mesmo conteudo dos controllers
       // file - todos os dados do arquivo que o usuario fez upload
 
-      // gerar nome unico
+      // gerar nome único
       crypto.randomBytes(16, (err, res) => {
         if (err) return callback(err);
 
-        // passo o null, pq o primeiro parametro é pra qndo da erro
+        // passo o null, pq o primeiro parametro é pra quando da erro
         return callback(null, res.toString('hex') + extname(file.originalname)); // transformo os 16 bytes em uma string hexadecimal
       });
     },
