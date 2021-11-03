@@ -2,6 +2,10 @@ import { Router } from 'express';
 import multer from 'multer';
 import { recipeFilesConfig } from './config/multer';
 
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocumentJSON from './swagger.json';
+import { swaggerDocument } from './swagger';
+
 import authMiddleware from './app/middlewares/auth';
 import dietPlanMiddleware from './app/middlewares/dietPlan';
 import mealMiddleware from './app/middlewares/meal';
@@ -25,6 +29,17 @@ import FoodDishController from './app/controllers/FoodDishController';
 
 const routes = new Router();
 const recipeUpload = multer(recipeFilesConfig);
+
+routes.use(
+  '/api-docs-json',
+  swaggerUi.serveFiles(swaggerDocumentJSON),
+  swaggerUi.setup(swaggerDocumentJSON)
+);
+routes.use(
+  '/api-docs',
+  swaggerUi.serveFiles(swaggerDocument),
+  swaggerUi.setup(swaggerDocument)
+);
 
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
