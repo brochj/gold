@@ -75,3 +75,14 @@
 ```sh
 [broch-pc backend]> docker run --name mypostgresDB -p 5432:5432 -d mypostgres
 ```
+
+## Running the aplicativo
+
+### Build the image
+```sh
+[broch-pc backend]> docker build -f nodejs.dockerfile -t nodedietapi .
+```
+
+### Run the container
+```sh
+[broch-pc backend]> docker run --name dietappapi -d -p 3333:3333 nodedietapi
