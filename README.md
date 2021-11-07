@@ -62,3 +62,16 @@
   - e assim por diante, até completar as 2500 kcal diárias
 - **Area de criar receitas**
   - Colocar a opcao de visualizaçao, só mandar as props para a tela - ShowRecipe
+
+
+## Running the database
+
+### Build the image
+```sh
+[broch-pc backend]> docker build -f postgresql.dockerfile -t mypostgres .
+```
+
+### Run the container
+```sh
+[broch-pc backend]> docker run --name mypostgresDB -p 5432:5432 -d mypostgres
+```
