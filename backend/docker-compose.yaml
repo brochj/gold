@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  postgres:
+    build:
+      dockerfile: postgresql.dockerfile
+      context: .
+    image: mypostgresdb
+    container_name: postgresDB
+    ports: 
+      - "5432:5432"
+    networks:
+      - production-network
+  
+  nodeapi:
+    build:
+      dockerfile: nodejs.dockerfile
+      context: .
+    image: dietapi
+    container_name: mydietapi
+    ports:
+      - "3333:3333"
+    networks:
+      - production-network
+    depends_on:
+      - "postgresDB"
+
+networks:
+  production-network: # nome da minha network
+    driver: bridge

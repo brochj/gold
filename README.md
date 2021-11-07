@@ -63,22 +63,23 @@
 - **Area de criar receitas**
   - Colocar a opcao de visualizaçao, só mandar as props para a tela - ShowRecipe
 
+## Running two containers manually
 
-## Running the database
+### 1. Running the database
 
-### Build the image
+#### Build the image
 ```sh
 [broch-pc backend]> docker build -f postgresql.dockerfile -t mypostgres .
 ```
 
-### Run the container
+#### Run the container
 ```sh
 [broch-pc backend]> docker run --name mypostgresDB -p 5432:5432 -d mypostgres
 ```
 
-## Running the aplicativo
+### 2. Running the Nodejs API
 
-### Build the image
+#### Build the image
 ```sh
 [broch-pc backend]> docker build -f nodejs.dockerfile -t nodedietapi .
 ```
@@ -86,3 +87,23 @@
 ### Run the container
 ```sh
 [broch-pc backend]> docker run --name dietappapi -d -p 3333:3333 nodedietapi
+```
+
+## Runnig with docker-compose
+
+Open your terminal inside `backend` folder, then run the following commands:
+
+```sh
+docker-compose build
+```
+
+```sh
+docker-compose up
+```
+
+Open another terminal and access Nodejs container terminal to populate de database:
+
+```sh
+docker exec -it dietappapi bash
+root@2caf89e77c13:/usr/app# npm run seed
+```
