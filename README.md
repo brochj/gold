@@ -107,3 +107,41 @@ Open another terminal and access Nodejs container terminal to populate de databa
 docker exec -it dietappapi bash
 root@2caf89e77c13:/usr/app# npm run seed
 ```
+### Stop all containers and keep data
+```sh
+docker-compose stop
+```
+
+### Start all containers
+```sh
+docker-compose start
+```
+
+### WARNING: `docker-compose down` will remove all containers, therefore, its data!
+
+---
+
+### Docker-compose commands
+
+| Command| Description |
+|--|--|
+| `build`       | Build or rebuild services |
+| `up`          | Create and start containers |
+| `down`        | Stop and **remove containers**, networks |
+| `stop`        | Stop services |
+| `start`       | Start services |
+| `restart`     | Restart containers |
+| `kill`        | Force stop service containers. |
+| `ls`          | List running compose projects |
+| `exec`        | Execute a command in a running container. |
+| `top`         | Display the running processes |
+
+| Command| Description |
+|--|--|
+| `ps`          | List containers |
+| `port`        | Print the public port for a port binding. |
+| `images`      | List images used by the created containers |
+| `rm`          | Removes stopped service containers |
+| `run`         | Run a one-off command on a service. |
+| `pause`       | pause services |
+| `unpause`     | unpause services |
