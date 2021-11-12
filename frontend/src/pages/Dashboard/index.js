@@ -1,32 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Grid, GridListTile, GridList } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-// import Link from '@material-ui/core/Link';
-import { Link } from 'react-router-dom';
 
 import api from '~/services/api';
 
 import RecipeCard from '~/components/RecipeCard';
 
 import { recipeRequest } from '~/store/modules/recipe/actions';
-
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="textSecondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://material-ui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
 
 const drawerWidth = 240;
 
@@ -160,7 +143,7 @@ export default function Dashboard() {
                       onClick={() => handleRecipeClick(recipe.id)}
                     >
                       {/* <Link to={`recipes/${recipe.id}`}> */}
-                        <RecipeCard recipe={recipe} />
+                      <RecipeCard recipe={recipe} />
                       {/* </Link> */}
                     </button>
                   </GridListTile>

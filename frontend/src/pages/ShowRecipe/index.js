@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { Grid, GridListTile, GridList } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 
